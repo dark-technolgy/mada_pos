@@ -1,0 +1,440 @@
+{
+  "@@locale": "ku",
+  "appName": "KeenX بۆ فرۆشتن",
+  "login": "چوونەژوورەوە",
+  "logout": "چوونەدەرەوە",
+  "username": "ناوی بەکارهێنەر",
+  "password": "وشەی نهێنی",
+  "rememberMe": "بمبیرهێنەوە",
+  "forgotPassword": "وشەی نهێنیت بیرچووەتەوە؟",
+  "loginButton": "چوونەژوورەوە",
+  "welcomeBack": "بەخێربێیتەوە",
+  "dashboard": "داشبۆرد",
+  "pos": "نوقتەی فرۆشتن",
+  "products": "بەرهەمەکان",
+  "categories": "جۆرەکان",
+  "inventory": "کۆگا",
+  "customers": "کڕیارەکان",
+  "suppliers": "دابینکەرەکان",
+  "invoices": "پسوڵەکان",
+  "sales": "فرۆشتنەکان",
+  "purchases": "کڕینەکان",
+  "returns": "گەڕاندنەوەکان",
+  "debts": "قەرزەکان",
+  "expenses": "خەرجییەکان",
+  "reports": "ڕاپۆرتەکان",
+  "settings": "ڕێکخستنەکان",
+  "backup": "پاشەکەوتکردن",
+  "users": "بەکارهێنەرەکان",
+  "profile": "پرۆفایل",
+  "search": "گەڕان...",
+  "add": "زیادکردن",
+  "edit": "دەستکاریکردن",
+  "delete": "سڕینەوە",
+  "save": "پاشەکەوتکردن",
+  "cancel": "هەڵوەشاندنەوە",
+  "confirm": "دڵنیاکردنەوە",
+  "close": "داخستن",
+  "yes": "بەڵێ",
+  "no": "نەخێر",
+  "ok": "باشە",
+  "back": "گەڕانەوە",
+  "next": "دواتر",
+  "previous": "پێشتر",
+  "loading": "بارکردن...",
+  "noData": "هیچ داتایەک نییە",
+  "error": "هەڵە",
+  "success": "سەرکەوتوو",
+  "warning": "ئاگاداری",
+  "info": "زانیاری",
+  "name": "ناو",
+  "phone": "تەلەفۆن",
+  "email": "ئیمەیل",
+  "address": "ناونیشان",
+  "notes": "تێبینییەکان",
+  "date": "بەروار",
+  "time": "کات",
+  "amount": "بڕ",
+  "total": "کۆی گشتی",
+  "subtotal": "کۆی لاوەکی",
+  "discount": "داشکاندن",
+  "tax": "باج",
+  "quantity": "بڕ",
+  "price": "نرخ",
+  "unitPrice": "نرخی یەکە",
+  "purchasePrice": "نرخی کڕین",
+  "sellingPrice": "نرخی فرۆشتن",
+  "profit": "قازانج",
+  "loss": "زیان",
+  "balance": "باڵانس",
+  "paid": "دراوە",
+  "unpaid": "نەدراوە",
+  "partial": "بەشێک",
+  "status": "بارودۆخ",
+  "active": "چالاک",
+  "inactive": "ناچالاک",
+  "currency": "دراو",
+  "exchangeRate": "نرخی ئاڵتوون",
+  "paymentMethod": "شێوازی پارەدان",
+  "cash": "نەقد",
+  "card": "کارت",
+  "transfer": "گواستنەوە",
+  "barcode": "بارکۆد",
+  "sku": "کۆدی بەرهەم",
+  "category": "جۆر",
+  "unit": "یەکە",
+  "warehouse": "کۆگا",
+  "stock": "کۆگا",
+  "minStock": "کەمترین کۆگا",
+  "lowStock": "کۆگا کەمە",
+  "outOfStock": "بەردەست نییە",
+  "inStock": "بەردەستە",
+  "invoice": "پسوڵە",
+  "invoiceNumber": "ژمارەی پسوڵە",
+  "saleInvoice": "پسوڵەی فرۆشتن",
+  "purchaseInvoice": "پسوڵەی کڕین",
+  "returnInvoice": "پسوڵەی گەڕاندنەوە",
+  "quote": "نرخنامە",
+  "customer": "کڕیار",
+  "supplier": "دابینکەر",
+  "debt": "قەرز",
+  "receivable": "قەرزی لەسەر",
+  "payable": "قەرزی بۆ",
+  "dueDate": "بەرواری دوایین",
+  "overdue": "دواکەوتوو",
+  "payDebt": "پارەدانی قەرز",
+  "debtStatement": "کەشفی حیساب",
+  "creditLimit": "سنوری قەرز",
+  "remaining": "ماوە",
+  "payment": "پارەدان",
+  "addPayment": "زیادکردنی پارەدان",
+  "receipt": "وەسڵ",
+  "print": "چاپکردن",
+  "export": "دەرکردن",
+  "pdf": "PDF",
+  "excel": "Excel",
+  "dailyReport": "ڕاپۆرتی ڕۆژانە",
+  "monthlyReport": "ڕاپۆرتی مانگانە",
+  "yearlyReport": "ڕاپۆرتی ساڵانە",
+  "salesReport": "ڕاپۆرتی فرۆشتن",
+  "inventoryReport": "ڕاپۆرتی کۆگا",
+  "debtReport": "ڕاپۆرتی قەرز",
+  "profitReport": "ڕاپۆرتی قازانج",
+  "expenseReport": "ڕاپۆرتی خەرجی",
+  "todaySales": "فرۆشتنی ئەمڕۆ",
+  "todayProfit": "قازانجی ئەمڕۆ",
+  "totalCustomers": "کۆی کڕیارەکان",
+  "totalProducts": "کۆی بەرهەمەکان",
+  "topProducts": "باشترین بەرهەمەکان",
+  "recentTransactions": "دوایین مامەڵەکان",
+  "quickActions": "کردارە خێراکان",
+  "newSale": "فرۆشتنی نوێ",
+  "newPurchase": "کڕینی نوێ",
+  "addProduct": "زیادکردنی بەرهەم",
+  "addCustomer": "زیادکردنی کڕیار",
+  "addSupplier": "زیادکردنی دابینکەر",
+  "companyInfo": "زانیاری کۆمپانیا",
+  "invoiceSettings": "ڕێکخستنی پسوڵە",
+  "taxSettings": "ڕێکخستنی باج",
+  "currencySettings": "ڕێکخستنی دراو",
+  "printerSettings": "ڕێکخستنی چاپکەر",
+  "themeSettings": "ڕێکخستنی ڕووکار",
+  "languageSettings": "ڕێکخستنی زمان",
+  "darkMode": "دۆخی تاریک",
+  "lightMode": "دۆخی ڕوناک",
+  "language": "زمان",
+  "arabic": "العربیة",
+  "english": "English",
+  "kurdish": "کوردی",
+  "createBackup": "دروستکردنی پاشەکەوت",
+  "restoreBackup": "گەڕاندنەوەی پاشەکەوت",
+  "autoBackup": "پاشەکەوتی خۆکار",
+  "cloudBackup": "پاشەکەوتی هەور",
+  "localBackup": "پاشەکەوتی ناوخۆیی",
+  "lastBackup": "دوایین پاشەکەوت",
+  "cashRegister": "سندوق",
+  "openShift": "کردنەوەی شیفت",
+  "closeShift": "داخستنی شیفت",
+  "openingAmount": "بڕی کردنەوە",
+  "closingAmount": "بڕی داخستن",
+  "difference": "جیاوازی",
+  "holdInvoice": "هەڵپەساردنی پسوڵە",
+  "recallInvoice": "بیرهێنانەوەی پسوڵە",
+  "splitPayment": "دابەشکردنی پارەدان",
+  "changeAmount": "پارەی گەڕاوە",
+  "stockTransfer": "گواستنەوەی کۆگا",
+  "stockAdjustment": "ڕێکخستنەوەی کۆگا",
+  "stockTake": "ژماردنی کۆگا",
+  "from": "لە",
+  "to": "بۆ",
+  "all": "هەموو",
+  "filter": "فلتەر",
+  "clearFilters": "سڕینەوەی فلتەرەکان",
+  "sortBy": "ڕیزکردن بەپێی",
+  "ascending": "بەرەو سەرەوە",
+  "descending": "بەرەو خوارەوە",
+  "today": "ئەمڕۆ",
+  "yesterday": "دوێنێ",
+  "thisWeek": "ئەم هەفتەیە",
+  "thisMonth": "ئەم مانگە",
+  "thisYear": "ئەم ساڵە",
+  "custom": "تایبەت",
+  "deleteConfirm": "دڵنیایت لە سڕینەوە؟",
+  "deleteWarning": "ئەم کردارە ناگەڕێتەوە",
+  "savedSuccessfully": "بە سەرکەوتوویی پاشەکەوت کرا",
+  "deletedSuccessfully": "بە سەرکەوتوویی سڕایەوە",
+  "updatedSuccessfully": "بە سەرکەوتوویی نوێکرایەوە",
+  "errorOccurred": "هەڵەیەک ڕوویدا",
+  "invalidCredentials": "زانیاری چوونەژوورەوە هەڵەیە",
+  "sessionExpired": "کاتی دانیشتن تەواوبوو",
+  "pieces": "دانە",
+  "box": "کارتۆن",
+  "kilogram": "کیلۆگرام",
+  "gram": "گرام",
+  "liter": "لیتر",
+  "meter": "مەتر",
+  "set": "تەقم",
+  "pair": "جووت",
+  "dozen": "دەرزن",
+  "iqd": "دیناری عێراقی",
+  "usd": "دۆلاری ئەمریکی",
+  "agingReport": "ڕاپۆرتی تەمەنی قەرز",
+  "days30": "30 ڕۆژ",
+  "days60": "60 ڕۆژ",
+  "days90": "90 ڕۆژ",
+  "days120": "+120 ڕۆژ",
+  "settled": "تەواوکراوە",
+  "writeOff": "سڕینەوە"
+  ,"fastAndSmart": "خێرا و زیرەک"
+  ,"highSecurity": "پاراستنی بەرز"
+  ,"multilingual": "چەند زمانە"
+  ,"comprehensiveManagement": "بەڕێوەبردنی گشتگیر"
+  ,"smartSalesSystem": "سیستەمی زیرەکی بەڕێوەبردنی فرۆشتن"
+  ,"signInToContinue": "بچۆ ژوورەوە بۆ بەردەوامبوون"
+  ,"enterUsername": "ناوی بەکارهێنەر بنووسە"
+  ,"enterPassword": "وشەی نهێنی بنووسە"
+  ,"systemPreferences": "ڕێکخستن و هەڵبژاردەکانی سیستەم"
+  ,"saveSettings": "پاشەکەوتکردنی ڕێکخستنەکان"
+  ,"saving": "لە پاشەکەوتکردندایە..."
+  ,"appearance": "ڕووکار"
+  ,"enableDarkMode": "دۆخی تاریک بۆ بەرنامەکە چالاک بکە"
+  ,"currencies": "دراوەکان"
+  ,"systemInfo": "زانیاری سیستەم"
+  ,"companyName": "ناوی کۆمپانیا"
+  ,"primaryCurrencyIqd": "دراوی سەرەکی: دیناری عێراقی (IQD)"
+  ,"usdRateIqd": "نرخی دۆلار (IQD)"
+  ,"dinarSuffix": "دینار"
+  ,"versionLabel": "وەشان"
+  ,"developerLabel": "پەرەپێدەر"
+  ,"databaseLabel": "بنکەدراوە"
+  ,"localDatabase": "SQLite (ناوخۆیی)"
+  ,"platformLabel": "پلاتفۆرم"
+  ,"desktop": "ڕووماڵی کار"
+  ,"relationships": "پەیوەندییەکان"
+  ,"financial": "دارایی"
+  ,"analytics": "شیکاری"
+  ,"system": "سیستەم"
+  ,"overviewOfToday": "کورتەیەک لە چالاکییەکانی ئەمڕۆ"
+  ,"viewAll": "پیشاندانی هەموو"
+  ,"noTransactionsYet": "هێشتا هیچ مامەڵەیەک نییە"
+  ,"totalDebtsLabel": "کۆی قەرزەکان"
+  ,"monthlySalesLabel": "فرۆشتنی مانگ"
+  ,"stockAlert": "ئاگاداریی کۆگا"
+  ,"stockHealthy": "کۆگا لە دۆخی باشدایە ✅"
+  ,"quickStats": "ئامارە خێراکان"
+  ,"scanBarcode": "بارکۆد بسکانە..."
+  ,"searchProductShortcut": "گەڕان بە دوای بەرهەم... (F3)"
+  ,"cart": "سەبەتی کڕین"
+  ,"items": "دانە"
+  ,"selectCustomerOptional": "کڕیار هەڵبژێرە (ئارەزوومەندانە)"
+  ,"emptyCart": "سەبەتەکە بەتاڵە"
+  ,"tapProductToAdd": "لەسەر بەرهەمێک بکە بۆ زیادکردن"
+  ,"completeSale": "تەواوکردنی فرۆشتن"
+  ,"changePeriod": "گۆڕینی ماوە"
+  ,"salesByCategory": "فرۆشتن بەپێی جۆر"
+  ,"dailySalesLabel": "فرۆشتنی ڕۆژانە"
+  ,"barcodeNotFound": "بەرهەم نەدۆزرایەوە"
+  ,"saleCompletedSuccessfully": "فرۆشتن بە سەرکەوتوویی تەواوبوو"
+  ,"invoiceSavedPrintFailed": "پسوڵەکە پاشەکەوت کرا بەڵام چاپکردن سەرنەکەوت"
+  ,"selectCustomer": "کڕیار هەڵبژێرە"
+  ,"searchCustomers": "گەڕان..."
+  ,"unknown": "نەناسراو"
+  ,"editCategory": "دەستکاریکردنی جۆر"
+  ,"addNewCategory": "زیادکردنی جۆرێکی نوێ"
+  ,"categoryNameArabic": "ناوی جۆر (عەرەبی) *"
+  ,"categoryNameEnglish": "ناوی جۆر (ئینگلیزی)"
+  ,"categoryNameKurdish": "ناوی جۆر (کوردی)"
+  ,"requiredField": "پێویستە"
+  ,"categoryAddedSuccessfully": "جۆرەکە زیاد کرا"
+  ,"categoryUpdatedSuccessfully": "جۆرەکە نوێکرایەوە"
+  ,"deleteCategoryTitle": "سڕینەوەی جۆر"
+  ,"deleteCategoryMessage": "دڵنیایت لە سڕینەوەی \"{categoryName}\"؟"
+  ,"@deleteCategoryMessage": {
+    "placeholders": {
+      "categoryName": {}
+    }
+  }
+  ,"noCategories": "هیچ جۆرێک نییە"
+  ,"startByAddingCategories": "بە زیادکردنی جۆر دەست پێبکە بۆ ڕێکخستنی بەرهەمەکان"
+  ,"searchInventory": "لە کۆگا بگەڕێ..."
+  ,"noSearchResults": "هیچ ئەنجامێک نییە"
+  ,"noProductsMatchSearch": "هیچ بەرهەمێک لەگەڵ گەڕانەکە ناگونجێت"
+  ,"backupInfoMessage": "باشترە بە شێوەیەکی بەردەوام پاشەکەوت دروست بکەیت بۆ پاراستنی داتاکانت. پاشەکەوتەکان لە پەڕگەی KeenX_Backups لە بەشی سەرەکی هەڵدەگیرێن."
+  ,"noBackups": "هیچ پاشەکەوتێک نییە"
+  ,"createFirstBackupNow": "یەکەم پاشەکەوتەکەت ئێستا دروست بکە"
+  ,"backupCreatedAt": "پاشەکەوتەکە لەم شوێنە دروست کرا:\n{path}"
+  ,"@backupCreatedAt": {
+    "placeholders": {
+      "path": {}
+    }
+  }
+  ,"databaseFileNotFound": "پەڕگەی بنکەدراوە نەدۆزرایەوە"
+  ,"filePathUnavailable": "ڕێڕەوی پەڕگە بەردەست نییە"
+  ,"backupFileMissing": "پەڕگەی پاشەکەوت بوونی نییە"
+  ,"backupRestoredRestart": "پاشەکەوتەکە بە سەرکەوتوویی گەڕێندرایەوە. تکایە بەرنامەکە دووبارە دەستپێبکەرەوە."
+  ,"restoreBackupMessage": "دڵنیایت؟ هەموو داتای ئێستات بە پاشەکەوتی \"{fileName}\" دەگۆڕدرێت.\n\nئەم کردارە ناگەڕێتەوە!"
+  ,"@restoreBackupMessage": {
+    "placeholders": {
+      "fileName": {}
+    }
+  }
+  ,"creatingBackup": "لە دروستکردنی پاشەکەوتدایە..."
+  ,"cashier": "کاشێر"
+  ,"walkInCustomer": "کڕیاری هاتووچۆ"
+  ,"withoutCategory": "بێ جۆر"
+  ,"actions": "کردارەکان"
+  ,"productLabel": "بەرهەم"
+  ,"supplierLabel": "دابینکەر"
+  ,"searchByNameBarcodeCode": "گەڕان بە دوای ناو، بارکۆد، کۆد..."
+  ,"allCategories": "هەموو جۆرەکان"
+  ,"noProducts": "هیچ بەرهەمێک نییە"
+  ,"startByAddingNewProducts": "بە زیادکردنی بەرهەمی نوێ دەست پێ بکە"
+  ,"newProduct": "بەرهەمی نوێ"
+  ,"editProduct": "دەستکاریکردنی بەرهەم"
+  ,"deleteProductTitle": "سڕینەوەی بەرهەم"
+  ,"deleteProductMessage": "دڵنیایت لە سڕینەوەی \"{productName}\"؟"
+  ,"@deleteProductMessage": {
+    "placeholders": {
+      "productName": {}
+    }
+  }
+  ,"basicInformation": "زانیارییە بنەڕەتییەکان"
+  ,"productNameArabic": "ناوی بەرهەم (عەرەبی)"
+  ,"productNameEnglish": "ناوی بەرهەم (English)"
+  ,"productNameKurdish": "ناوی بەرهەم (کوردی)"
+  ,"categoryAndUnit": "جۆر و یەکە"
+  ,"withoutUnit": "بێ یەکە"
+  ,"pricing": "نرخەکان"
+  ,"wholesalePrice": "نرخی کۆمەڵ"
+  ,"minimumSellingPrice": "کەمترین نرخی فرۆشتن"
+  ,"barcodeAndCode": "بارکۆد و کۆد"
+  ,"productCodeSku": "کۆدی بەرهەم (SKU)"
+  ,"initialQuantity": "بڕی سەرەتایی"
+  ,"minimumLimit": "سنووری کەمترین"
+  ,"maximumLimit": "سنووری زۆرترین"
+  ,"productIsActive": "بەرهەمەکە چالاکە"
+  ,"fieldRequired": "ئەم خانەیە پێویستە"
+  ,"productUpdatedSuccessfully": "بەرهەمەکە بە سەرکەوتوویی نوێکرایەوە"
+  ,"productAddedSuccessfully": "بەرهەمەکە بە سەرکەوتوویی زیاد کرا"
+  ,"searchByNamePhoneEmail": "گەڕان بە دوای ناو، تەلەفۆن، ئیمەیڵ..."
+  ,"noCustomers": "هیچ کڕیارێک نییە"
+  ,"startByAddingNewCustomers": "بە زیادکردنی کڕیاری نوێ دەست پێ بکە"
+  ,"customerBalanceLabel": "بالانس:"
+  ,"newCustomer": "کڕیاری نوێ"
+  ,"editCustomer": "دەستکاریکردنی کڕیار"
+  ,"customerNameRequired": "ناوی کڕیار"
+  ,"customerUpdatedSuccessfully": "کڕیارەکە بە سەرکەوتوویی نوێکرایەوە"
+  ,"customerAddedSuccessfully": "کڕیارەکە بە سەرکەوتوویی زیاد کرا"
+  ,"deleteCustomerTitle": "سڕینەوەی کڕیار"
+  ,"deleteCustomerMessage": "دڵنیایت لە سڕینەوەی \"{customerName}\"؟"
+  ,"@deleteCustomerMessage": {
+    "placeholders": {
+      "customerName": {}
+    }
+  }
+  ,"searchByNamePhoneCompany": "گەڕان بە دوای ناو، تەلەفۆن، کۆمپانیا..."
+  ,"noSuppliers": "هیچ دابینکەرێک نییە"
+  ,"startByAddingNewSuppliers": "بە زیادکردنی دابینکەری نوێ دەست پێ بکە"
+  ,"supplierInfo": "زانیاریی دابینکەر"
+  ,"newSupplier": "دابینکەری نوێ"
+  ,"editSupplier": "دەستکاریکردنی دابینکەر"
+  ,"supplierNameRequired": "ناوی دابینکەر"
+  ,"supplierUpdatedSuccessfully": "دابینکەرەکە بە سەرکەوتوویی نوێکرایەوە"
+  ,"supplierAddedSuccessfully": "دابینکەرەکە بە سەرکەوتوویی زیاد کرا"
+  ,"deleteSupplierTitle": "سڕینەوەی دابینکەر"
+  ,"deleteSupplierMessage": "دڵنیایت لە سڕینەوەی \"{supplierName}\"؟"
+  ,"@deleteSupplierMessage": {
+    "placeholders": {
+      "supplierName": {}
+    }
+  }
+  ,"cancelled": "هەڵوەشاوە"
+  ,"cashCustomer": "کڕیاری نەقد"
+  ,"person": "کەس"
+  ,"unspecified": "دیارینەکراو"
+  ,"searchByInvoiceNumberCustomer": "گەڕان بە ژمارەی پسوڵە، ناوی کڕیار..."
+  ,"saleInvoicesTab": "پسوڵەکانی فرۆشتن"
+  ,"purchaseInvoicesTab": "پسوڵەکانی کڕین"
+  ,"returnsTab": "گەڕاندنەوەکان"
+  ,"noInvoices": "هیچ پسوڵەیەک نییە"
+  ,"invoicesWillAppearAfterOperations": "پسوڵەکان لێرە دەردەکەون دوای تەواوبوونی کردارەکان"
+  ,"invoicePayment": "پارەدان"
+  ,"manageDebts": "بەڕێوەبردنی قەرزەکان"
+  ,"receivablesDue": "قەرزەکانی ئێمە"
+  ,"payablesDue": "قەرزەکانی لەسەر ئێمە"
+  ,"netDebts": "خاڵسی قەرزەکان"
+  ,"recordPayment": "تۆمارکردنی پارەدان"
+  ,"remainingAmountLabel": "ماوە: {amount}"
+  ,"@remainingAmountLabel": {
+    "placeholders": {
+      "amount": {}
+    }
+  }
+  ,"record": "تۆمارکردن"
+  ,"invalidAmount": "بڕی نادروست"
+  ,"paymentRecordedSuccessfully": "پارەدان بە سەرکەوتوویی تۆمار کرا"
+  ,"noDebts": "هیچ قەرزێک نییە"
+  ,"debtsWillAppearHere": "قەرزەکان لێرە دەردەکەون"
+  ,"paymentShort": "پارەدان"
+  ,"searchExpenses": "گەڕان لە خەرجییەکان..."
+  ,"selectPeriod": "ماوە هەڵبژێرە"
+  ,"noExpenses": "هیچ خەرجییەک نییە"
+  ,"expensesWillAppearHere": "خەرجییەکان لێرە دەردەکەون"
+  ,"addExpenseTitle": "زیادکردنی خەرجی"
+  ,"addExpenseButton": "زیادکردنی خەرجی"
+  ,"expenseDescription": "وەسف"
+  ,"categoryHintExample": "نمونە: کرێ، کارەبا"
+  ,"fillRequiredFields": "تکایە خانە پێویستەکان پڕ بکەرەوە"
+  ,"defaultExpenseCategory": "گشتی"
+  ,"expenseAddedSuccessfully": "خەرجییەکە بە سەرکەوتوویی زیاد کرا"
+  ,"deleteExpenseTitle": "سڕینەوەی خەرجی"
+  ,"deleteExpenseMessage": "دڵنیایت لە سڕینەوەی ئەم خەرجییە؟"
+  ,"financialBreakdown": "پوختەی دارایی"
+  ,"categoryBreakdown": "وردەکاریی جۆرەکان"
+  ,"barcodeAddedToCart": "زیاد کرا بۆ سەبەت: {productName}"
+  ,"@barcodeAddedToCart": {
+    "placeholders": {
+      "productName": {}
+    }
+  }
+  ,"dashboardLoadFailed": "ناتوانرێت داتای داشبۆرد بار بکرێت"
+  ,"adminRole": "بەڕێوەبەری سیستەم"
+  ,"managerRole": "بەڕێوەبەر"
+  ,"invoiceDiscountLabel": "داشکاندنی پسوڵە"
+  ,"itemDiscountsLabel": "داشکاندنی کاڵاکان"
+  ,"fixedAmount": "بڕی جێگیر"
+  ,"percentage": "لە سەدا"
+  ,"clearDiscount": "سڕینەوەی داشکاندن"
+  ,"currentCurrencyLabel": "دراو: {code}"
+  ,"@currentCurrencyLabel": {
+    "placeholders": {
+      "code": {}
+    }
+  }
+  ,"invoiceHeldSuccessfully": "پسوڵەکە هەڵپەسێنرا"
+  ,"noHeldInvoices": "هیچ پسوڵەیەکی هەڵپەسێنراو نییە"
+  ,"heldInvoicesTitle": "پسوڵە هەڵپەسێنراوەکان"
+  ,"replaceCurrentSaleTitle": "جێگۆڕکردنی فرۆشتنی ئێستا"
+  ,"replaceCurrentSaleMessage": "سەبەتی ئێستا بە پسوڵەی هەڵپەسێنراو دەگۆڕدرێت. بەردەوام بیت؟"
+  ,"heldInvoiceRestored": "پسوڵەی هەڵپەسێنراو گەڕێندرایەوە"
+}

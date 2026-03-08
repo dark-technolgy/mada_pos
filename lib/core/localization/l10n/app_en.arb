@@ -1,0 +1,440 @@
+{
+  "@@locale": "en",
+  "appName": "KeenX POS",
+  "login": "Login",
+  "logout": "Logout",
+  "username": "Username",
+  "password": "Password",
+  "rememberMe": "Remember me",
+  "forgotPassword": "Forgot password?",
+  "loginButton": "Sign In",
+  "welcomeBack": "Welcome back",
+  "dashboard": "Dashboard",
+  "pos": "Point of Sale",
+  "products": "Products",
+  "categories": "Categories",
+  "inventory": "Inventory",
+  "customers": "Customers",
+  "suppliers": "Suppliers",
+  "invoices": "Invoices",
+  "sales": "Sales",
+  "purchases": "Purchases",
+  "returns": "Returns",
+  "debts": "Debts",
+  "expenses": "Expenses",
+  "reports": "Reports",
+  "settings": "Settings",
+  "backup": "Backup",
+  "users": "Users",
+  "profile": "Profile",
+  "search": "Search...",
+  "add": "Add",
+  "edit": "Edit",
+  "delete": "Delete",
+  "save": "Save",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "close": "Close",
+  "yes": "Yes",
+  "no": "No",
+  "ok": "OK",
+  "back": "Back",
+  "next": "Next",
+  "previous": "Previous",
+  "loading": "Loading...",
+  "noData": "No data available",
+  "error": "Error",
+  "success": "Success",
+  "warning": "Warning",
+  "info": "Info",
+  "name": "Name",
+  "phone": "Phone",
+  "email": "Email",
+  "address": "Address",
+  "notes": "Notes",
+  "date": "Date",
+  "time": "Time",
+  "amount": "Amount",
+  "total": "Total",
+  "subtotal": "Subtotal",
+  "discount": "Discount",
+  "tax": "Tax",
+  "quantity": "Quantity",
+  "price": "Price",
+  "unitPrice": "Unit Price",
+  "purchasePrice": "Purchase Price",
+  "sellingPrice": "Selling Price",
+  "profit": "Profit",
+  "loss": "Loss",
+  "balance": "Balance",
+  "paid": "Paid",
+  "unpaid": "Unpaid",
+  "partial": "Partial",
+  "status": "Status",
+  "active": "Active",
+  "inactive": "Inactive",
+  "currency": "Currency",
+  "exchangeRate": "Exchange Rate",
+  "paymentMethod": "Payment Method",
+  "cash": "Cash",
+  "card": "Card",
+  "transfer": "Transfer",
+  "barcode": "Barcode",
+  "sku": "SKU",
+  "category": "Category",
+  "unit": "Unit",
+  "warehouse": "Warehouse",
+  "stock": "Stock",
+  "minStock": "Min Stock",
+  "lowStock": "Low Stock",
+  "outOfStock": "Out of Stock",
+  "inStock": "In Stock",
+  "invoice": "Invoice",
+  "invoiceNumber": "Invoice No.",
+  "saleInvoice": "Sale Invoice",
+  "purchaseInvoice": "Purchase Invoice",
+  "returnInvoice": "Return Invoice",
+  "quote": "Quotation",
+  "customer": "Customer",
+  "supplier": "Supplier",
+  "debt": "Debt",
+  "receivable": "Receivable",
+  "payable": "Payable",
+  "dueDate": "Due Date",
+  "overdue": "Overdue",
+  "payDebt": "Pay Debt",
+  "debtStatement": "Account Statement",
+  "creditLimit": "Credit Limit",
+  "remaining": "Remaining",
+  "payment": "Payment",
+  "addPayment": "Add Payment",
+  "receipt": "Receipt",
+  "print": "Print",
+  "export": "Export",
+  "pdf": "PDF",
+  "excel": "Excel",
+  "dailyReport": "Daily Report",
+  "monthlyReport": "Monthly Report",
+  "yearlyReport": "Yearly Report",
+  "salesReport": "Sales Report",
+  "inventoryReport": "Inventory Report",
+  "debtReport": "Debt Report",
+  "profitReport": "Profit Report",
+  "expenseReport": "Expense Report",
+  "todaySales": "Today's Sales",
+  "todayProfit": "Today's Profit",
+  "totalCustomers": "Total Customers",
+  "totalProducts": "Total Products",
+  "topProducts": "Top Selling Products",
+  "recentTransactions": "Recent Transactions",
+  "quickActions": "Quick Actions",
+  "newSale": "New Sale",
+  "newPurchase": "New Purchase",
+  "addProduct": "Add Product",
+  "addCustomer": "Add Customer",
+  "addSupplier": "Add Supplier",
+  "companyInfo": "Company Info",
+  "invoiceSettings": "Invoice Settings",
+  "taxSettings": "Tax Settings",
+  "currencySettings": "Currency Settings",
+  "printerSettings": "Printer Settings",
+  "themeSettings": "Theme Settings",
+  "languageSettings": "Language Settings",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode",
+  "language": "Language",
+  "arabic": "العربية",
+  "english": "English",
+  "kurdish": "کوردی",
+  "createBackup": "Create Backup",
+  "restoreBackup": "Restore Backup",
+  "autoBackup": "Auto Backup",
+  "cloudBackup": "Cloud Backup",
+  "localBackup": "Local Backup",
+  "lastBackup": "Last Backup",
+  "cashRegister": "Cash Register",
+  "openShift": "Open Shift",
+  "closeShift": "Close Shift",
+  "openingAmount": "Opening Amount",
+  "closingAmount": "Closing Amount",
+  "difference": "Difference",
+  "holdInvoice": "Hold Invoice",
+  "recallInvoice": "Recall Invoice",
+  "splitPayment": "Split Payment",
+  "changeAmount": "Change",
+  "stockTransfer": "Stock Transfer",
+  "stockAdjustment": "Stock Adjustment",
+  "stockTake": "Stock Take",
+  "from": "From",
+  "to": "To",
+  "all": "All",
+  "filter": "Filter",
+  "clearFilters": "Clear Filters",
+  "sortBy": "Sort By",
+  "ascending": "Ascending",
+  "descending": "Descending",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "thisWeek": "This Week",
+  "thisMonth": "This Month",
+  "thisYear": "This Year",
+  "custom": "Custom",
+  "deleteConfirm": "Are you sure you want to delete?",
+  "deleteWarning": "This action cannot be undone",
+  "savedSuccessfully": "Saved successfully",
+  "deletedSuccessfully": "Deleted successfully",
+  "updatedSuccessfully": "Updated successfully",
+  "errorOccurred": "An error occurred",
+  "invalidCredentials": "Invalid credentials",
+  "sessionExpired": "Session expired",
+  "pieces": "Pieces",
+  "box": "Box",
+  "kilogram": "Kilogram",
+  "gram": "Gram",
+  "liter": "Liter",
+  "meter": "Meter",
+  "set": "Set",
+  "pair": "Pair",
+  "dozen": "Dozen",
+  "iqd": "Iraqi Dinar",
+  "usd": "US Dollar",
+  "agingReport": "Aging Report",
+  "days30": "30 Days",
+  "days60": "60 Days",
+  "days90": "90 Days",
+  "days120": "120+ Days",
+  "settled": "Settled",
+  "writeOff": "Write Off"
+  ,"fastAndSmart": "Fast and smart"
+  ,"highSecurity": "High security"
+  ,"multilingual": "Multilingual"
+  ,"comprehensiveManagement": "Comprehensive management"
+  ,"smartSalesSystem": "Smart sales management system"
+  ,"signInToContinue": "Sign in to continue"
+  ,"enterUsername": "Enter username"
+  ,"enterPassword": "Enter password"
+  ,"systemPreferences": "System settings and preferences"
+  ,"saveSettings": "Save settings"
+  ,"saving": "Saving..."
+  ,"appearance": "Appearance"
+  ,"enableDarkMode": "Enable dark mode for the application"
+  ,"currencies": "Currencies"
+  ,"systemInfo": "System information"
+  ,"companyName": "Company name"
+  ,"primaryCurrencyIqd": "Primary currency: Iraqi Dinar (IQD)"
+  ,"usdRateIqd": "USD exchange rate (IQD)"
+  ,"dinarSuffix": "Dinar"
+  ,"versionLabel": "Version"
+  ,"developerLabel": "Developer"
+  ,"databaseLabel": "Database"
+  ,"localDatabase": "SQLite (local)"
+  ,"platformLabel": "Platform"
+  ,"desktop": "Desktop"
+  ,"relationships": "Relationships"
+  ,"financial": "Financial"
+  ,"analytics": "Analytics"
+  ,"system": "System"
+  ,"overviewOfToday": "Here is an overview of today's activity"
+  ,"viewAll": "View all"
+  ,"noTransactionsYet": "No transactions yet"
+  ,"totalDebtsLabel": "Total debts"
+  ,"monthlySalesLabel": "Monthly sales"
+  ,"stockAlert": "Stock alert"
+  ,"stockHealthy": "Stock levels look good ✅"
+  ,"quickStats": "Quick stats"
+  ,"scanBarcode": "Scan barcode..."
+  ,"searchProductShortcut": "Search product... (F3)"
+  ,"cart": "Cart"
+  ,"items": "items"
+  ,"selectCustomerOptional": "Select customer (optional)"
+  ,"emptyCart": "Cart is empty"
+  ,"tapProductToAdd": "Tap a product to add it"
+  ,"completeSale": "Complete sale"
+  ,"changePeriod": "Change period"
+  ,"salesByCategory": "Sales by category"
+  ,"dailySalesLabel": "Daily sales"
+  ,"barcodeNotFound": "Product not found"
+  ,"saleCompletedSuccessfully": "Sale completed successfully"
+  ,"invoiceSavedPrintFailed": "Invoice saved but printing failed"
+  ,"selectCustomer": "Select customer"
+  ,"searchCustomers": "Search..."
+  ,"unknown": "Unknown"
+  ,"editCategory": "Edit category"
+  ,"addNewCategory": "Add new category"
+  ,"categoryNameArabic": "Category name (Arabic) *"
+  ,"categoryNameEnglish": "Category name (English)"
+  ,"categoryNameKurdish": "Category name (Kurdish)"
+  ,"requiredField": "Required"
+  ,"categoryAddedSuccessfully": "Category added successfully"
+  ,"categoryUpdatedSuccessfully": "Category updated successfully"
+  ,"deleteCategoryTitle": "Delete category"
+  ,"deleteCategoryMessage": "Are you sure you want to delete \"{categoryName}\"?"
+  ,"@deleteCategoryMessage": {
+    "placeholders": {
+      "categoryName": {}
+    }
+  }
+  ,"noCategories": "No categories"
+  ,"startByAddingCategories": "Start by adding categories to organize products"
+  ,"searchInventory": "Search inventory..."
+  ,"noSearchResults": "No results"
+  ,"noProductsMatchSearch": "No products match your search"
+  ,"backupInfoMessage": "It is recommended to create backups regularly to protect your data. Backups are stored in the KeenX_Backups folder in your home directory."
+  ,"noBackups": "No backups"
+  ,"createFirstBackupNow": "Create your first backup now"
+  ,"backupCreatedAt": "Backup created at:\n{path}"
+  ,"@backupCreatedAt": {
+    "placeholders": {
+      "path": {}
+    }
+  }
+  ,"databaseFileNotFound": "Database file was not found"
+  ,"filePathUnavailable": "File path is unavailable"
+  ,"backupFileMissing": "Backup file does not exist"
+  ,"backupRestoredRestart": "Backup restored successfully. Please restart the app."
+  ,"restoreBackupMessage": "Are you sure? All current data will be replaced with backup \"{fileName}\".\n\nThis action cannot be undone!"
+  ,"@restoreBackupMessage": {
+    "placeholders": {
+      "fileName": {}
+    }
+  }
+  ,"creatingBackup": "Creating backup..."
+  ,"cashier": "Cashier"
+  ,"walkInCustomer": "Walk-in customer"
+  ,"withoutCategory": "Without category"
+  ,"actions": "Actions"
+  ,"productLabel": "Product"
+  ,"supplierLabel": "Supplier"
+  ,"searchByNameBarcodeCode": "Search by name, barcode, code..."
+  ,"allCategories": "All categories"
+  ,"noProducts": "No products"
+  ,"startByAddingNewProducts": "Start by adding new products"
+  ,"newProduct": "New Product"
+  ,"editProduct": "Edit Product"
+  ,"deleteProductTitle": "Delete Product"
+  ,"deleteProductMessage": "Are you sure you want to delete \"{productName}\"?"
+  ,"@deleteProductMessage": {
+    "placeholders": {
+      "productName": {}
+    }
+  }
+  ,"basicInformation": "Basic information"
+  ,"productNameArabic": "Product name (Arabic)"
+  ,"productNameEnglish": "Product name (English)"
+  ,"productNameKurdish": "Product name (Kurdish)"
+  ,"categoryAndUnit": "Category and unit"
+  ,"withoutUnit": "Without unit"
+  ,"pricing": "Pricing"
+  ,"wholesalePrice": "Wholesale price"
+  ,"minimumSellingPrice": "Minimum selling price"
+  ,"barcodeAndCode": "Barcode and code"
+  ,"productCodeSku": "Product code (SKU)"
+  ,"initialQuantity": "Initial quantity"
+  ,"minimumLimit": "Minimum limit"
+  ,"maximumLimit": "Maximum limit"
+  ,"productIsActive": "Product is active"
+  ,"fieldRequired": "This field is required"
+  ,"productUpdatedSuccessfully": "Product updated successfully"
+  ,"productAddedSuccessfully": "Product added successfully"
+  ,"searchByNamePhoneEmail": "Search by name, phone, email..."
+  ,"noCustomers": "No customers"
+  ,"startByAddingNewCustomers": "Start by adding new customers"
+  ,"customerBalanceLabel": "Balance:"
+  ,"newCustomer": "New Customer"
+  ,"editCustomer": "Edit Customer"
+  ,"customerNameRequired": "Customer name"
+  ,"customerUpdatedSuccessfully": "Customer updated successfully"
+  ,"customerAddedSuccessfully": "Customer added successfully"
+  ,"deleteCustomerTitle": "Delete Customer"
+  ,"deleteCustomerMessage": "Are you sure you want to delete \"{customerName}\"?"
+  ,"@deleteCustomerMessage": {
+    "placeholders": {
+      "customerName": {}
+    }
+  }
+  ,"searchByNamePhoneCompany": "Search by name, phone, company..."
+  ,"noSuppliers": "No suppliers"
+  ,"startByAddingNewSuppliers": "Start by adding new suppliers"
+  ,"supplierInfo": "Supplier information"
+  ,"newSupplier": "New Supplier"
+  ,"editSupplier": "Edit Supplier"
+  ,"supplierNameRequired": "Supplier name"
+  ,"supplierUpdatedSuccessfully": "Supplier updated successfully"
+  ,"supplierAddedSuccessfully": "Supplier added successfully"
+  ,"deleteSupplierTitle": "Delete Supplier"
+  ,"deleteSupplierMessage": "Are you sure you want to delete \"{supplierName}\"?"
+  ,"@deleteSupplierMessage": {
+    "placeholders": {
+      "supplierName": {}
+    }
+  }
+  ,"cancelled": "Cancelled"
+  ,"cashCustomer": "Cash customer"
+  ,"person": "Person"
+  ,"unspecified": "Unspecified"
+  ,"searchByInvoiceNumberCustomer": "Search by invoice number, customer name..."
+  ,"saleInvoicesTab": "Sale invoices"
+  ,"purchaseInvoicesTab": "Purchase invoices"
+  ,"returnsTab": "Returns"
+  ,"noInvoices": "No invoices"
+  ,"invoicesWillAppearAfterOperations": "Invoices will appear here after completing operations"
+  ,"invoicePayment": "Payment"
+  ,"manageDebts": "Debt management"
+  ,"receivablesDue": "Debts owed to us"
+  ,"payablesDue": "Debts we owe"
+  ,"netDebts": "Net debts"
+  ,"recordPayment": "Record payment"
+  ,"remainingAmountLabel": "Remaining: {amount}"
+  ,"@remainingAmountLabel": {
+    "placeholders": {
+      "amount": {}
+    }
+  }
+  ,"record": "Record"
+  ,"invalidAmount": "Invalid amount"
+  ,"paymentRecordedSuccessfully": "Payment recorded successfully"
+  ,"noDebts": "No debts"
+  ,"debtsWillAppearHere": "Debts will appear here"
+  ,"paymentShort": "Payment"
+  ,"searchExpenses": "Search expenses..."
+  ,"selectPeriod": "Select period"
+  ,"noExpenses": "No expenses"
+  ,"expensesWillAppearHere": "Expenses will appear here"
+  ,"addExpenseTitle": "Add expense"
+  ,"addExpenseButton": "Add expense"
+  ,"expenseDescription": "Description"
+  ,"categoryHintExample": "Example: Rent, Electricity"
+  ,"fillRequiredFields": "Please fill the required fields"
+  ,"defaultExpenseCategory": "General"
+  ,"expenseAddedSuccessfully": "Expense added successfully"
+  ,"deleteExpenseTitle": "Delete expense"
+  ,"deleteExpenseMessage": "Are you sure you want to delete this expense?"
+  ,"financialBreakdown": "Financial breakdown"
+  ,"categoryBreakdown": "Category breakdown"
+  ,"barcodeAddedToCart": "Added to cart: {productName}"
+  ,"@barcodeAddedToCart": {
+    "placeholders": {
+      "productName": {}
+    }
+  }
+  ,"dashboardLoadFailed": "Failed to load dashboard data"
+  ,"adminRole": "Administrator"
+  ,"managerRole": "Manager"
+  ,"invoiceDiscountLabel": "Invoice discount"
+  ,"itemDiscountsLabel": "Item discounts"
+  ,"fixedAmount": "Fixed amount"
+  ,"percentage": "Percentage"
+  ,"clearDiscount": "Clear discount"
+  ,"currentCurrencyLabel": "Currency: {code}"
+  ,"@currentCurrencyLabel": {
+    "placeholders": {
+      "code": {}
+    }
+  }
+  ,"invoiceHeldSuccessfully": "Invoice placed on hold"
+  ,"noHeldInvoices": "No held invoices"
+  ,"heldInvoicesTitle": "Held invoices"
+  ,"replaceCurrentSaleTitle": "Replace current sale"
+  ,"replaceCurrentSaleMessage": "Your current cart will be replaced by the held invoice. Continue?"
+  ,"heldInvoiceRestored": "Held invoice restored"
+}

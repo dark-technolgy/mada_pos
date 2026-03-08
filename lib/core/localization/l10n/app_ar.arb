@@ -1,0 +1,440 @@
+{
+  "@@locale": "ar",
+  "appName": "KeenX للمبيعات",
+  "login": "تسجيل الدخول",
+  "logout": "تسجيل الخروج",
+  "username": "اسم المستخدم",
+  "password": "كلمة المرور",
+  "rememberMe": "تذكرني",
+  "forgotPassword": "نسيت كلمة المرور؟",
+  "loginButton": "دخول",
+  "welcomeBack": "مرحباً بعودتك",
+  "dashboard": "لوحة التحكم",
+  "pos": "نقطة البيع",
+  "products": "المنتجات",
+  "categories": "الأصناف",
+  "inventory": "المخازن",
+  "customers": "العملاء",
+  "suppliers": "الموردين",
+  "invoices": "الفواتير",
+  "sales": "المبيعات",
+  "purchases": "المشتريات",
+  "returns": "المرتجعات",
+  "debts": "الديون",
+  "expenses": "المصروفات",
+  "reports": "التقارير",
+  "settings": "الإعدادات",
+  "backup": "النسخ الاحتياطي",
+  "users": "المستخدمين",
+  "profile": "الملف الشخصي",
+  "search": "بحث...",
+  "add": "إضافة",
+  "edit": "تعديل",
+  "delete": "حذف",
+  "save": "حفظ",
+  "cancel": "إلغاء",
+  "confirm": "تأكيد",
+  "close": "إغلاق",
+  "yes": "نعم",
+  "no": "لا",
+  "ok": "موافق",
+  "back": "رجوع",
+  "next": "التالي",
+  "previous": "السابق",
+  "loading": "جارٍ التحميل...",
+  "noData": "لا توجد بيانات",
+  "error": "خطأ",
+  "success": "نجاح",
+  "warning": "تحذير",
+  "info": "معلومات",
+  "name": "الاسم",
+  "phone": "الهاتف",
+  "email": "البريد الإلكتروني",
+  "address": "العنوان",
+  "notes": "ملاحظات",
+  "date": "التاريخ",
+  "time": "الوقت",
+  "amount": "المبلغ",
+  "total": "الإجمالي",
+  "subtotal": "المجموع الفرعي",
+  "discount": "الخصم",
+  "tax": "الضريبة",
+  "quantity": "الكمية",
+  "price": "السعر",
+  "unitPrice": "سعر الوحدة",
+  "purchasePrice": "سعر الشراء",
+  "sellingPrice": "سعر البيع",
+  "profit": "الربح",
+  "loss": "الخسارة",
+  "balance": "الرصيد",
+  "paid": "مدفوع",
+  "unpaid": "غير مدفوع",
+  "partial": "جزئي",
+  "status": "الحالة",
+  "active": "نشط",
+  "inactive": "غير نشط",
+  "currency": "العملة",
+  "exchangeRate": "سعر الصرف",
+  "paymentMethod": "طريقة الدفع",
+  "cash": "نقداً",
+  "card": "بطاقة",
+  "transfer": "تحويل",
+  "barcode": "الباركود",
+  "sku": "رمز المنتج",
+  "category": "الصنف",
+  "unit": "الوحدة",
+  "warehouse": "المخزن",
+  "stock": "المخزون",
+  "minStock": "الحد الأدنى",
+  "lowStock": "مخزون منخفض",
+  "outOfStock": "نفد المخزون",
+  "inStock": "متوفر",
+  "invoice": "فاتورة",
+  "invoiceNumber": "رقم الفاتورة",
+  "saleInvoice": "فاتورة بيع",
+  "purchaseInvoice": "فاتورة شراء",
+  "returnInvoice": "فاتورة مرتجع",
+  "quote": "عرض سعر",
+  "customer": "العميل",
+  "supplier": "المورد",
+  "debt": "دين",
+  "receivable": "مدينون",
+  "payable": "دائنون",
+  "dueDate": "تاريخ الاستحقاق",
+  "overdue": "متأخر",
+  "payDebt": "تسديد دين",
+  "debtStatement": "كشف حساب",
+  "creditLimit": "حد الائتمان",
+  "remaining": "المتبقي",
+  "payment": "دفعة",
+  "addPayment": "إضافة دفعة",
+  "receipt": "إيصال",
+  "print": "طباعة",
+  "export": "تصدير",
+  "pdf": "PDF",
+  "excel": "Excel",
+  "dailyReport": "التقرير اليومي",
+  "monthlyReport": "التقرير الشهري",
+  "yearlyReport": "التقرير السنوي",
+  "salesReport": "تقرير المبيعات",
+  "inventoryReport": "تقرير المخزون",
+  "debtReport": "تقرير الديون",
+  "profitReport": "تقرير الأرباح",
+  "expenseReport": "تقرير المصروفات",
+  "todaySales": "مبيعات اليوم",
+  "todayProfit": "ربح اليوم",
+  "totalCustomers": "إجمالي العملاء",
+  "totalProducts": "إجمالي المنتجات",
+  "topProducts": "المنتجات الأكثر مبيعاً",
+  "recentTransactions": "المعاملات الأخيرة",
+  "quickActions": "إجراءات سريعة",
+  "newSale": "عملية بيع جديدة",
+  "newPurchase": "عملية شراء جديدة",
+  "addProduct": "إضافة منتج",
+  "addCustomer": "إضافة عميل",
+  "addSupplier": "إضافة مورد",
+  "companyInfo": "معلومات الشركة",
+  "invoiceSettings": "إعدادات الفواتير",
+  "taxSettings": "إعدادات الضريبة",
+  "currencySettings": "إعدادات العملات",
+  "printerSettings": "إعدادات الطباعة",
+  "themeSettings": "إعدادات المظهر",
+  "languageSettings": "إعدادات اللغة",
+  "darkMode": "الوضع الداكن",
+  "lightMode": "الوضع الفاتح",
+  "language": "اللغة",
+  "arabic": "العربية",
+  "english": "English",
+  "kurdish": "کوردی",
+  "createBackup": "إنشاء نسخة احتياطية",
+  "restoreBackup": "استعادة نسخة",
+  "autoBackup": "نسخ تلقائي",
+  "cloudBackup": "نسخ سحابي",
+  "localBackup": "نسخ محلي",
+  "lastBackup": "آخر نسخة",
+  "cashRegister": "الصندوق",
+  "openShift": "فتح وردية",
+  "closeShift": "إغلاق وردية",
+  "openingAmount": "المبلغ الافتتاحي",
+  "closingAmount": "المبلغ الختامي",
+  "difference": "الفرق",
+  "holdInvoice": "تعليق الفاتورة",
+  "recallInvoice": "استرجاع فاتورة",
+  "splitPayment": "تقسيم الدفع",
+  "changeAmount": "المبلغ المرتد",
+  "stockTransfer": "تحويل مخزون",
+  "stockAdjustment": "تعديل مخزون",
+  "stockTake": "جرد المخزون",
+  "from": "من",
+  "to": "إلى",
+  "all": "الكل",
+  "filter": "تصفية",
+  "clearFilters": "مسح الفلاتر",
+  "sortBy": "ترتيب حسب",
+  "ascending": "تصاعدي",
+  "descending": "تنازلي",
+  "today": "اليوم",
+  "yesterday": "أمس",
+  "thisWeek": "هذا الأسبوع",
+  "thisMonth": "هذا الشهر",
+  "thisYear": "هذه السنة",
+  "custom": "مخصص",
+  "deleteConfirm": "هل أنت متأكد من الحذف؟",
+  "deleteWarning": "هذا الإجراء لا يمكن التراجع عنه",
+  "savedSuccessfully": "تم الحفظ بنجاح",
+  "deletedSuccessfully": "تم الحذف بنجاح",
+  "updatedSuccessfully": "تم التحديث بنجاح",
+  "errorOccurred": "حدث خطأ",
+  "invalidCredentials": "بيانات الدخول غير صحيحة",
+  "sessionExpired": "انتهت الجلسة",
+  "pieces": "قطعة",
+  "box": "كرتون",
+  "kilogram": "كيلوغرام",
+  "gram": "غرام",
+  "liter": "لتر",
+  "meter": "متر",
+  "set": "طقم",
+  "pair": "زوج",
+  "dozen": "درزن",
+  "iqd": "دينار عراقي",
+  "usd": "دولار أمريكي",
+  "agingReport": "تقرير أعمار الديون",
+  "days30": "30 يوم",
+  "days60": "60 يوم",
+  "days90": "90 يوم",
+  "days120": "120+ يوم",
+  "settled": "مسدد",
+  "writeOff": "شطب"
+  ,"fastAndSmart": "سريع وذكي"
+  ,"highSecurity": "أمان عالٍ"
+  ,"multilingual": "متعدد اللغات"
+  ,"comprehensiveManagement": "إدارة شاملة"
+  ,"smartSalesSystem": "نظام إدارة المبيعات الذكي"
+  ,"signInToContinue": "قم بتسجيل الدخول للمتابعة"
+  ,"enterUsername": "أدخل اسم المستخدم"
+  ,"enterPassword": "أدخل كلمة المرور"
+  ,"systemPreferences": "إعدادات النظام والتفضيلات"
+  ,"saveSettings": "حفظ الإعدادات"
+  ,"saving": "جارٍ الحفظ..."
+  ,"appearance": "المظهر"
+  ,"enableDarkMode": "تفعيل الوضع الداكن للتطبيق"
+  ,"currencies": "العملات"
+  ,"systemInfo": "معلومات النظام"
+  ,"companyName": "اسم الشركة"
+  ,"primaryCurrencyIqd": "العملة الرئيسية: دينار عراقي (IQD)"
+  ,"usdRateIqd": "سعر صرف الدولار (IQD)"
+  ,"dinarSuffix": "دينار"
+  ,"versionLabel": "الإصدار"
+  ,"developerLabel": "المطور"
+  ,"databaseLabel": "قاعدة البيانات"
+  ,"localDatabase": "SQLite (محلي)"
+  ,"platformLabel": "المنصة"
+  ,"desktop": "سطح المكتب"
+  ,"relationships": "العلاقات"
+  ,"financial": "المالية"
+  ,"analytics": "التحليلات"
+  ,"system": "النظام"
+  ,"overviewOfToday": "إليك نظرة عامة على نشاط اليوم"
+  ,"viewAll": "عرض الكل"
+  ,"noTransactionsYet": "لا توجد معاملات بعد"
+  ,"totalDebtsLabel": "إجمالي الديون"
+  ,"monthlySalesLabel": "مبيعات الشهر"
+  ,"stockAlert": "تنبيه المخزون"
+  ,"stockHealthy": "المخزون في حالة جيدة ✅"
+  ,"quickStats": "إحصائيات سريعة"
+  ,"scanBarcode": "مسح باركود..."
+  ,"searchProductShortcut": "بحث عن منتج... (F3)"
+  ,"cart": "سلة المشتريات"
+  ,"items": "عناصر"
+  ,"selectCustomerOptional": "اختر عميل (اختياري)"
+  ,"emptyCart": "السلة فارغة"
+  ,"tapProductToAdd": "انقر على منتج لإضافته"
+  ,"completeSale": "إتمام البيع"
+  ,"changePeriod": "تغيير الفترة"
+  ,"salesByCategory": "مبيعات حسب الفئة"
+  ,"dailySalesLabel": "المبيعات اليومية"
+  ,"barcodeNotFound": "المنتج غير موجود"
+  ,"saleCompletedSuccessfully": "تمت عملية البيع بنجاح"
+  ,"invoiceSavedPrintFailed": "تم حفظ الفاتورة لكن تعذرت الطباعة"
+  ,"selectCustomer": "اختر عميل"
+  ,"searchCustomers": "بحث..."
+  ,"unknown": "غير معروف"
+  ,"editCategory": "تعديل الفئة"
+  ,"addNewCategory": "إضافة فئة جديدة"
+  ,"categoryNameArabic": "اسم الفئة (عربي) *"
+  ,"categoryNameEnglish": "اسم الفئة (إنجليزي)"
+  ,"categoryNameKurdish": "اسم الفئة (كردي)"
+  ,"requiredField": "مطلوب"
+  ,"categoryAddedSuccessfully": "تمت إضافة الفئة"
+  ,"categoryUpdatedSuccessfully": "تم تحديث الفئة"
+  ,"deleteCategoryTitle": "حذف الفئة"
+  ,"deleteCategoryMessage": "هل أنت متأكد من حذف \"{categoryName}\"؟"
+  ,"@deleteCategoryMessage": {
+    "placeholders": {
+      "categoryName": {}
+    }
+  }
+  ,"noCategories": "لا توجد فئات"
+  ,"startByAddingCategories": "ابدأ بإضافة فئات لتنظيم المنتجات"
+  ,"searchInventory": "بحث في المخزون..."
+  ,"noSearchResults": "لا توجد نتائج"
+  ,"noProductsMatchSearch": "لا توجد منتجات تطابق البحث"
+  ,"backupInfoMessage": "يُنصح بإنشاء نسخ احتياطية بشكل دوري لحماية بياناتك. يتم حفظ النسخ في مجلد KeenX_Backups في مجلدك الرئيسي."
+  ,"noBackups": "لا توجد نسخ احتياطية"
+  ,"createFirstBackupNow": "أنشئ أول نسخة احتياطية الآن"
+  ,"backupCreatedAt": "تم إنشاء النسخة الاحتياطية في:\n{path}"
+  ,"@backupCreatedAt": {
+    "placeholders": {
+      "path": {}
+    }
+  }
+  ,"databaseFileNotFound": "لم يتم العثور على ملف قاعدة البيانات"
+  ,"filePathUnavailable": "مسار الملف غير متوفر"
+  ,"backupFileMissing": "ملف النسخة الاحتياطية غير موجود"
+  ,"backupRestoredRestart": "تمت الاستعادة بنجاح. يرجى إعادة تشغيل التطبيق."
+  ,"restoreBackupMessage": "هل أنت متأكد؟ سيتم استبدال جميع البيانات الحالية بالنسخة الاحتياطية \"{fileName}\".\n\nهذا الإجراء لا يمكن التراجع عنه!"
+  ,"@restoreBackupMessage": {
+    "placeholders": {
+      "fileName": {}
+    }
+  }
+  ,"creatingBackup": "جاري النسخ..."
+  ,"cashier": "أمين الصندوق"
+  ,"walkInCustomer": "عميل نقدي"
+  ,"withoutCategory": "بدون فئة"
+  ,"actions": "إجراءات"
+  ,"productLabel": "المنتج"
+  ,"supplierLabel": "المورد"
+  ,"searchByNameBarcodeCode": "بحث بالاسم، الباركود، الكود..."
+  ,"allCategories": "كل الفئات"
+  ,"noProducts": "لا توجد منتجات"
+  ,"startByAddingNewProducts": "ابدأ بإضافة منتجات جديدة"
+  ,"newProduct": "منتج جديد"
+  ,"editProduct": "تعديل منتج"
+  ,"deleteProductTitle": "حذف المنتج"
+  ,"deleteProductMessage": "هل أنت متأكد من حذف \"{productName}\"؟"
+  ,"@deleteProductMessage": {
+    "placeholders": {
+      "productName": {}
+    }
+  }
+  ,"basicInformation": "المعلومات الأساسية"
+  ,"productNameArabic": "اسم المنتج (عربي)"
+  ,"productNameEnglish": "اسم المنتج (English)"
+  ,"productNameKurdish": "اسم المنتج (کوردی)"
+  ,"categoryAndUnit": "التصنيف والوحدة"
+  ,"withoutUnit": "بدون وحدة"
+  ,"pricing": "الأسعار"
+  ,"wholesalePrice": "سعر الجملة"
+  ,"minimumSellingPrice": "أقل سعر بيع"
+  ,"barcodeAndCode": "الباركود والكود"
+  ,"productCodeSku": "كود المنتج (SKU)"
+  ,"initialQuantity": "الكمية الأولية"
+  ,"minimumLimit": "الحد الأدنى"
+  ,"maximumLimit": "الحد الأقصى"
+  ,"productIsActive": "المنتج نشط"
+  ,"fieldRequired": "هذا الحقل مطلوب"
+  ,"productUpdatedSuccessfully": "تم تحديث المنتج بنجاح"
+  ,"productAddedSuccessfully": "تمت إضافة المنتج بنجاح"
+  ,"searchByNamePhoneEmail": "بحث بالاسم، الهاتف، البريد..."
+  ,"noCustomers": "لا يوجد عملاء"
+  ,"startByAddingNewCustomers": "ابدأ بإضافة عملاء جدد"
+  ,"customerBalanceLabel": "الرصيد:"
+  ,"newCustomer": "عميل جديد"
+  ,"editCustomer": "تعديل عميل"
+  ,"customerNameRequired": "اسم العميل"
+  ,"customerUpdatedSuccessfully": "تم تحديث العميل"
+  ,"customerAddedSuccessfully": "تمت إضافة العميل"
+  ,"deleteCustomerTitle": "حذف العميل"
+  ,"deleteCustomerMessage": "هل أنت متأكد من حذف \"{customerName}\"؟"
+  ,"@deleteCustomerMessage": {
+    "placeholders": {
+      "customerName": {}
+    }
+  }
+  ,"searchByNamePhoneCompany": "بحث بالاسم، الهاتف، الشركة..."
+  ,"noSuppliers": "لا يوجد موردون"
+  ,"startByAddingNewSuppliers": "ابدأ بإضافة موردين جدد"
+  ,"supplierInfo": "معلومات المورد"
+  ,"newSupplier": "مورد جديد"
+  ,"editSupplier": "تعديل مورد"
+  ,"supplierNameRequired": "اسم المورد"
+  ,"supplierUpdatedSuccessfully": "تم تحديث المورد"
+  ,"supplierAddedSuccessfully": "تمت إضافة المورد"
+  ,"deleteSupplierTitle": "حذف المورد"
+  ,"deleteSupplierMessage": "هل أنت متأكد من حذف \"{supplierName}\"؟"
+  ,"@deleteSupplierMessage": {
+    "placeholders": {
+      "supplierName": {}
+    }
+  }
+  ,"cancelled": "ملغي"
+  ,"cashCustomer": "عميل نقدي"
+  ,"person": "الشخص"
+  ,"unspecified": "غير محدد"
+  ,"searchByInvoiceNumberCustomer": "بحث برقم الفاتورة، اسم العميل..."
+  ,"saleInvoicesTab": "فواتير البيع"
+  ,"purchaseInvoicesTab": "فواتير الشراء"
+  ,"returnsTab": "المرتجعات"
+  ,"noInvoices": "لا توجد فواتير"
+  ,"invoicesWillAppearAfterOperations": "ستظهر الفواتير هنا بعد إتمام العمليات"
+  ,"invoicePayment": "الدفع"
+  ,"manageDebts": "إدارة الديون"
+  ,"receivablesDue": "ديون لنا (مستحقة)"
+  ,"payablesDue": "ديون علينا (مطلوبة)"
+  ,"netDebts": "صافي الديون"
+  ,"recordPayment": "تسجيل دفعة"
+  ,"remainingAmountLabel": "المتبقي: {amount}"
+  ,"@remainingAmountLabel": {
+    "placeholders": {
+      "amount": {}
+    }
+  }
+  ,"record": "تسجيل"
+  ,"invalidAmount": "مبلغ غير صالح"
+  ,"paymentRecordedSuccessfully": "تم تسجيل الدفعة"
+  ,"noDebts": "لا توجد ديون"
+  ,"debtsWillAppearHere": "الديون ستظهر هنا"
+  ,"paymentShort": "دفعة"
+  ,"searchExpenses": "بحث في المصروفات..."
+  ,"selectPeriod": "اختر الفترة"
+  ,"noExpenses": "لا توجد مصروفات"
+  ,"expensesWillAppearHere": "المصروفات ستظهر هنا"
+  ,"addExpenseTitle": "إضافة مصروف"
+  ,"addExpenseButton": "إضافة مصروف"
+  ,"expenseDescription": "الوصف"
+  ,"categoryHintExample": "مثال: إيجار، كهرباء"
+  ,"fillRequiredFields": "يرجى ملء الحقول المطلوبة"
+  ,"defaultExpenseCategory": "عام"
+  ,"expenseAddedSuccessfully": "تمت إضافة المصروف"
+  ,"deleteExpenseTitle": "حذف المصروف"
+  ,"deleteExpenseMessage": "هل أنت متأكد من حذف هذا المصروف؟"
+  ,"financialBreakdown": "الملخص المالي"
+  ,"categoryBreakdown": "تفصيل الفئات"
+  ,"barcodeAddedToCart": "تمت الإضافة إلى السلة: {productName}"
+  ,"@barcodeAddedToCart": {
+    "placeholders": {
+      "productName": {}
+    }
+  }
+  ,"dashboardLoadFailed": "تعذر تحميل بيانات لوحة التحكم"
+  ,"adminRole": "مدير النظام"
+  ,"managerRole": "مدير"
+  ,"invoiceDiscountLabel": "خصم الفاتورة"
+  ,"itemDiscountsLabel": "خصومات الأصناف"
+  ,"fixedAmount": "مبلغ ثابت"
+  ,"percentage": "نسبة مئوية"
+  ,"clearDiscount": "مسح الخصم"
+  ,"currentCurrencyLabel": "العملة: {code}"
+  ,"@currentCurrencyLabel": {
+    "placeholders": {
+      "code": {}
+    }
+  }
+  ,"invoiceHeldSuccessfully": "تم تعليق الفاتورة"
+  ,"noHeldInvoices": "لا توجد فواتير معلقة"
+  ,"heldInvoicesTitle": "الفواتير المعلقة"
+  ,"replaceCurrentSaleTitle": "استبدال البيع الحالي"
+  ,"replaceCurrentSaleMessage": "سيتم استبدال السلة الحالية بالفاتورة المعلقة. هل تريد المتابعة؟"
+  ,"heldInvoiceRestored": "تم استرجاع الفاتورة المعلقة"
+}
