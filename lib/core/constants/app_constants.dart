@@ -35,7 +35,7 @@ class AppConstants {
   // Backup
   static const String backupFolder = 'mada_backups';
 
-  // Supabase (Placeholders)
-  static const String supabaseUrl = 'YOUR_SUPABASE_URL';
-  static const String supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
+  // Supabase
+  static const String supabaseUrl = 'https://xuafnfxlhoaweumsoqww.supabase.co';
+  static const String supabaseAnonKey = 'YOUR_ANON_KEY';
 }
