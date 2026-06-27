@@ -62,11 +62,21 @@ alter table public.audit_logs enable row level security;
 alter table public.remote_config enable row level security;
 alter table public.admin_users enable row level security;
 
--- POLICIES
-create policy "Users can view own profile" on public.profiles for select using (auth.uid() = id);
-create policy "Users can update own profile" on public.profiles for update using (auth.uid() = id);
-create policy "Public can read remote config" on public.remote_config for select using (true);
-create policy "Admins can read own record" on public.admin_users for select using (auth.uid() = user_id);
+-- POLICIES (Idempotent creation)
+DO $$
+BEGIN
+    DROP POLICY IF EXISTS "Users can view own profile" ON public.profiles;
+    CREATE POLICY "Users can view own profile" ON public.profiles FOR SELECT USING (auth.uid() = id);
+
+    DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
+    CREATE POLICY "Users can update own profile" ON public.profiles FOR UPDATE USING (auth.uid() = id);
+
+    DROP POLICY IF EXISTS "Public can read remote config" ON public.remote_config;
+    CREATE POLICY "Public can read remote config" ON public.remote_config FOR SELECT USING (true);
+
+    DROP POLICY IF EXISTS "Admins can read own record" ON public.admin_users;
+    CREATE POLICY "Admins can read own record" ON public.admin_users FOR SELECT USING (auth.uid() = user_id);
+END $$;
 
 -- 7. STORAGE BUCKETS
 -- Create backups bucket (private)
@@ -75,9 +85,13 @@ values ('backups', 'backups', false)
 on conflict (id) do nothing;
 
 -- Storage policies for backups
-create policy "Users can manage own backups"
-on storage.objects for all
-using (bucket_id = 'backups' and (storage.foldername(name))[1] = auth.uid()::text);
+DO $$
+BEGIN
+    DROP POLICY IF EXISTS "Users can manage own backups" ON storage.objects;
+    CREATE POLICY "Users can manage own backups"
+    ON storage.objects FOR ALL
+    USING (bucket_id = 'backups' AND (storage.foldername(name))[1] = auth.uid()::text);
+END $$;
 
 -- 8. TRIGGERS & FUNCTIONS
 -- Handle new user signup: create profile automatically
@@ -105,4 +119,12 @@ CREATE TRIGGER on_auth_user_created
   FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
 
 -- 9. REALTIME
-ALTER PUBLICATION supabase_realtime ADD TABLE public.profiles;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_publication_tables
+        WHERE pubname = 'supabase_realtime' AND tablename = 'profiles'
+    ) THEN
+        ALTER PUBLICATION supabase_realtime ADD TABLE public.profiles;
+    END IF;
+END $$;
