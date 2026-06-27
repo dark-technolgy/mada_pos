@@ -270,7 +270,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get lowStock => 'Low Stock';
 
   @override
-  String get outOfStock => 'Out of Stock';
+  String get outOfStock => 'Out of stock';
 
   @override
   String get inStock => 'In Stock';
@@ -498,7 +498,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get stockTransfer => 'Stock Transfer';
 
   @override
-  String get stockAdjustment => 'Stock Adjustment';
+  String get stockAdjustment => 'Stock adjustment';
 
   @override
   String get stockTake => 'Stock Take';
@@ -1208,4 +1208,749 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get heldInvoiceRestored => 'Held invoice restored';
+
+  @override
+  String get invoiceCounterparty => 'Customer / Supplier';
+
+  @override
+  String get newPurchaseInvoice => 'New purchase invoice';
+
+  @override
+  String get recordPurchase => 'Record purchase';
+
+  @override
+  String get addLine => 'Add line';
+
+  @override
+  String get purchaseRecorded => 'Purchase invoice recorded';
+
+  @override
+  String get invoiceDiscountOptional => 'Invoice discount (optional)';
+
+  @override
+  String get removeLine => 'Remove line';
+
+  @override
+  String get supplierNotSpecified => 'No supplier';
+
+  @override
+  String get adjustmentWarehouse => 'Warehouse';
+
+  @override
+  String get adjustmentDeltaHint => 'Change (+ add, − remove)';
+
+  @override
+  String get adjustmentNotesOptional => 'Notes (optional)';
+
+  @override
+  String get applyAdjustment => 'Apply';
+
+  @override
+  String get adjustmentSaved => 'Stock updated';
+
+  @override
+  String get saleReturnTitle => 'Sale return';
+
+  @override
+  String get returnQtyHint => 'Return qty';
+
+  @override
+  String get returnSubmit => 'Record return';
+
+  @override
+  String get returnRecorded => 'Return recorded';
+
+  @override
+  String get originalSale => 'Original sale';
+
+  @override
+  String remainingReturnable(Object qty) {
+    return 'Remaining: $qty';
+  }
+
+  @override
+  String get purchaseReturnTitle => 'Purchase return';
+
+  @override
+  String get originalPurchase => 'Original purchase';
+
+  @override
+  String get openingBalance => 'Opening balance';
+
+  @override
+  String get expectedInDrawer => 'Expected in drawer';
+
+  @override
+  String get countedCash => 'Counted cash';
+
+  @override
+  String get openCashRegister => 'Open shift';
+
+  @override
+  String get closeCashRegister => 'Close shift';
+
+  @override
+  String get cashRegisterOpen => 'Shift open';
+
+  @override
+  String get cashRegisterClosed => 'Shift closed';
+
+  @override
+  String get noOpenCashRegister => 'No open shift';
+
+  @override
+  String get cashRegisterAlreadyOpen => 'A shift is already open';
+
+  @override
+  String get invalidCashAmount => 'Enter a valid amount';
+
+  @override
+  String get backupIntervalHours => 'Backup interval (hours)';
+
+  @override
+  String get autoBackupEnabled => 'Automatic backup';
+
+  @override
+  String get autoBackupRanInBackground => 'Scheduled backup created';
+
+  @override
+  String get taxRatePercent => 'Tax rate (%)';
+
+  @override
+  String get taxIncludedInPrice => 'Prices include tax';
+
+  @override
+  String get voidInvoice => 'Void invoice';
+
+  @override
+  String get voidInvoiceTitle => 'Void invoice?';
+
+  @override
+  String get voidInvoiceMessage =>
+      'This will cancel the invoice and reverse stock movements. This action cannot be undone.';
+
+  @override
+  String get voidInvoiceSuccess => 'Invoice voided successfully';
+
+  @override
+  String get cannotVoidInvoice => 'This invoice cannot be voided';
+
+  @override
+  String get warehouses => 'Warehouses';
+
+  @override
+  String get addWarehouse => 'Add warehouse';
+
+  @override
+  String get editWarehouse => 'Edit warehouse';
+
+  @override
+  String get warehouseName => 'Warehouse name';
+
+  @override
+  String get defaultWarehouse => 'Default warehouse';
+
+  @override
+  String get noWarehousesYet => 'No warehouses yet';
+
+  @override
+  String get deleteWarehouseTitle => 'Delete warehouse?';
+
+  @override
+  String deleteWarehouseMessage(Object name) {
+    return 'Delete warehouse \"$name\"?';
+  }
+
+  @override
+  String get cannotDeleteWarehouseHasStock =>
+      'Cannot delete a warehouse that still has stock';
+
+  @override
+  String get cannotDeleteDefaultWarehouse =>
+      'Cannot delete the default warehouse';
+
+  @override
+  String get auditLog => 'Audit log';
+
+  @override
+  String get allActions => 'All actions';
+
+  @override
+  String get noAuditEntries => 'No audit entries yet';
+
+  @override
+  String get auditActionLogin => 'Login';
+
+  @override
+  String get auditActionLogout => 'Logout';
+
+  @override
+  String get auditActionVoid => 'Void invoice';
+
+  @override
+  String get auditActionCreate => 'Create';
+
+  @override
+  String get auditActionUpdate => 'Update';
+
+  @override
+  String get auditActionDelete => 'Delete';
+
+  @override
+  String get refresh => 'Refresh';
+
+  @override
+  String get quotes => 'Price quotes';
+
+  @override
+  String get newQuote => 'New quote';
+
+  @override
+  String get editQuote => 'Edit quote';
+
+  @override
+  String get noQuotesYet => 'No quotes yet';
+
+  @override
+  String get quoteSaved => 'Quote saved';
+
+  @override
+  String get convertToSale => 'Convert to sale';
+
+  @override
+  String get convertQuoteTitle => 'Convert quote to sale?';
+
+  @override
+  String convertQuoteMessage(Object number) {
+    return 'Convert quote $number into a paid sale invoice?';
+  }
+
+  @override
+  String quoteConverted(Object number) {
+    return 'Sale created: $number';
+  }
+
+  @override
+  String get cannotConvertQuote => 'Cannot convert this quote';
+
+  @override
+  String get deleteQuoteTitle => 'Delete quote?';
+
+  @override
+  String deleteQuoteMessage(Object number) {
+    return 'Delete quote $number?';
+  }
+
+  @override
+  String exportedTo(Object path) {
+    return 'Exported to $path';
+  }
+
+  @override
+  String get units => 'Units';
+
+  @override
+  String get addUnit => 'Add unit';
+
+  @override
+  String get editUnit => 'Edit unit';
+
+  @override
+  String get abbreviation => 'Abbreviation';
+
+  @override
+  String get nameAr => 'Name (Arabic)';
+
+  @override
+  String get nameEn => 'Name (English)';
+
+  @override
+  String get deleteUnitTitle => 'Delete unit?';
+
+  @override
+  String deleteUnitMessage(Object name) {
+    return 'Delete unit \"$name\"?';
+  }
+
+  @override
+  String get cannotDeleteUnitInUse => 'Cannot delete a unit used by products';
+
+  @override
+  String get passwordTooShort => 'Password must be at least 8 characters';
+
+  @override
+  String get passwordNoUpper => 'Must include an uppercase letter';
+
+  @override
+  String get passwordNoLower => 'Must include a lowercase letter';
+
+  @override
+  String get passwordNoDigit => 'Must include a number';
+
+  @override
+  String get activateLicense => 'Activate license';
+
+  @override
+  String get licenseExpiredMessage =>
+      'Trial ended. Enter your license key to continue.';
+
+  @override
+  String get licenseTrialMessage =>
+      'You can continue the trial or enter a license key.';
+
+  @override
+  String get deviceId => 'Device ID';
+
+  @override
+  String get copyDeviceId => 'Copy device ID';
+
+  @override
+  String get licenseKey => 'License key';
+
+  @override
+  String get invalidLicenseKey => 'Invalid license key for this device';
+
+  @override
+  String get activate => 'Activate';
+
+  @override
+  String get continueTrial => 'Continue trial';
+
+  @override
+  String trialDaysLeft(int days) {
+    return 'Trial days remaining: $days';
+  }
+
+  @override
+  String get about => 'About';
+
+  @override
+  String get userManual => 'User manual';
+
+  @override
+  String get openUserManualHint => 'Open PDF from the docs folder';
+
+  @override
+  String get manualNotFound => 'User manual not found in installation folder';
+
+  @override
+  String get openLogs => 'Error logs';
+
+  @override
+  String get logsFolder => 'Logs folder';
+
+  @override
+  String get copied => 'Copied';
+
+  @override
+  String get companyLogo => 'Company logo';
+
+  @override
+  String get pickCompanyLogo => 'Pick logo image';
+
+  @override
+  String get smartInsights => 'Smart insights';
+
+  @override
+  String get smartSuggestions => 'Smart suggestions';
+
+  @override
+  String get frequentlyBoughtTogether => 'Frequently bought together';
+
+  @override
+  String get salesTrendUp => 'Strong sales today';
+
+  @override
+  String salesTrendUpMessage(int percent) {
+    return 'Sales are up $percent% vs yesterday';
+  }
+
+  @override
+  String get salesTrendDown => 'Sales dip';
+
+  @override
+  String salesTrendDownMessage(int percent) {
+    return 'Sales are down $percent% vs yesterday';
+  }
+
+  @override
+  String get slowDayInsight => 'Quiet day';
+
+  @override
+  String get slowDayInsightMessage =>
+      'Today\'s sales are below your weekly average — consider promotions';
+
+  @override
+  String get lowStockAlert => 'Low stock';
+
+  @override
+  String lowStockAlertMessage(int count) {
+    return '$count products need reordering';
+  }
+
+  @override
+  String get overdueDebtsInsight => 'Overdue debts';
+
+  @override
+  String overdueDebtsInsightMessage(int count) {
+    return '$count debts are past due';
+  }
+
+  @override
+  String get topProductToday => 'Top seller today';
+
+  @override
+  String topProductTodayMessage(String name) {
+    return '$name is leading — keep stock available';
+  }
+
+  @override
+  String get businessHealthy => 'Looking good';
+
+  @override
+  String get businessHealthyMessage =>
+      'No urgent alerts — keep up the great work';
+
+  @override
+  String get topSellingToday => 'Top sellers';
+
+  @override
+  String get topSellersQuickPick => 'Top sellers (7 days)';
+
+  @override
+  String get lowStockBadge => 'Low stock';
+
+  @override
+  String stockLeft(String qty) {
+    return 'Left: $qty';
+  }
+
+  @override
+  String get insufficientStock => 'Insufficient stock';
+
+  @override
+  String insufficientStockMessage(
+    String name,
+    String available,
+    String requested,
+  ) {
+    return '$name: available $available, requested $requested';
+  }
+
+  @override
+  String get saleGuardTitle => 'Sale warning';
+
+  @override
+  String saleGuardBelowCost(String name) {
+    return 'Selling below cost: $name';
+  }
+
+  @override
+  String saleGuardHighDiscount(String percent) {
+    return 'Total discount $percent% exceeds usual limit';
+  }
+
+  @override
+  String get saleGuardUnusualTotal =>
+      'Invoice total is much higher than your average sale';
+
+  @override
+  String get saleGuardConfirm => 'Continue sale despite warnings?';
+
+  @override
+  String get proceedAnyway => 'Proceed anyway';
+
+  @override
+  String get reorderSuggestion => 'Suggested reorder';
+
+  @override
+  String get staleHeldInvoicesInsight => 'Held invoices waiting';
+
+  @override
+  String staleHeldInvoicesInsightMessage(int count) {
+    return '$count held invoices are older than 24 hours — recall or complete them';
+  }
+
+  @override
+  String get appInitializing => 'Loading KeenX POS...';
+
+  @override
+  String get appInitializingHint =>
+      'Windows libraries may be installed on first launch';
+
+  @override
+  String get appInitFailed =>
+      'Failed to initialize the application. Please restart.';
+
+  @override
+  String get commandPaletteTitle => 'Quick navigation';
+
+  @override
+  String get commandPaletteSearchHint => 'Search pages...';
+
+  @override
+  String get commandPaletteNoResults => 'No matching pages';
+
+  @override
+  String get changePassword => 'Change password';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get keyboardShortcutsTitle => 'Keyboard shortcuts';
+
+  @override
+  String get shortcutFocusSearch => 'Focus product search';
+
+  @override
+  String get shortcutFocusBarcode => 'Focus barcode field';
+
+  @override
+  String get shortcutCompleteSale => 'Complete sale';
+
+  @override
+  String get shortcutClearCart => 'Clear cart (with confirmation)';
+
+  @override
+  String get shortcutShowHelp => 'Show this help';
+
+  @override
+  String get clearCartTitle => 'Clear cart?';
+
+  @override
+  String get clearCartMessage =>
+      'All items will be removed from the current sale.';
+
+  @override
+  String get globalSearchHint => 'Search products, customers, invoices...';
+
+  @override
+  String get globalSearchProducts => 'Products';
+
+  @override
+  String get globalSearchCustomers => 'Customers';
+
+  @override
+  String get globalSearchInvoices => 'Invoices';
+
+  @override
+  String get last7Days => 'Last 7 days';
+
+  @override
+  String get last30Days => 'Last 30 days';
+
+  @override
+  String get resetToDefaults => 'Reset to defaults';
+
+  @override
+  String get dashboardCustomize => 'Customize dashboard';
+
+  @override
+  String get dashboardShowStats => 'Statistics cards';
+
+  @override
+  String get dashboardShowInsights => 'Smart insights';
+
+  @override
+  String get dashboardShowRecentTransactions => 'Recent transactions';
+
+  @override
+  String get dashboardShowLowStock => 'Low stock alerts';
+
+  @override
+  String get splitPaymentEmpty => 'Enter at least one payment amount';
+
+  @override
+  String get splitPaymentMismatch =>
+      'Payment splits must equal the invoice total';
+
+  @override
+  String get splitPaymentEntered => 'Entered';
+
+  @override
+  String get splitFillCash => 'Remainder to cash';
+
+  @override
+  String get lockScreenTitle => 'Screen locked';
+
+  @override
+  String get enterPin => 'Enter PIN';
+
+  @override
+  String get invalidPin => 'Invalid PIN';
+
+  @override
+  String get pinInvalidFormat => 'PIN must be 4–6 digits';
+
+  @override
+  String get unlock => 'Unlock';
+
+  @override
+  String get setUserPin => 'Set PIN';
+
+  @override
+  String get clearUserPin => 'Remove PIN';
+
+  @override
+  String get pinSetSuccess => 'PIN saved';
+
+  @override
+  String get pinClearedSuccess => 'PIN removed';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get noNotifications => 'No notifications';
+
+  @override
+  String get notificationLowStock => 'Low stock products';
+
+  @override
+  String get notificationOverdueDebts => 'Overdue debts';
+
+  @override
+  String get notificationStaleHeld => 'Stale held invoices';
+
+  @override
+  String get notificationSalesDown => 'Sales below average';
+
+  @override
+  String get overdueDebtsCount => 'Overdue debts';
+
+  @override
+  String get heldInvoicesCount => 'Held invoices';
+
+  @override
+  String get grossMargin => 'Gross margin';
+
+  @override
+  String get collectionRate => 'Collection rate';
+
+  @override
+  String get topCustomerToday => 'Top customer today';
+
+  @override
+  String get rolePermissions => 'Role permissions';
+
+  @override
+  String get rolePermissionsHint => 'Choose what each role can access';
+
+  @override
+  String get customerSpecialPrices => 'Special prices';
+
+  @override
+  String get customerPriceSaved => 'Special price saved';
+
+  @override
+  String get lockScreenNow => 'Lock screen';
+
+  @override
+  String get paymentSplit => 'Split';
+
+  @override
+  String get compactLayout => 'Compact layout';
+
+  @override
+  String get compactLayoutHint => 'Reduce spacing in lists and tables';
+
+  @override
+  String get shortcutsGlobalSection => 'Global';
+
+  @override
+  String get shortcutsPosSection => 'Point of sale';
+
+  @override
+  String get shortcutsPosActiveHint => 'Available on the POS screen';
+
+  @override
+  String get branches => 'Branches';
+
+  @override
+  String get branchesHint =>
+      'Add company branches and switch the active branch from the sidebar';
+
+  @override
+  String get addBranch => 'Add branch';
+
+  @override
+  String get editBranch => 'Edit branch';
+
+  @override
+  String get deleteBranch => 'Delete branch';
+
+  @override
+  String deleteBranchMessage(String name) {
+    return 'Delete branch \"$name\"?';
+  }
+
+  @override
+  String get branchName => 'Branch name';
+
+  @override
+  String get branchCode => 'Branch code';
+
+  @override
+  String get defaultBranch => 'Default branch';
+
+  @override
+  String get noBranches => 'No branches';
+
+  @override
+  String get cannotDeleteDefaultBranch => 'Cannot delete the default branch';
+
+  @override
+  String get cannotDeleteBranchHasInvoices => 'Branch has linked invoices';
+
+  @override
+  String get activeBranch => 'Active branch';
+
+  @override
+  String get accountStatement => 'Account statement';
+
+  @override
+  String get printStatement => 'Print statement';
+
+  @override
+  String get period => 'Period';
+
+  @override
+  String get closingBalance => 'Closing balance';
+
+  @override
+  String get debit => 'Debit';
+
+  @override
+  String get credit => 'Credit';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get cloudBackupEnabled => 'Copy to cloud folder';
+
+  @override
+  String get cloudBackupPathHint =>
+      'Pick a OneDrive or Dropbox folder on this PC';
+
+  @override
+  String get chooseCloudFolder => 'Choose folder';
+
+  @override
+  String get welcomeToMada => 'Welcome to KeenX';
+
+  @override
+  String get setupWizardSubtitle =>
+      'Let\'s set up the essentials in a few simple steps';
+
+  @override
+  String get startUsingApp => 'Start Using App';
+
+  @override
+  String get allSet => 'All Set!';
+
+  @override
+  String get readyToStartMessage =>
+      'Configuration saved successfully. You\'re ready to log in and start selling.';
 }

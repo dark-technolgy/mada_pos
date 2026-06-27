@@ -4,6 +4,10 @@ import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import '../constants/app_constants.dart';
+import '../security/account_security_service.dart';
+import '../security/auth_service.dart';
+import '../security/permission_service.dart';
+import '../services/branch_context_service.dart';
 import 'tables/all_tables.dart';
 
 part 'database.g.dart';
@@ -28,8 +32,9 @@ part 'database.g.dart';
     Expenses,
     CashRegister,
     Settings,
-    AuditLog,
     Backups,
+    RolePermissions,
+    Branches,
   ],
 )
 class AppDatabase extends _$AppDatabase {
@@ -47,7 +52,92 @@ class AppDatabase extends _$AppDatabase {
       await _seedInitialData();
     },
     onUpgrade: (Migrator m, int from, int to) async {
-      // Future migrations here
+      if (from < 2) {
+        await m.addColumn(invoiceItems, invoiceItems.sourceInvoiceItemId);
+      }
+      if (from < 3) {
+        final existing =
+            await (select(settings)..where(
+                  (item) => item.key.equals(
+                    AccountSecurityService.defaultAdminPasswordKey,
+                  ),
+                ))
+                .getSingleOrNull();
+        if (existing == null) {
+          await into(settings).insert(
+            SettingsCompanion.insert(
+              key: AccountSecurityService.defaultAdminPasswordKey,
+              value: 'true',
+            ),
+          );
+        }
+      }
+      if (from < 4) {
+        await m.createTable(rolePermissions);
+        await const PermissionService().seedDefaultsIfEmpty(this);
+      }
+      if (from < 5) {
+        await m.createTable(branches);
+        final defaultBranchId = await into(branches).insert(
+          BranchesCompanion.insert(
+            name: 'الفرع الرئيسي',
+            code: const Value('MAIN'),
+            isDefault: const Value(true),
+          ),
+        );
+        await m.addColumn(users, users.branchId);
+        await m.addColumn(warehouses, warehouses.branchId);
+        await m.addColumn(invoices, invoices.branchId);
+        await (update(users)..where((u) => u.branchId.isNull())).write(
+          UsersCompanion(branchId: Value(defaultBranchId)),
+        );
+        await (update(warehouses)..where((w) => w.branchId.isNull())).write(
+          WarehousesCompanion(branchId: Value(defaultBranchId)),
+        );
+        final activeBranchSetting = await (select(settings)..where(
+              (s) => s.key.equals(BranchContextService.activeBranchKey),
+            ))
+            .getSingleOrNull();
+        if (activeBranchSetting == null) {
+          await into(settings).insert(
+            SettingsCompanion.insert(
+              key: BranchContextService.activeBranchKey,
+              value: '$defaultBranchId',
+              group: const Value('general'),
+            ),
+          );
+        }
+      }
+      if (from < 6) {
+        await m.addColumn(debts, debts.branchId);
+        await m.addColumn(expenses, expenses.branchId);
+        final defaultBranch = await (select(branches)
+              ..where((b) => b.isDefault.equals(true))
+              ..limit(1))
+            .getSingleOrNull();
+        final fallbackBranch = defaultBranch ??
+            await (select(branches)..limit(1)).getSingleOrNull();
+        final defaultBranchId = fallbackBranch?.id;
+        if (defaultBranchId != null) {
+          await (update(expenses)..where((e) => e.branchId.isNull())).write(
+            ExpensesCompanion(branchId: Value(defaultBranchId)),
+          );
+          await (update(debts)..where((d) => d.branchId.isNull())).write(
+            DebtsCompanion(branchId: Value(defaultBranchId)),
+          );
+          await customStatement('''
+UPDATE debts
+SET branch_id = (
+  SELECT branch_id FROM invoices WHERE invoices.id = debts.invoice_id
+)
+WHERE invoice_id IS NOT NULL
+  AND EXISTS (
+    SELECT 1 FROM invoices
+    WHERE invoices.id = debts.invoice_id AND invoices.branch_id IS NOT NULL
+  );
+''');
+        }
+      }
     },
   );
 
@@ -57,8 +147,7 @@ class AppDatabase extends _$AppDatabase {
     await into(users).insert(
       UsersCompanion.insert(
         username: 'admin',
-        passwordHash:
-            '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', // sha256 of 'admin123'
+        passwordHash: AuthService.hashPassword('admin123'),
         fullName: 'مدير النظام',
         role: const Value('admin'),
       ),
@@ -86,10 +175,19 @@ class AppDatabase extends _$AppDatabase {
       ),
     );
 
+    final defaultBranchId = await into(branches).insert(
+      BranchesCompanion.insert(
+        name: 'الفرع الرئيسي',
+        code: const Value('MAIN'),
+        isDefault: const Value(true),
+      ),
+    );
+
     // Default warehouse
     await into(warehouses).insert(
       WarehousesCompanion.insert(
         name: 'المخزن الرئيسي',
+        branchId: Value(defaultBranchId),
         isDefault: const Value(true),
       ),
     );
@@ -119,7 +217,7 @@ class AppDatabase extends _$AppDatabase {
 
     // Default settings
     final defaultSettings = {
-      'company_name': 'KeenX',
+      'company_name': 'Mada',
       'company_address': 'بغداد، العراق',
       'company_phone': '',
       'company_email': '',
@@ -137,8 +235,12 @@ class AppDatabase extends _$AppDatabase {
       'auto_backup': 'true',
       'backup_interval_hours': '24',
       'session_timeout_minutes': '30',
+      'security_require_password_change_admin': 'true',
       'printer_type': 'both', // thermal, a4, both
       'thermal_printer_width': '80', // 58 or 80
+      BranchContextService.activeBranchKey: '$defaultBranchId',
+      'cloud_backup_enabled': 'false',
+      'cloud_backup_path': '',
     };
     for (final entry in defaultSettings.entries) {
       await into(settings).insert(
@@ -149,6 +251,8 @@ class AppDatabase extends _$AppDatabase {
         ),
       );
     }
+
+    await const PermissionService().seedDefaultsIfEmpty(this);
   }
 
   String _getSettingsGroup(String key) {
@@ -156,10 +260,15 @@ class AppDatabase extends _$AppDatabase {
     if (key.startsWith('invoice_')) return 'invoice';
     if (key.startsWith('tax_')) return 'tax';
     if (key.startsWith('theme_') || key == 'language') return 'appearance';
-    if (key.startsWith('backup_') || key.startsWith('auto_backup')) {
+    if (key.startsWith('backup_') ||
+        key.startsWith('auto_backup') ||
+        key.startsWith('cloud_backup')) {
       return 'backup';
     }
-    if (key.startsWith('session_')) return 'security';
+    if (key == BranchContextService.activeBranchKey) return 'general';
+    if (key.startsWith('session_') || key.startsWith('security_')) {
+      return 'security';
+    }
     if (key.startsWith('printer_') || key.startsWith('thermal_')) {
       return 'printer';
     }
@@ -202,7 +311,7 @@ class AppDatabase extends _$AppDatabase {
 
 Future<File> resolveAppDatabaseFile() async {
   final dbFolder = await getApplicationDocumentsDirectory();
-  final file = File(p.join(dbFolder.path, 'keenx_pos', AppConstants.dbName));
+  final file = File(p.join(dbFolder.path, 'mada_pos', AppConstants.dbName));
 
   if (!await file.parent.exists()) {
     await file.parent.create(recursive: true);

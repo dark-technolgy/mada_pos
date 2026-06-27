@@ -1,15 +1,19 @@
 class AppConstants {
   AppConstants._();
 
-  static const String appName = 'KeenX POS';
-  static const String appNameAr = 'كينكس للمبيعات';
-  static const String companyName = 'KeenX';
+  static const String appName = 'Mada Smart POS';
+  static const String appNameAr = 'مدى للمبيعات الذكية';
+  static const String companyName = 'Mada';
   static const String companyAddress = 'Baghdad, Iraq - بغداد، العراق';
   static const String appVersion = '1.0.0';
+  static const int trialDays = 30;
+
+  /// Used to generate per-device license keys (keep private in your org).
+  static const String licenseSecret = 'mada-pos-license-v1';
 
   // Database
-  static const String dbName = 'keenx_pos.db';
-  static const int dbVersion = 1;
+  static const String dbName = 'mada_pos.db';
+  static const int dbVersion = 6;
 
   // Session
   static const int sessionTimeoutMinutes = 30;
@@ -29,5 +33,9 @@ class AppConstants {
   static const String defaultCurrencySymbol = 'د.ع';
 
   // Backup
-  static const String backupFolder = 'keenx_backups';
+  static const String backupFolder = 'mada_backups';
+
+  // Supabase (Placeholders)
+  static const String supabaseUrl = 'YOUR_SUPABASE_URL';
+  static const String supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
 }

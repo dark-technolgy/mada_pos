@@ -1,13 +1,14 @@
-import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:keenx_pos/core/database/database.dart';
-import 'package:keenx_pos/core/localization/generated/app_localizations.dart';
-import 'package:keenx_pos/core/localization/kurdish_fallback_localizations.dart';
-import 'package:keenx_pos/features/pos/presentation/pos_screen.dart';
-import 'package:keenx_pos/shared/providers/app_providers.dart';
+import 'package:mada_pos/core/database/database.dart';
+import 'package:mada_pos/core/localization/generated/app_localizations.dart';
+import 'package:mada_pos/core/localization/kurdish_fallback_localizations.dart';
+import 'package:mada_pos/features/pos/presentation/pos_screen.dart';
+import 'package:mada_pos/shared/providers/app_providers.dart';
+
+import '../../../helpers/test_database_helpers.dart';
 
 Finder _textContaining(String fragment) {
   return find.byWidgetPredicate(
@@ -62,14 +63,11 @@ void main() {
       final database = AppDatabase.forTesting(NativeDatabase.memory());
       addTearDown(database.close);
 
-      await database
-          .into(database.products)
-          .insert(
-            ProductsCompanion.insert(
-              nameAr: 'منتج تجريبي',
-              sellingPrice: const Value(14800),
-            ),
-          );
+      await insertProductWithStock(
+        database,
+        nameAr: 'منتج تجريبي',
+        sellingPrice: 14800,
+      );
 
       await tester.pumpWidget(
         _buildTestApp(database, currentUser: _buildCurrentUser()),
@@ -112,14 +110,11 @@ void main() {
     final database = AppDatabase.forTesting(NativeDatabase.memory());
     addTearDown(database.close);
 
-    await database
-        .into(database.products)
-        .insert(
-          ProductsCompanion.insert(
-            nameAr: 'منتج معلق',
-            sellingPrice: const Value(10000),
-          ),
-        );
+    await insertProductWithStock(
+      database,
+      nameAr: 'منتج معلق',
+      sellingPrice: 10000,
+    );
 
     await tester.pumpWidget(
       _buildTestApp(database, currentUser: _buildCurrentUser()),
@@ -134,7 +129,7 @@ void main() {
     await tester.tap(find.text('Hold Invoice'));
     await tester.pumpAndSettle();
 
-    expect(find.text('Invoice placed on hold'), findsOneWidget);
+    expect(_textContaining('Invoice placed on hold'), findsOneWidget);
     expect(find.text('0 items'), findsOneWidget);
 
     await tester.tap(find.text('Recall Invoice'));

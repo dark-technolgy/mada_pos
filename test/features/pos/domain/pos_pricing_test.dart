@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:keenx_pos/features/pos/domain/pos_pricing.dart';
+import 'package:mada_pos/features/pos/domain/pos_pricing.dart';
 
 void main() {
   group('PosPricing', () {
@@ -35,6 +35,8 @@ void main() {
       expect(summary.lineDiscountTotal, 3);
       expect(summary.subtotal, 22);
       expect(summary.invoiceDiscountAmount, 4);
+      expect(summary.taxableBase, 18);
+      expect(summary.taxAmount, 0);
       expect(summary.total, 18);
     });
 
@@ -51,6 +53,8 @@ void main() {
       expect(summary.lineDiscountTotal, 10);
       expect(summary.subtotal, 90);
       expect(summary.invoiceDiscountAmount, 9);
+      expect(summary.taxableBase, 81);
+      expect(summary.taxAmount, 0);
       expect(summary.total, 81);
     });
 

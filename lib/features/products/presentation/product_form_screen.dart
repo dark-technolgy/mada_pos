@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:drift/drift.dart' show Value;
+import '../../../core/database/database.dart';
 import '../../../core/localization/l10n_ext.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/database/database.dart';
 import '../../../shared/providers/app_providers.dart';
+import '../../../shared/widgets/app_feedback.dart';
+import '../application/product_form_service.dart';
+import 'widgets/product_form_sections.dart';
 
 class ProductFormScreen extends ConsumerStatefulWidget {
   final int? productId;
@@ -30,6 +32,7 @@ class _ProductFormScreenState extends ConsumerState<ProductFormScreen> {
   final _minStockCtrl = TextEditingController(text: '0');
   final _maxStockCtrl = TextEditingController();
   final _initialStockCtrl = TextEditingController(text: '0');
+  final ProductFormService _productFormService = const ProductFormService();
 
   int? _selectedCategoryId;
   int? _selectedUnitId;
@@ -67,37 +70,33 @@ class _ProductFormScreenState extends ConsumerState<ProductFormScreen> {
 
   Future<void> _loadData() async {
     final db = ref.read(databaseProvider);
-    final categories = await (db.select(
-      db.categories,
-    )..where((c) => c.isActive.equals(true))).get();
-    final units = await db.select(db.units).get();
+    final result = await _productFormService.loadFormData(
+      db,
+      productId: widget.productId,
+    );
 
     setState(() {
-      _categories = categories;
-      _units = units;
+      _categories = result.categories;
+      _units = result.units;
     });
 
-    if (_isEditing) {
-      final product = await (db.select(
-        db.products,
-      )..where((p) => p.id.equals(widget.productId!))).getSingleOrNull();
-      if (product != null) {
-        _nameArCtrl.text = product.nameAr;
-        _nameEnCtrl.text = product.nameEn ?? '';
-        _nameKuCtrl.text = product.nameKu ?? '';
-        _barcodeCtrl.text = product.barcode ?? '';
-        _skuCtrl.text = product.sku ?? '';
-        _descriptionCtrl.text = product.description ?? '';
-        _purchasePriceCtrl.text = product.purchasePrice.toString();
-        _sellingPriceCtrl.text = product.sellingPrice.toString();
-        _minStockCtrl.text = product.minStockLevel.toString();
-        setState(() {
-          _selectedCategoryId = product.categoryId;
-          _selectedUnitId = product.unitId;
-          _isActive = product.isActive;
-        });
-      }
-    }
+    final product = result.product;
+    if (product == null) return;
+
+    _nameArCtrl.text = product.nameAr;
+    _nameEnCtrl.text = product.nameEn ?? '';
+    _nameKuCtrl.text = product.nameKu ?? '';
+    _barcodeCtrl.text = product.barcode ?? '';
+    _skuCtrl.text = product.sku ?? '';
+    _descriptionCtrl.text = product.description ?? '';
+    _purchasePriceCtrl.text = product.purchasePrice.toString();
+    _sellingPriceCtrl.text = product.sellingPrice.toString();
+    _minStockCtrl.text = product.minStockLevel.toString();
+    setState(() {
+      _selectedCategoryId = product.categoryId;
+      _selectedUnitId = product.unitId;
+      _isActive = product.isActive;
+    });
   }
 
   Future<void> _saveProduct() async {
@@ -108,124 +107,48 @@ class _ProductFormScreenState extends ConsumerState<ProductFormScreen> {
 
     try {
       final db = ref.read(databaseProvider);
+      final payload = ProductFormPayload(
+        nameAr: _nameArCtrl.text.trim(),
+        nameEn: _nameEnCtrl.text.trim().isEmpty
+            ? null
+            : _nameEnCtrl.text.trim(),
+        nameKu: _nameKuCtrl.text.trim().isEmpty
+            ? null
+            : _nameKuCtrl.text.trim(),
+        barcode: _barcodeCtrl.text.trim().isEmpty
+            ? null
+            : _barcodeCtrl.text.trim(),
+        sku: _skuCtrl.text.trim().isEmpty ? null : _skuCtrl.text.trim(),
+        description: _descriptionCtrl.text.trim().isEmpty
+            ? null
+            : _descriptionCtrl.text.trim(),
+        purchasePrice: double.tryParse(_purchasePriceCtrl.text) ?? 0,
+        sellingPrice: double.tryParse(_sellingPriceCtrl.text) ?? 0,
+        minStockLevel: double.tryParse(_minStockCtrl.text) ?? 0,
+        initialStock: double.tryParse(_initialStockCtrl.text) ?? 0,
+        categoryId: _selectedCategoryId,
+        unitId: _selectedUnitId,
+        isActive: _isActive,
+      );
 
-      if (_isEditing) {
-        await (db.update(
-          db.products,
-        )..where((p) => p.id.equals(widget.productId!))).write(
-          ProductsCompanion(
-            nameAr: Value(_nameArCtrl.text.trim()),
-            nameEn: Value(
-              _nameEnCtrl.text.trim().isEmpty ? null : _nameEnCtrl.text.trim(),
-            ),
-            nameKu: Value(
-              _nameKuCtrl.text.trim().isEmpty ? null : _nameKuCtrl.text.trim(),
-            ),
-            barcode: Value(
-              _barcodeCtrl.text.trim().isEmpty
-                  ? null
-                  : _barcodeCtrl.text.trim(),
-            ),
-            sku: Value(
-              _skuCtrl.text.trim().isEmpty ? null : _skuCtrl.text.trim(),
-            ),
-            description: Value(
-              _descriptionCtrl.text.trim().isEmpty
-                  ? null
-                  : _descriptionCtrl.text.trim(),
-            ),
-            categoryId: Value(_selectedCategoryId),
-            unitId: Value(_selectedUnitId),
-            purchasePrice: Value(double.tryParse(_purchasePriceCtrl.text) ?? 0),
-            sellingPrice: Value(double.tryParse(_sellingPriceCtrl.text) ?? 0),
-            minStockLevel: Value(double.tryParse(_minStockCtrl.text) ?? 0),
-            isActive: Value(_isActive),
-            updatedAt: Value(DateTime.now()),
-          ),
-        );
-      } else {
-        final productId = await db
-            .into(db.products)
-            .insert(
-              ProductsCompanion.insert(
-                nameAr: _nameArCtrl.text.trim(),
-                nameEn: Value(
-                  _nameEnCtrl.text.trim().isEmpty
-                      ? null
-                      : _nameEnCtrl.text.trim(),
-                ),
-                nameKu: Value(
-                  _nameKuCtrl.text.trim().isEmpty
-                      ? null
-                      : _nameKuCtrl.text.trim(),
-                ),
-                barcode: Value(
-                  _barcodeCtrl.text.trim().isEmpty
-                      ? null
-                      : _barcodeCtrl.text.trim(),
-                ),
-                sku: Value(
-                  _skuCtrl.text.trim().isEmpty ? null : _skuCtrl.text.trim(),
-                ),
-                description: Value(
-                  _descriptionCtrl.text.trim().isEmpty
-                      ? null
-                      : _descriptionCtrl.text.trim(),
-                ),
-                categoryId: Value(_selectedCategoryId),
-                unitId: Value(_selectedUnitId),
-                purchasePrice: Value(
-                  double.tryParse(_purchasePriceCtrl.text) ?? 0,
-                ),
-                sellingPrice: Value(
-                  double.tryParse(_sellingPriceCtrl.text) ?? 0,
-                ),
-                minStockLevel: Value(double.tryParse(_minStockCtrl.text) ?? 0),
-                isActive: const Value(true),
-              ),
-            );
-
-        // Create initial stock entry
-        final initialStock = double.tryParse(_initialStockCtrl.text) ?? 0;
-        if (initialStock > 0) {
-          final warehouse = await (db.select(
-            db.warehouses,
-          )..limit(1)).getSingleOrNull();
-          if (warehouse != null) {
-            await db
-                .into(db.stock)
-                .insert(
-                  StockCompanion.insert(
-                    productId: productId,
-                    warehouseId: warehouse.id,
-                    quantity: Value(initialStock),
-                  ),
-                );
-          }
-        }
-      }
+      await _productFormService.saveProduct(
+        db,
+        payload: payload,
+        productId: widget.productId,
+      );
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              _isEditing
-                  ? l10n.productUpdatedSuccessfully
-                  : l10n.productAddedSuccessfully,
-            ),
-            backgroundColor: AppColors.success,
-          ),
+        AppFeedback.success(
+          context,
+          _isEditing
+              ? l10n.productUpdatedSuccessfully
+              : l10n.productAddedSuccessfully,
         );
         context.go('/products');
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${l10n.errorOccurred}: $e'),
-            backgroundColor: AppColors.error,
-          ),
-        );
+        AppFeedback.error(context, '${l10n.errorOccurred}: $e');
       }
     } finally {
       setState(() => _isSaving = false);
@@ -241,323 +164,71 @@ class _ProductFormScreenState extends ConsumerState<ProductFormScreen> {
       backgroundColor: isDark ? AppColors.darkBg : AppColors.lightBg,
       body: Column(
         children: [
-          // Header
-          Container(
-            padding: const EdgeInsets.all(24),
-            child: Row(
-              children: [
-                IconButton(
-                  onPressed: () => context.go('/products'),
-                  icon: const Icon(Icons.arrow_back_rounded),
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  _isEditing ? l10n.editProduct : l10n.newProduct,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: isDark
-                        ? AppColors.darkTextPrimary
-                        : AppColors.lightTextPrimary,
-                  ),
-                ),
-                const Spacer(),
-                OutlinedButton(
-                  onPressed: () => context.go('/products'),
-                  child: Text(l10n.cancel),
-                ),
-                const SizedBox(width: 12),
-                ElevatedButton.icon(
-                  onPressed: _isSaving ? null : _saveProduct,
-                  icon: _isSaving
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.save_rounded, size: 18),
-                  label: Text(_isSaving ? l10n.saving : l10n.save),
-                ),
-              ],
-            ),
+          ProductFormHeader(
+            isDark: isDark,
+            title: _isEditing ? l10n.editProduct : l10n.newProduct,
+            cancelLabel: l10n.cancel,
+            saveLabel: l10n.save,
+            savingLabel: l10n.saving,
+            isSaving: _isSaving,
+            onCancel: () => context.go('/products'),
+            onSave: _saveProduct,
           ),
-          // Form
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Form(
-                key: _formKey,
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Left column
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildSection(l10n.basicInformation, [
-                            _buildTextField(
-                              '${l10n.productNameArabic} *',
-                              _nameArCtrl,
-                              requiredMessage: l10n.fieldRequired,
-                              required: true,
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _buildTextField(
-                                    l10n.productNameEnglish,
-                                    _nameEnCtrl,
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: _buildTextField(
-                                    l10n.productNameKurdish,
-                                    _nameKuCtrl,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            _buildTextField(
-                              l10n.notes,
-                              _descriptionCtrl,
-                              maxLines: 3,
-                            ),
-                          ], isDark),
-                          const SizedBox(height: 20),
-                          _buildSection(l10n.categoryAndUnit, [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: DropdownButtonFormField<int?>(
-                                    initialValue: _selectedCategoryId,
-                                    decoration: InputDecoration(
-                                      labelText: l10n.category,
-                                    ),
-                                    items: [
-                                      DropdownMenuItem(
-                                        value: null,
-                                        child: Text(l10n.withoutCategory),
-                                      ),
-                                      ..._categories.map(
-                                        (c) => DropdownMenuItem(
-                                          value: c.id,
-                                          child: Text(c.nameAr),
-                                        ),
-                                      ),
-                                    ],
-                                    onChanged: (v) =>
-                                        setState(() => _selectedCategoryId = v),
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: DropdownButtonFormField<int?>(
-                                    initialValue: _selectedUnitId,
-                                    decoration: InputDecoration(
-                                      labelText: l10n.unit,
-                                    ),
-                                    items: [
-                                      DropdownMenuItem(
-                                        value: null,
-                                        child: Text(l10n.withoutUnit),
-                                      ),
-                                      ..._units.map(
-                                        (u) => DropdownMenuItem(
-                                          value: u.id,
-                                          child: Text(u.nameAr),
-                                        ),
-                                      ),
-                                    ],
-                                    onChanged: (v) =>
-                                        setState(() => _selectedUnitId = v),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ], isDark),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 24),
-                    // Right column
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          _buildSection(l10n.pricing, [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _buildTextField(
-                                    '${l10n.purchasePrice} *',
-                                    _purchasePriceCtrl,
-                                    keyboardType: TextInputType.number,
-                                    requiredMessage: l10n.fieldRequired,
-                                    required: true,
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: _buildTextField(
-                                    '${l10n.sellingPrice} *',
-                                    _sellingPriceCtrl,
-                                    keyboardType: TextInputType.number,
-                                    requiredMessage: l10n.fieldRequired,
-                                    required: true,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _buildTextField(
-                                    l10n.wholesalePrice,
-                                    _wholesalePriceCtrl,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: _buildTextField(
-                                    l10n.minimumSellingPrice,
-                                    _minPriceCtrl,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ], isDark),
-                          const SizedBox(height: 20),
-                          _buildSection(l10n.barcodeAndCode, [
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: _buildTextField(
-                                    l10n.barcode,
-                                    _barcodeCtrl,
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: _buildTextField(
-                                    l10n.productCodeSku,
-                                    _skuCtrl,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ], isDark),
-                          const SizedBox(height: 20),
-                          _buildSection(l10n.stock, [
-                            Row(
-                              children: [
-                                if (!_isEditing)
-                                  Expanded(
-                                    child: _buildTextField(
-                                      l10n.initialQuantity,
-                                      _initialStockCtrl,
-                                      keyboardType: TextInputType.number,
-                                    ),
-                                  ),
-                                if (!_isEditing) const SizedBox(width: 12),
-                                Expanded(
-                                  child: _buildTextField(
-                                    l10n.minimumLimit,
-                                    _minStockCtrl,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                                const SizedBox(width: 12),
-                                Expanded(
-                                  child: _buildTextField(
-                                    l10n.maximumLimit,
-                                    _maxStockCtrl,
-                                    keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 12),
-                            SwitchListTile(
-                              title: Text(l10n.productIsActive),
-                              value: _isActive,
-                              onChanged: (v) => setState(() => _isActive = v),
-                              contentPadding: EdgeInsets.zero,
-                            ),
-                          ], isDark),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+            child: ProductFormContent(
+              formKey: _formKey,
+              isDark: isDark,
+              basicTitle: l10n.basicInformation,
+              categoryUnitTitle: l10n.categoryAndUnit,
+              pricingTitle: l10n.pricing,
+              barcodeTitle: l10n.barcodeAndCode,
+              stockTitle: l10n.stock,
+              nameArLabel: '${l10n.productNameArabic} *',
+              nameEnLabel: l10n.productNameEnglish,
+              nameKuLabel: l10n.productNameKurdish,
+              notesLabel: l10n.notes,
+              categoryLabel: l10n.category,
+              withoutCategoryLabel: l10n.withoutCategory,
+              unitLabel: l10n.unit,
+              withoutUnitLabel: l10n.withoutUnit,
+              purchasePriceLabel: '${l10n.purchasePrice} *',
+              sellingPriceLabel: '${l10n.sellingPrice} *',
+              wholesalePriceLabel: l10n.wholesalePrice,
+              minSellingPriceLabel: l10n.minimumSellingPrice,
+              barcodeLabel: l10n.barcode,
+              skuLabel: l10n.productCodeSku,
+              initialQuantityLabel: l10n.initialQuantity,
+              minimumLimitLabel: l10n.minimumLimit,
+              maximumLimitLabel: l10n.maximumLimit,
+              productIsActiveLabel: l10n.productIsActive,
+              fieldRequiredLabel: l10n.fieldRequired,
+              nameArCtrl: _nameArCtrl,
+              nameEnCtrl: _nameEnCtrl,
+              nameKuCtrl: _nameKuCtrl,
+              descriptionCtrl: _descriptionCtrl,
+              purchasePriceCtrl: _purchasePriceCtrl,
+              sellingPriceCtrl: _sellingPriceCtrl,
+              wholesalePriceCtrl: _wholesalePriceCtrl,
+              minPriceCtrl: _minPriceCtrl,
+              barcodeCtrl: _barcodeCtrl,
+              skuCtrl: _skuCtrl,
+              initialStockCtrl: _initialStockCtrl,
+              minStockCtrl: _minStockCtrl,
+              maxStockCtrl: _maxStockCtrl,
+              categories: _categories,
+              units: _units,
+              selectedCategoryId: _selectedCategoryId,
+              selectedUnitId: _selectedUnitId,
+              isActive: _isActive,
+              isEditing: _isEditing,
+              onCategoryChanged: (value) =>
+                  setState(() => _selectedCategoryId = value),
+              onUnitChanged: (value) => setState(() => _selectedUnitId = value),
+              onActiveChanged: (value) => setState(() => _isActive = value),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildSection(String title, List<Widget> children, bool isDark) {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: isDark ? AppColors.darkCard : AppColors.lightCard,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: isDark ? AppColors.darkBorder : AppColors.lightBorder,
-        ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: isDark
-                  ? AppColors.darkTextPrimary
-                  : AppColors.lightTextPrimary,
-            ),
-          ),
-          const SizedBox(height: 16),
-          ...children,
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTextField(
-    String label,
-    TextEditingController controller, {
-    bool required = false,
-    String? requiredMessage,
-    int maxLines = 1,
-    TextInputType? keyboardType,
-  }) {
-    return TextFormField(
-      controller: controller,
-      maxLines: maxLines,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(labelText: label),
-      validator: required
-          ? (v) {
-              if (v == null || v.trim().isEmpty) {
-                return requiredMessage ?? '';
-              }
-              return null;
-            }
-          : null,
     );
   }
 }

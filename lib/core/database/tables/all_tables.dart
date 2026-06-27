@@ -11,6 +11,7 @@ class Users extends Table {
   )(); // admin, manager, cashier, viewer
   BoolColumn get isActive => boolean().withDefault(const Constant(true))();
   TextColumn get pin => text().nullable()();
+  IntColumn get branchId => integer().nullable().references(Branches, #id)();
   DateTimeColumn get lastLogin => dateTime().nullable()();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
@@ -41,6 +42,9 @@ class Units extends Table {
 }
 
 /// Products table - المنتجات
+@TableIndex(name: 'products_barcode', columns: {#barcode})
+@TableIndex(name: 'products_name_ar', columns: {#nameAr})
+@TableIndex(name: 'products_active', columns: {#isActive})
 class Products extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get nameAr => text().withLength(min: 1, max: 200)();
@@ -91,9 +95,22 @@ class Suppliers extends Table {
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
 }
 
+/// Branches table - الفروع
+class Branches extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text().withLength(min: 1, max: 100)();
+  TextColumn get code => text().nullable()();
+  TextColumn get address => text().nullable()();
+  TextColumn get phone => text().nullable()();
+  BoolColumn get isDefault => boolean().withDefault(const Constant(false))();
+  BoolColumn get isActive => boolean().withDefault(const Constant(true))();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+}
+
 /// Warehouses table - المخازن
 class Warehouses extends Table {
   IntColumn get id => integer().autoIncrement()();
+  IntColumn get branchId => integer().nullable().references(Branches, #id)();
   TextColumn get name => text().withLength(min: 1, max: 100)();
   TextColumn get location => text().nullable()();
   BoolColumn get isDefault => boolean().withDefault(const Constant(false))();
@@ -102,6 +119,7 @@ class Warehouses extends Table {
 }
 
 /// Stock table - المخزون
+@TableIndex(name: 'stock_product_warehouse', columns: {#productId, #warehouseId})
 class Stock extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get productId => integer().references(Products, #id)();
@@ -149,14 +167,18 @@ class Currencies extends Table {
 }
 
 /// Invoices table - الفواتير
+@TableIndex(name: 'invoices_number', columns: {#invoiceNumber})
+@TableIndex(name: 'invoices_type', columns: {#type})
+@TableIndex(name: 'invoices_created_at', columns: {#createdAt})
 class Invoices extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get invoiceNumber => text().unique()();
   TextColumn get type =>
-      text()(); // sale, purchase, sale_return, purchase_return, quote
+      text()(); // sale, purchase, sale_return, purchase_return
   IntColumn get customerId => integer().nullable().references(Customers, #id)();
   IntColumn get supplierId => integer().nullable().references(Suppliers, #id)();
   IntColumn get userId => integer().references(Users, #id)();
+  IntColumn get branchId => integer().nullable().references(Branches, #id)();
   IntColumn get warehouseId =>
       integer().nullable().references(Warehouses, #id)();
   RealColumn get subtotal => real().withDefault(const Constant(0.0))();
@@ -174,7 +196,7 @@ class Invoices extends Table {
   )(); // cash, card, transfer, split
   TextColumn get status => text().withDefault(
     const Constant('paid'),
-  )(); // paid, partial, unpaid, draft, cancelled
+  )(); // paid, partial, unpaid, cancelled
   TextColumn get notes => text().nullable()();
   BoolColumn get isHeld => boolean().withDefault(const Constant(false))();
   IntColumn get returnedFromId =>
@@ -194,6 +216,8 @@ class InvoiceItems extends Table {
   RealColumn get total => real()();
   IntColumn get warehouseId =>
       integer().nullable().references(Warehouses, #id)();
+  /// When this row is on a return invoice, points at the original sale line (`invoice_items.id`).
+  IntColumn get sourceInvoiceItemId => integer().nullable()();
 }
 
 /// Payments table - المدفوعات
@@ -226,6 +250,7 @@ class Debts extends Table {
     const Constant('active'),
   )(); // active, partial, settled, written_off
   TextColumn get notes => text().nullable()();
+  IntColumn get branchId => integer().nullable().references(Branches, #id)();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
   DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
 }
@@ -249,6 +274,7 @@ class Expenses extends Table {
   TextColumn get currencyCode => text().withDefault(const Constant('IQD'))();
   TextColumn get description => text().nullable()();
   IntColumn get userId => integer().nullable().references(Users, #id)();
+  IntColumn get branchId => integer().nullable().references(Branches, #id)();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 }
 
@@ -273,17 +299,16 @@ class Settings extends Table {
   TextColumn get group => text().withDefault(const Constant('general'))();
 }
 
-/// Audit Log table - سجل المراجعة
-class AuditLog extends Table {
+/// Role-based permissions - صلاحيات الأدوار
+class RolePermissions extends Table {
   IntColumn get id => integer().autoIncrement()();
-  IntColumn get userId => integer().nullable().references(Users, #id)();
-  TextColumn get action => text()(); // create, update, delete, login, logout
-  TextColumn get targetTable => text()();
-  IntColumn get recordId => integer().nullable()();
-  TextColumn get oldValues => text().nullable()();
-  TextColumn get newValues => text().nullable()();
-  TextColumn get details => text().nullable()();
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  TextColumn get role => text().withLength(min: 1, max: 32)();
+  TextColumn get permission => text().withLength(min: 1, max: 64)();
+
+  @override
+  List<Set<Column>> get uniqueKeys => [
+    {role, permission},
+  ];
 }
 
 /// Backups table - النسخ الاحتياطية

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:drift/drift.dart' show Value;
 import '../../../core/theme/app_colors.dart';
 import '../../../core/database/database.dart';
 import '../../../core/localization/l10n_ext.dart';
 import '../../../shared/providers/app_providers.dart';
+import '../../../shared/widgets/app_feedback.dart';
 import '../../../shared/widgets/page_header.dart';
 import '../../../shared/widgets/confirmation_dialog.dart';
-import '../../../shared/widgets/empty_state.dart';
+import '../application/categories_service.dart';
+import 'widgets/categories_sections.dart';
+import 'widgets/category_dialogs.dart';
 
 class CategoriesScreen extends ConsumerStatefulWidget {
   const CategoriesScreen({super.key});
@@ -18,6 +20,7 @@ class CategoriesScreen extends ConsumerStatefulWidget {
 
 class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
   List<Category> _categories = [];
+  final CategoriesService _categoriesService = const CategoriesService();
 
   @override
   void initState() {
@@ -27,185 +30,56 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
 
   Future<void> _loadCategories() async {
     final db = ref.read(databaseProvider);
-    final categories = await db.select(db.categories).get();
+    final categories = await _categoriesService.loadCategories(db);
     setState(() => _categories = categories);
   }
 
   Future<void> _showCategoryDialog([Category? category]) async {
     final l10n = context.l10n;
-    final nameArCtrl = TextEditingController(text: category?.nameAr ?? '');
-    final nameEnCtrl = TextEditingController(text: category?.nameEn ?? '');
-    final nameKuCtrl = TextEditingController(text: category?.nameKu ?? '');
-    bool isActive = category?.isActive ?? true;
-    final formKey = GlobalKey<FormState>();
-
-    final result = await showDialog<bool>(
+    final result = await showCategoryDialog(
       context: context,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setDialogState) {
-            final isDark = Theme.of(context).brightness == Brightness.dark;
-            return Dialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Container(
-                width: 450,
-                padding: const EdgeInsets.all(24),
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        category != null
-                            ? l10n.editCategory
-                            : l10n.addNewCategory,
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: isDark
-                              ? AppColors.darkTextPrimary
-                              : AppColors.lightTextPrimary,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      TextFormField(
-                        controller: nameArCtrl,
-                        decoration: InputDecoration(
-                          labelText: l10n.categoryNameArabic,
-                        ),
-                        validator: (v) => v == null || v.trim().isEmpty
-                            ? l10n.requiredField
-                            : null,
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              controller: nameEnCtrl,
-                              decoration: InputDecoration(
-                                labelText: l10n.categoryNameEnglish,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: TextFormField(
-                              controller: nameKuCtrl,
-                              decoration: InputDecoration(
-                                labelText: l10n.categoryNameKurdish,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      SwitchListTile(
-                        title: Text(l10n.active),
-                        value: isActive,
-                        onChanged: (v) => setDialogState(() => isActive = v),
-                        contentPadding: EdgeInsets.zero,
-                      ),
-                      const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          OutlinedButton(
-                            onPressed: () => Navigator.pop(context, false),
-                            child: Text(l10n.cancel),
-                          ),
-                          const SizedBox(width: 12),
-                          ElevatedButton(
-                            onPressed: () {
-                              if (formKey.currentState!.validate()) {
-                                Navigator.pop(context, true);
-                              }
-                            },
-                            child: Text(
-                              category != null ? l10n.save : l10n.add,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      },
+      title: category != null ? l10n.editCategory : l10n.addNewCategory,
+      nameArLabel: l10n.categoryNameArabic,
+      nameEnLabel: l10n.categoryNameEnglish,
+      nameKuLabel: l10n.categoryNameKurdish,
+      activeLabel: l10n.active,
+      requiredFieldLabel: l10n.requiredField,
+      cancelLabel: l10n.cancel,
+      saveLabel: category != null ? l10n.save : l10n.add,
+      initialNameAr: category?.nameAr,
+      initialNameEn: category?.nameEn,
+      initialNameKu: category?.nameKu,
+      initialIsActive: category?.isActive ?? true,
     );
 
-    if (result == true) {
+    if (result != null) {
       final db = ref.read(databaseProvider);
       try {
-        if (category != null) {
-          await (db.update(
-            db.categories,
-          )..where((c) => c.id.equals(category.id))).write(
-            CategoriesCompanion(
-              nameAr: Value(nameArCtrl.text.trim()),
-              nameEn: Value(
-                nameEnCtrl.text.trim().isEmpty ? null : nameEnCtrl.text.trim(),
-              ),
-              nameKu: Value(
-                nameKuCtrl.text.trim().isEmpty ? null : nameKuCtrl.text.trim(),
-              ),
-              isActive: Value(isActive),
-            ),
-          );
-        } else {
-          await db
-              .into(db.categories)
-              .insert(
-                CategoriesCompanion.insert(
-                  nameAr: nameArCtrl.text.trim(),
-                  nameEn: Value(
-                    nameEnCtrl.text.trim().isEmpty
-                        ? null
-                        : nameEnCtrl.text.trim(),
-                  ),
-                  nameKu: Value(
-                    nameKuCtrl.text.trim().isEmpty
-                        ? null
-                        : nameKuCtrl.text.trim(),
-                  ),
-                  isActive: Value(isActive),
-                ),
-              );
-        }
-        _loadCategories();
+        await _categoriesService.saveCategory(
+          db,
+          category: category,
+          payload: CategoryFormPayload(
+            nameAr: result.nameAr,
+            nameEn: result.nameEn,
+            nameKu: result.nameKu,
+            isActive: result.isActive,
+          ),
+        );
+        await _loadCategories();
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                category != null
-                    ? l10n.categoryUpdatedSuccessfully
-                    : l10n.categoryAddedSuccessfully,
-              ),
-              backgroundColor: AppColors.success,
-            ),
+          AppFeedback.success(
+            context,
+            category != null
+                ? l10n.categoryUpdatedSuccessfully
+                : l10n.categoryAddedSuccessfully,
           );
         }
       } catch (e) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('${l10n.errorOccurred}: $e'),
-              backgroundColor: AppColors.error,
-            ),
-          );
+          AppFeedback.error(context, '${l10n.errorOccurred}: $e');
         }
       }
     }
-
-    nameArCtrl.dispose();
-    nameEnCtrl.dispose();
-    nameKuCtrl.dispose();
   }
 
   Future<void> _deleteCategory(Category category) async {
@@ -219,10 +93,8 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
 
     if (confirmed) {
       final db = ref.read(databaseProvider);
-      await (db.delete(
-        db.categories,
-      )..where((c) => c.id.equals(category.id))).go();
-      _loadCategories();
+      await _categoriesService.deleteCategory(db, category.id);
+      await _loadCategories();
     }
   }
 
@@ -247,133 +119,18 @@ class _CategoriesScreenState extends ConsumerState<CategoriesScreen> {
             ],
           ),
           Expanded(
-            child: _categories.isEmpty
-                ? EmptyState(
-                    icon: Icons.category_outlined,
-                    title: l10n.noCategories,
-                    subtitle: l10n.startByAddingCategories,
-                  )
-                : Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 300,
-                            childAspectRatio: 2.2,
-                            crossAxisSpacing: 16,
-                            mainAxisSpacing: 16,
-                          ),
-                      itemCount: _categories.length,
-                      itemBuilder: (context, index) {
-                        final cat = _categories[index];
-                        return Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                            color: isDark
-                                ? AppColors.darkCard
-                                : AppColors.lightCard,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: isDark
-                                  ? AppColors.darkBorder
-                                  : AppColors.lightBorder,
-                            ),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 36,
-                                    height: 36,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.primary.withValues(
-                                        alpha: 0.1,
-                                      ),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: const Icon(
-                                      Icons.category_outlined,
-                                      color: AppColors.primary,
-                                      size: 18,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 10),
-                                  Expanded(
-                                    child: Text(
-                                      cat.nameAr,
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600,
-                                        color: isDark
-                                            ? AppColors.darkTextPrimary
-                                            : AppColors.lightTextPrimary,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                      horizontal: 8,
-                                      vertical: 3,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color:
-                                          (cat.isActive
-                                                  ? AppColors.success
-                                                  : AppColors.error)
-                                              .withValues(alpha: 0.1),
-                                      borderRadius: BorderRadius.circular(6),
-                                    ),
-                                    child: Text(
-                                      cat.isActive
-                                          ? l10n.active
-                                          : l10n.inactive,
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w600,
-                                        color: cat.isActive
-                                            ? AppColors.success
-                                            : AppColors.error,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.edit_outlined,
-                                      size: 18,
-                                    ),
-                                    onPressed: () => _showCategoryDialog(cat),
-                                    color: AppColors.primary,
-                                    tooltip: 'تعديل',
-                                    visualDensity: VisualDensity.compact,
-                                  ),
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.delete_outline,
-                                      size: 18,
-                                    ),
-                                    onPressed: () => _deleteCategory(cat),
-                                    color: AppColors.error,
-                                    tooltip: 'حذف',
-                                    visualDensity: VisualDensity.compact,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  ),
+            child: CategoriesGridSection(
+              categories: _categories,
+              isDark: isDark,
+              noCategoriesLabel: l10n.noCategories,
+              emptySubtitle: l10n.startByAddingCategories,
+              activeLabel: l10n.active,
+              inactiveLabel: l10n.inactive,
+              editTooltip: l10n.edit,
+              deleteTooltip: l10n.delete,
+              onEditCategory: _showCategoryDialog,
+              onDeleteCategory: _deleteCategory,
+            ),
           ),
         ],
       ),

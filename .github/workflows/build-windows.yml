@@ -39,13 +39,13 @@ jobs:
         run: flutter build windows --release
 
       - name: Package Windows build
-        run: Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath keenx-pos-windows.zip -Force
+        run: Compress-Archive -Path build/windows/x64/runner/Release/* -DestinationPath mada-pos-windows.zip -Force
 
       - name: Upload Windows build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: keenx-pos-windows
-          path: keenx-pos-windows.zip
+          name: mada-pos-windows
+          path: mada-pos-windows.zip
           retention-days: 30
 
       - name: Publish Windows zip to release
@@ -57,7 +57,7 @@ jobs:
           $title = "Windows Build (Latest)"
           gh release view $tag --repo $env:GITHUB_REPOSITORY *> $null
           if ($LASTEXITCODE -ne 0) {
-            gh release create $tag keenx-pos-windows.zip --repo $env:GITHUB_REPOSITORY --title $title --notes "Automated Windows build from GitHub Actions."
+            gh release create $tag mada-pos-windows.zip --repo $env:GITHUB_REPOSITORY --title $title --notes "Automated Windows build from GitHub Actions."
           } else {
-            gh release upload $tag keenx-pos-windows.zip --repo $env:GITHUB_REPOSITORY --clobber
+            gh release upload $tag mada-pos-windows.zip --repo $env:GITHUB_REPOSITORY --clobber
           }

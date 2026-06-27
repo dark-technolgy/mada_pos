@@ -1,3 +1,5 @@
+import '../../../core/utils/tax_settings.dart';
+
 class PosLinePricing {
   const PosLinePricing({
     required this.quantity,
@@ -23,6 +25,8 @@ class PosPricingSummary {
     required this.lineDiscountTotal,
     required this.subtotal,
     required this.invoiceDiscountAmount,
+    required this.taxableBase,
+    required this.taxAmount,
     required this.total,
   });
 
@@ -30,6 +34,8 @@ class PosPricingSummary {
   final double lineDiscountTotal;
   final double subtotal;
   final double invoiceDiscountAmount;
+  final double taxableBase;
+  final double taxAmount;
   final double total;
 }
 
@@ -58,6 +64,7 @@ class PosPricing {
     required Iterable<PosLinePricing> lines,
     required double invoiceDiscount,
     required String discountType,
+    TaxSettings taxSettings = const TaxSettings(),
   }) {
     final normalizedLines = lines
         .map(
@@ -87,12 +94,20 @@ class PosPricing {
       _ => clampDiscountAmount(invoiceDiscount, subtotal),
     };
 
+    final taxableBase = subtotal - invoiceDiscountAmount;
+    final taxBreakdown = TaxCalculator.compute(
+      taxableBase: taxableBase,
+      settings: taxSettings,
+    );
+
     return PosPricingSummary(
       grossSubtotal: grossSubtotal,
       lineDiscountTotal: lineDiscountTotal,
       subtotal: subtotal,
       invoiceDiscountAmount: invoiceDiscountAmount,
-      total: subtotal - invoiceDiscountAmount,
+      taxableBase: taxBreakdown.taxableBase,
+      taxAmount: taxBreakdown.taxAmount,
+      total: taxBreakdown.total,
     );
   }
 }

@@ -1,99 +1,122 @@
 import 'dart:async';
 import 'package:drift/drift.dart';
+import '../constants/app_constants.dart';
 import '../database/database.dart';
+import 'permission_service.dart';
+import 'pin_auth_service.dart';
 
-/// Manages user sessions with auto-logout functionality
+/// Manages user sessions with auto-logout and PIN lock.
 class SessionManager {
-  SessionManager(this._db);
+  SessionManager(this._db, {this.onUserChanged, this.onLockChanged});
 
   final AppDatabase _db;
+  final void Function(User?)? onUserChanged;
+  final void Function(bool locked)? onLockChanged;
   User? _currentUser;
+  Set<String> _permissions = {};
   Timer? _sessionTimer;
+  Timer? _pinLockTimer;
   int _timeoutMinutes = 30;
+  bool _isLocked = false;
 
   User? get currentUser => _currentUser;
   bool get isLoggedIn => _currentUser != null;
+  bool get isLocked => _isLocked;
   bool get isAdmin => _currentUser?.role == 'admin';
   bool get isManager => _currentUser?.role == 'manager' || isAdmin;
 
-  /// Check if the current user has a specific permission
   bool hasPermission(String permission) {
     if (_currentUser == null) return false;
-    final role = _currentUser!.role;
-
-    return switch (permission) {
-      'manage_users' => role == 'admin',
-      'manage_settings' => role == 'admin',
-      'view_reports' => role != 'viewer',
-      'manage_products' => role != 'viewer',
-      'manage_inventory' => role != 'viewer',
-      'manage_customers' => role != 'viewer',
-      'manage_suppliers' => role == 'admin' || role == 'manager',
-      'create_invoice' => role != 'viewer',
-      'void_invoice' => role == 'admin' || role == 'manager',
-      'manage_debts' => role != 'viewer',
-      'manage_expenses' => role == 'admin' || role == 'manager',
-      'view_profit' => role == 'admin' || role == 'manager',
-      'manage_backup' => role == 'admin',
-      'cash_register' => role != 'viewer',
-      _ => role == 'admin',
-    };
+    if (_currentUser!.role == 'admin') return true;
+    return _permissions.contains(permission);
   }
 
-  /// Start a session for a user
   Future<void> startSession(User user, {int? timeoutMinutes}) async {
+    _timeoutMinutes = timeoutMinutes ?? await _resolveTimeoutMinutes();
     _currentUser = user;
-    if (timeoutMinutes != null) _timeoutMinutes = timeoutMinutes;
+    _permissions = await const PermissionService().permissionsForRole(
+      _db,
+      user.role,
+    );
+    _isLocked = false;
     _resetTimer();
+    _resetPinLockTimer();
 
-    // Update last login
     await (_db.update(_db.users)..where((u) => u.id.equals(user.id))).write(
       UsersCompanion(lastLogin: Value(DateTime.now())),
     );
 
-    // Audit log
-    await _db
-        .into(_db.auditLog)
-        .insert(
-          AuditLogCompanion.insert(
-            userId: Value(user.id),
-            action: 'login',
-            targetTable: 'users',
-            recordId: Value(user.id),
-          ),
-        );
+    onUserChanged?.call(user);
+    onLockChanged?.call(false);
   }
 
-  /// End the current session
   Future<void> endSession() async {
-    if (_currentUser != null) {
-      await _db
-          .into(_db.auditLog)
-          .insert(
-            AuditLogCompanion.insert(
-              userId: Value(_currentUser!.id),
-              action: 'logout',
-              targetTable: 'users',
-              recordId: Value(_currentUser!.id),
-            ),
-          );
-    }
     _currentUser = null;
+    _permissions = {};
     _sessionTimer?.cancel();
     _sessionTimer = null;
+    _pinLockTimer?.cancel();
+    _pinLockTimer = null;
+    _isLocked = false;
+    onUserChanged?.call(null);
+    onLockChanged?.call(false);
   }
 
-  /// Reset the session timer (called on user activity)
+  void recordActivity() {
+    resetTimer();
+    if (_isLocked) return;
+    _resetPinLockTimer();
+  }
+
   void resetTimer() => _resetTimer();
+
+  void lockScreen() {
+    if (_currentUser == null || _isLocked) return;
+    _isLocked = true;
+    onLockChanged?.call(true);
+  }
+
+  Future<bool> unlockWithPin(String pin) async {
+    final user = _currentUser;
+    if (user == null || user.pin == null) return false;
+    if (!PinAuthService.verifyPin(pin, user.pin)) return false;
+    _isLocked = false;
+    _resetPinLockTimer();
+    onLockChanged?.call(false);
+    return true;
+  }
+
+  bool get canUsePinLock => _currentUser?.pin != null;
 
   void _resetTimer() {
     _sessionTimer?.cancel();
     _sessionTimer = Timer(Duration(minutes: _timeoutMinutes), () {
-      endSession();
+      unawaited(endSession());
     });
   }
 
-  /// Record an audit action
+  void _resetPinLockTimer() {
+    _pinLockTimer?.cancel();
+    if (_currentUser?.pin == null) return;
+    _pinLockTimer = Timer(
+      Duration(minutes: AppConstants.pinLockTimeoutMinutes),
+      lockScreen,
+    );
+  }
+
+  Future<int> _resolveTimeoutMinutes() async {
+    final timeoutSetting = await (_db.select(_db.settings)
+          ..where((setting) => setting.key.equals('session_timeout_minutes')))
+        .getSingleOrNull();
+
+    final configured = int.tryParse(timeoutSetting?.value ?? '');
+    if (configured == null || configured <= 0) {
+      return AppConstants.sessionTimeoutMinutes;
+    }
+
+    return configured;
+  }
+
   Future<void> logAction({
     required String action,
     required String targetTable,
@@ -102,23 +125,11 @@ class SessionManager {
     String? newValues,
     String? details,
   }) async {
-    if (_currentUser == null) return;
-    await _db
-        .into(_db.auditLog)
-        .insert(
-          AuditLogCompanion.insert(
-            userId: Value(_currentUser!.id),
-            action: action,
-            targetTable: targetTable,
-            recordId: Value.absentIfNull(recordId),
-            oldValues: Value.absentIfNull(oldValues),
-            newValues: Value.absentIfNull(newValues),
-            details: Value.absentIfNull(details),
-          ),
-        );
+    // Audit log removed to simplify system.
   }
 
   void dispose() {
     _sessionTimer?.cancel();
+    _pinLockTimer?.cancel();
   }
 }

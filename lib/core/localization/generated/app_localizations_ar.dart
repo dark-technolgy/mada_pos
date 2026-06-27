@@ -498,7 +498,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get stockTransfer => 'تحويل مخزون';
 
   @override
-  String get stockAdjustment => 'تعديل مخزون';
+  String get stockAdjustment => 'تسوية المخزون';
 
   @override
   String get stockTake => 'جرد المخزون';
@@ -1206,4 +1206,746 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get heldInvoiceRestored => 'تم استرجاع الفاتورة المعلقة';
+
+  @override
+  String get invoiceCounterparty => 'العميل / المورد';
+
+  @override
+  String get newPurchaseInvoice => 'فاتورة شراء جديدة';
+
+  @override
+  String get recordPurchase => 'تسجيل الشراء';
+
+  @override
+  String get addLine => 'إضافة سطر';
+
+  @override
+  String get purchaseRecorded => 'تم تسجيل فاتورة الشراء';
+
+  @override
+  String get invoiceDiscountOptional => 'خصم الفاتورة (اختياري)';
+
+  @override
+  String get removeLine => 'حذف السطر';
+
+  @override
+  String get supplierNotSpecified => 'بدون مورد';
+
+  @override
+  String get adjustmentWarehouse => 'المخزن';
+
+  @override
+  String get adjustmentDeltaHint => 'التغيير (+ إضافة، − خصم)';
+
+  @override
+  String get adjustmentNotesOptional => 'ملاحظات (اختياري)';
+
+  @override
+  String get applyAdjustment => 'تطبيق';
+
+  @override
+  String get adjustmentSaved => 'تم تحديث المخزون';
+
+  @override
+  String get saleReturnTitle => 'مرتجع مبيعات';
+
+  @override
+  String get returnQtyHint => 'كمية المرتجع';
+
+  @override
+  String get returnSubmit => 'تسجيل المرتجع';
+
+  @override
+  String get returnRecorded => 'تم تسجيل المرتجع';
+
+  @override
+  String get originalSale => 'فاتورة البيع الأصلية';
+
+  @override
+  String remainingReturnable(Object qty) {
+    return 'المتبقي: $qty';
+  }
+
+  @override
+  String get purchaseReturnTitle => 'مرتجع مشتريات';
+
+  @override
+  String get originalPurchase => 'فاتورة الشراء الأصلية';
+
+  @override
+  String get openingBalance => 'رصيد افتتاحي';
+
+  @override
+  String get expectedInDrawer => 'المتوقع في الصندوق';
+
+  @override
+  String get countedCash => 'النقد المحسوب';
+
+  @override
+  String get openCashRegister => 'فتح الوردية';
+
+  @override
+  String get closeCashRegister => 'إغلاق الوردية';
+
+  @override
+  String get cashRegisterOpen => 'وردية مفتوحة';
+
+  @override
+  String get cashRegisterClosed => 'وردية مغلقة';
+
+  @override
+  String get noOpenCashRegister => 'لا توجد وردية مفتوحة';
+
+  @override
+  String get cashRegisterAlreadyOpen => 'يوجد بالفعل وردية مفتوحة';
+
+  @override
+  String get invalidCashAmount => 'أدخل مبلغاً صالحاً';
+
+  @override
+  String get backupIntervalHours => 'فترة النسخ (ساعات)';
+
+  @override
+  String get autoBackupEnabled => 'نسخ احتياطي تلقائي';
+
+  @override
+  String get autoBackupRanInBackground => 'تم إنشاء نسخة احتياطية مجدولة';
+
+  @override
+  String get taxRatePercent => 'نسبة الضريبة (%)';
+
+  @override
+  String get taxIncludedInPrice => 'الأسعار تشمل الضريبة';
+
+  @override
+  String get voidInvoice => 'إلغاء الفاتورة';
+
+  @override
+  String get voidInvoiceTitle => 'إلغاء الفاتورة؟';
+
+  @override
+  String get voidInvoiceMessage =>
+      'سيتم إلغاء الفاتورة وعكس حركات المخزون. لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get voidInvoiceSuccess => 'تم إلغاء الفاتورة بنجاح';
+
+  @override
+  String get cannotVoidInvoice => 'لا يمكن إلغاء هذه الفاتورة';
+
+  @override
+  String get warehouses => 'المخازن';
+
+  @override
+  String get addWarehouse => 'إضافة مخزن';
+
+  @override
+  String get editWarehouse => 'تعديل مخزن';
+
+  @override
+  String get warehouseName => 'اسم المخزن';
+
+  @override
+  String get defaultWarehouse => 'المخزن الافتراضي';
+
+  @override
+  String get noWarehousesYet => 'لا توجد مخازن بعد';
+
+  @override
+  String get deleteWarehouseTitle => 'حذف المخزن؟';
+
+  @override
+  String deleteWarehouseMessage(Object name) {
+    return 'حذف المخزن \"$name\"؟';
+  }
+
+  @override
+  String get cannotDeleteWarehouseHasStock =>
+      'لا يمكن حذف مخزن يحتوي على كميات';
+
+  @override
+  String get cannotDeleteDefaultWarehouse => 'لا يمكن حذف المخزن الافتراضي';
+
+  @override
+  String get auditLog => 'سجل المراجعة';
+
+  @override
+  String get allActions => 'كل الإجراءات';
+
+  @override
+  String get noAuditEntries => 'لا توجد سجلات بعد';
+
+  @override
+  String get auditActionLogin => 'تسجيل دخول';
+
+  @override
+  String get auditActionLogout => 'تسجيل خروج';
+
+  @override
+  String get auditActionVoid => 'إلغاء فاتورة';
+
+  @override
+  String get auditActionCreate => 'إنشاء';
+
+  @override
+  String get auditActionUpdate => 'تحديث';
+
+  @override
+  String get auditActionDelete => 'حذف';
+
+  @override
+  String get refresh => 'تحديث';
+
+  @override
+  String get quotes => 'عروض الأسعار';
+
+  @override
+  String get newQuote => 'عرض سعر جديد';
+
+  @override
+  String get editQuote => 'تعديل عرض السعر';
+
+  @override
+  String get noQuotesYet => 'لا توجد عروض أسعار بعد';
+
+  @override
+  String get quoteSaved => 'تم حفظ عرض السعر';
+
+  @override
+  String get convertToSale => 'تحويل إلى بيع';
+
+  @override
+  String get convertQuoteTitle => 'تحويل عرض السعر إلى بيع؟';
+
+  @override
+  String convertQuoteMessage(Object number) {
+    return 'تحويل عرض السعر $number إلى فاتورة بيع؟';
+  }
+
+  @override
+  String quoteConverted(Object number) {
+    return 'تم إنشاء البيع: $number';
+  }
+
+  @override
+  String get cannotConvertQuote => 'لا يمكن تحويل هذا العرض';
+
+  @override
+  String get deleteQuoteTitle => 'حذف عرض السعر؟';
+
+  @override
+  String deleteQuoteMessage(Object number) {
+    return 'حذف عرض السعر $number؟';
+  }
+
+  @override
+  String exportedTo(Object path) {
+    return 'تم التصدير إلى $path';
+  }
+
+  @override
+  String get units => 'الوحدات';
+
+  @override
+  String get addUnit => 'إضافة وحدة';
+
+  @override
+  String get editUnit => 'تعديل وحدة';
+
+  @override
+  String get abbreviation => 'الاختصار';
+
+  @override
+  String get nameAr => 'الاسم (عربي)';
+
+  @override
+  String get nameEn => 'الاسم (إنجليزي)';
+
+  @override
+  String get deleteUnitTitle => 'حذف الوحدة؟';
+
+  @override
+  String deleteUnitMessage(Object name) {
+    return 'حذف الوحدة \"$name\"؟';
+  }
+
+  @override
+  String get cannotDeleteUnitInUse => 'لا يمكن حذف وحدة مستخدمة في منتجات';
+
+  @override
+  String get passwordTooShort => 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+
+  @override
+  String get passwordNoUpper => 'يجب أن تحتوي على حرف كبير';
+
+  @override
+  String get passwordNoLower => 'يجب أن تحتوي على حرف صغير';
+
+  @override
+  String get passwordNoDigit => 'يجب أن تحتوي على رقم';
+
+  @override
+  String get activateLicense => 'تفعيل الترخيص';
+
+  @override
+  String get licenseExpiredMessage =>
+      'انتهت الفترة التجريبية. أدخل مفتاح الترخيص للمتابعة.';
+
+  @override
+  String get licenseTrialMessage =>
+      'يمكنك التجربة مجاناً أو إدخال مفتاح الترخيص.';
+
+  @override
+  String get deviceId => 'معرّف الجهاز';
+
+  @override
+  String get copyDeviceId => 'نسخ المعرّف';
+
+  @override
+  String get licenseKey => 'مفتاح الترخيص';
+
+  @override
+  String get invalidLicenseKey => 'مفتاح غير صالح لهذا الجهاز';
+
+  @override
+  String get activate => 'تفعيل';
+
+  @override
+  String get continueTrial => 'متابعة التجربة';
+
+  @override
+  String trialDaysLeft(int days) {
+    return 'أيام متبقية في التجربة: $days';
+  }
+
+  @override
+  String get about => 'حول البرنامج';
+
+  @override
+  String get userManual => 'دليل المستخدم';
+
+  @override
+  String get openUserManualHint => 'فتح ملف PDF من مجلد docs';
+
+  @override
+  String get manualNotFound => 'لم يُعثر على دليل المستخدم في مجلد التثبيت';
+
+  @override
+  String get openLogs => 'سجل الأخطاء';
+
+  @override
+  String get logsFolder => 'مجلد السجلات';
+
+  @override
+  String get copied => 'تم النسخ';
+
+  @override
+  String get companyLogo => 'شعار الشركة';
+
+  @override
+  String get pickCompanyLogo => 'اختيار شعار';
+
+  @override
+  String get smartInsights => 'رؤى ذكية';
+
+  @override
+  String get smartSuggestions => 'اقتراحات ذكية';
+
+  @override
+  String get frequentlyBoughtTogether => 'يُشترى معاً عادةً';
+
+  @override
+  String get salesTrendUp => 'مبيعات قوية اليوم';
+
+  @override
+  String salesTrendUpMessage(int percent) {
+    return 'المبيعات أعلى من أمس بنسبة $percent%';
+  }
+
+  @override
+  String get salesTrendDown => 'انخفاض في المبيعات';
+
+  @override
+  String salesTrendDownMessage(int percent) {
+    return 'المبيعات أقل من أمس بنسبة $percent%';
+  }
+
+  @override
+  String get slowDayInsight => 'يوم هادئ';
+
+  @override
+  String get slowDayInsightMessage =>
+      'مبيعات اليوم أقل من المتوسط الأسبوعي — فكّر في عروض أو متابعة العملاء';
+
+  @override
+  String get lowStockAlert => 'تنبيه مخزون';
+
+  @override
+  String lowStockAlertMessage(int count) {
+    return '$count منتج بحاجة لإعادة طلب';
+  }
+
+  @override
+  String get overdueDebtsInsight => 'ديون متأخرة';
+
+  @override
+  String overdueDebtsInsightMessage(int count) {
+    return '$count دين تجاوز تاريخ الاستحقاق';
+  }
+
+  @override
+  String get topProductToday => 'الأكثر مبيعاً اليوم';
+
+  @override
+  String topProductTodayMessage(String name) {
+    return '$name في الصدارة — تأكد من توفر المخزون';
+  }
+
+  @override
+  String get businessHealthy => 'أداء جيد';
+
+  @override
+  String get businessHealthyMessage =>
+      'لا توجد تنبيهات عاجلة — استمر في العمل بكفاءة';
+
+  @override
+  String get topSellingToday => 'الأكثر مبيعاً';
+
+  @override
+  String get topSellersQuickPick => 'الأكثر مبيعاً (7 أيام)';
+
+  @override
+  String get lowStockBadge => 'مخزون منخفض';
+
+  @override
+  String stockLeft(String qty) {
+    return 'المتبقي: $qty';
+  }
+
+  @override
+  String get insufficientStock => 'الكمية غير كافية في المخزون';
+
+  @override
+  String insufficientStockMessage(
+    String name,
+    String available,
+    String requested,
+  ) {
+    return '$name: المتاح $available، المطلوب $requested';
+  }
+
+  @override
+  String get saleGuardTitle => 'تنبيه بيع';
+
+  @override
+  String saleGuardBelowCost(String name) {
+    return 'سعر البيع أقل من سعر الشراء: $name';
+  }
+
+  @override
+  String saleGuardHighDiscount(String percent) {
+    return 'خصم إجمالي $percent% — أعلى من الحد المعتاد';
+  }
+
+  @override
+  String get saleGuardUnusualTotal =>
+      'قيمة الفاتورة أعلى بكثير من متوسط المبيعات';
+
+  @override
+  String get saleGuardConfirm => 'متابعة البيع رغم التنبيهات؟';
+
+  @override
+  String get proceedAnyway => 'متابعة على أي حال';
+
+  @override
+  String get reorderSuggestion => 'كمية إعادة الطلب';
+
+  @override
+  String get staleHeldInvoicesInsight => 'فواتير معلّقة قديمة';
+
+  @override
+  String staleHeldInvoicesInsightMessage(int count) {
+    return '$count فاتورة معلّقة منذ أكثر من 24 ساعة — استرجعها أو أكملها';
+  }
+
+  @override
+  String get appInitializing => 'جاري تحميل KeenX POS...';
+
+  @override
+  String get appInitializingHint =>
+      'قد يُطلب تثبيت مكتبات Windows عند أول تشغيل';
+
+  @override
+  String get appInitFailed => 'تعذّر تهيئة التطبيق. أعد تشغيل البرنامج.';
+
+  @override
+  String get commandPaletteTitle => 'انتقال سريع';
+
+  @override
+  String get commandPaletteSearchHint => 'ابحث عن صفحة...';
+
+  @override
+  String get commandPaletteNoResults => 'لا توجد نتائج';
+
+  @override
+  String get changePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get retry => 'إعادة المحاولة';
+
+  @override
+  String get keyboardShortcutsTitle => 'اختصارات لوحة المفاتيح';
+
+  @override
+  String get shortcutFocusSearch => 'التركيز على بحث المنتجات';
+
+  @override
+  String get shortcutFocusBarcode => 'التركيز على حقل الباركود';
+
+  @override
+  String get shortcutCompleteSale => 'إتمام البيع';
+
+  @override
+  String get shortcutClearCart => 'تفريغ السلة (مع تأكيد)';
+
+  @override
+  String get shortcutShowHelp => 'عرض هذه المساعدة';
+
+  @override
+  String get clearCartTitle => 'تفريغ السلة؟';
+
+  @override
+  String get clearCartMessage =>
+      'سيتم إزالة جميع المنتجات من عملية البيع الحالية.';
+
+  @override
+  String get globalSearchHint => 'بحث في المنتجات والعملاء والفواتير...';
+
+  @override
+  String get globalSearchProducts => 'المنتجات';
+
+  @override
+  String get globalSearchCustomers => 'العملاء';
+
+  @override
+  String get globalSearchInvoices => 'الفواتير';
+
+  @override
+  String get last7Days => 'آخر 7 أيام';
+
+  @override
+  String get last30Days => 'آخر 30 يوماً';
+
+  @override
+  String get resetToDefaults => 'استعادة الافتراضي';
+
+  @override
+  String get dashboardCustomize => 'تخصيص لوحة التحكم';
+
+  @override
+  String get dashboardShowStats => 'بطاقات الإحصائيات';
+
+  @override
+  String get dashboardShowInsights => 'الرؤى الذكية';
+
+  @override
+  String get dashboardShowRecentTransactions => 'آخر المعاملات';
+
+  @override
+  String get dashboardShowLowStock => 'تنبيهات المخزون المنخفض';
+
+  @override
+  String get splitPaymentEmpty => 'أدخل مبلغاً واحداً على الأقل';
+
+  @override
+  String get splitPaymentMismatch =>
+      'مجموع الدفعات يجب أن يساوي إجمالي الفاتورة';
+
+  @override
+  String get splitPaymentEntered => 'المُدخل';
+
+  @override
+  String get splitFillCash => 'الباقي نقداً';
+
+  @override
+  String get lockScreenTitle => 'الشاشة مقفلة';
+
+  @override
+  String get enterPin => 'أدخل رمز PIN';
+
+  @override
+  String get invalidPin => 'رمز PIN غير صحيح';
+
+  @override
+  String get pinInvalidFormat => 'يجب أن يكون PIN من 4 إلى 6 أرقام';
+
+  @override
+  String get unlock => 'فتح القفل';
+
+  @override
+  String get setUserPin => 'تعيين PIN';
+
+  @override
+  String get clearUserPin => 'إزالة PIN';
+
+  @override
+  String get pinSetSuccess => 'تم حفظ PIN';
+
+  @override
+  String get pinClearedSuccess => 'تم إزالة PIN';
+
+  @override
+  String get notifications => 'التنبيهات';
+
+  @override
+  String get noNotifications => 'لا توجد تنبيهات';
+
+  @override
+  String get notificationLowStock => 'منتجات بمخزون منخفض';
+
+  @override
+  String get notificationOverdueDebts => 'ديون متأخرة';
+
+  @override
+  String get notificationStaleHeld => 'فواتير معلّقة قديمة';
+
+  @override
+  String get notificationSalesDown => 'مبيعات أقل من المعتاد';
+
+  @override
+  String get overdueDebtsCount => 'ديون متأخرة';
+
+  @override
+  String get heldInvoicesCount => 'فواتير معلّقة';
+
+  @override
+  String get grossMargin => 'هامش إجمالي';
+
+  @override
+  String get collectionRate => 'نسبة التحصيل';
+
+  @override
+  String get topCustomerToday => 'أفضل عميل اليوم';
+
+  @override
+  String get rolePermissions => 'صلاحيات الأدوار';
+
+  @override
+  String get rolePermissionsHint => 'حدد ما يمكن لكل دور الوصول إليه';
+
+  @override
+  String get customerSpecialPrices => 'أسعار خاصة';
+
+  @override
+  String get customerPriceSaved => 'تم حفظ السعر الخاص';
+
+  @override
+  String get lockScreenNow => 'قفل الشاشة';
+
+  @override
+  String get paymentSplit => 'تقسيم';
+
+  @override
+  String get compactLayout => 'واجهة مدمجة';
+
+  @override
+  String get compactLayoutHint => 'تقليل المسافات في القوائم والجداول';
+
+  @override
+  String get shortcutsGlobalSection => 'عام';
+
+  @override
+  String get shortcutsPosSection => 'نقطة البيع';
+
+  @override
+  String get shortcutsPosActiveHint => 'متاحة عند فتح شاشة POS';
+
+  @override
+  String get branches => 'الفروع';
+
+  @override
+  String get branchesHint =>
+      'أضف فروع الشركة واختر الفرع النشط من الشريط الجانبي';
+
+  @override
+  String get addBranch => 'إضافة فرع';
+
+  @override
+  String get editBranch => 'تعديل فرع';
+
+  @override
+  String get deleteBranch => 'حذف فرع';
+
+  @override
+  String deleteBranchMessage(String name) {
+    return 'حذف الفرع «$name»؟';
+  }
+
+  @override
+  String get branchName => 'اسم الفرع';
+
+  @override
+  String get branchCode => 'رمز الفرع';
+
+  @override
+  String get defaultBranch => 'الفرع الافتراضي';
+
+  @override
+  String get noBranches => 'لا توجد فروع';
+
+  @override
+  String get cannotDeleteDefaultBranch => 'لا يمكن حذف الفرع الافتراضي';
+
+  @override
+  String get cannotDeleteBranchHasInvoices => 'الفرع مرتبط بفواتير';
+
+  @override
+  String get activeBranch => 'الفرع النشط';
+
+  @override
+  String get accountStatement => 'كشف حساب';
+
+  @override
+  String get printStatement => 'طباعة الكشف';
+
+  @override
+  String get period => 'الفترة';
+
+  @override
+  String get closingBalance => 'رصيد ختامي';
+
+  @override
+  String get debit => 'مدين';
+
+  @override
+  String get credit => 'دائن';
+
+  @override
+  String get description => 'البيان';
+
+  @override
+  String get cloudBackupEnabled => 'نسخ إلى مجلد سحابي';
+
+  @override
+  String get cloudBackupPathHint => 'اختر مجلد OneDrive أو Dropbox على جهازك';
+
+  @override
+  String get chooseCloudFolder => 'اختيار المجلد';
+
+  @override
+  String get welcomeToMada => 'مرحباً بك في KeenX';
+
+  @override
+  String get setupWizardSubtitle =>
+      'سنقوم بضبط الإعدادات الأساسية لبرنامجك في بضع خطوات بسيطة';
+
+  @override
+  String get startUsingApp => 'ابدأ استخدام البرنامج';
+
+  @override
+  String get allSet => 'جاهز تماماً!';
+
+  @override
+  String get readyToStartMessage =>
+      'تم حفظ الإعدادات بنجاح. يمكنك الآن تسجيل الدخول والبدء بالبيع.';
 }

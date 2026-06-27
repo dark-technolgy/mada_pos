@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
@@ -30,10 +32,15 @@ class InvoicePrintPayload {
     required this.subtotal,
     required this.itemDiscountAmount,
     required this.discountAmount,
+    this.taxAmount = 0,
     required this.total,
     required this.items,
     this.customerName,
     this.cashierName,
+    this.companyName,
+    this.companyPhone,
+    this.companyAddress,
+    this.companyLogoPath,
   });
 
   final InvoicePrintLabels labels;
@@ -44,10 +51,15 @@ class InvoicePrintPayload {
   final double subtotal;
   final double itemDiscountAmount;
   final double discountAmount;
+  final double taxAmount;
   final double total;
   final List<InvoicePrintItem> items;
   final String? customerName;
   final String? cashierName;
+  final String? companyName;
+  final String? companyPhone;
+  final String? companyAddress;
+  final String? companyLogoPath;
 }
 
 class InvoicePrintLabels {
@@ -66,6 +78,7 @@ class InvoicePrintLabels {
     required this.subtotalLabel,
     required this.itemDiscountsLabel,
     required this.invoiceDiscountSummaryLabel,
+    required this.taxLabel,
     required this.totalLabel,
     required this.walkInCustomerLabel,
   });
@@ -84,6 +97,7 @@ class InvoicePrintLabels {
   final String subtotalLabel;
   final String itemDiscountsLabel;
   final String invoiceDiscountSummaryLabel;
+  final String taxLabel;
   final String totalLabel;
   final String walkInCustomerLabel;
 }
@@ -92,6 +106,17 @@ class InvoicePrintService {
   static Future<void> printInvoice(InvoicePrintPayload payload) async {
     final labels = payload.labels;
     final document = pw.Document();
+    pw.ImageProvider? logo;
+    final logoPath = payload.companyLogoPath;
+    if (logoPath != null && logoPath.isNotEmpty) {
+      final file = File(logoPath);
+      if (await file.exists()) {
+        final bytes = await file.readAsBytes();
+        logo = pw.MemoryImage(bytes);
+      }
+    }
+
+    final companyTitle = payload.companyName ?? 'Mada Smart POS';
 
     document.addPage(
       pw.MultiPage(
@@ -105,13 +130,27 @@ class InvoicePrintService {
               pw.Column(
                 crossAxisAlignment: pw.CrossAxisAlignment.start,
                 children: [
+                  if (logo != null) ...[
+                    pw.SizedBox(
+                      height: 48,
+                      child: pw.Image(logo, fit: pw.BoxFit.contain),
+                    ),
+                    pw.SizedBox(height: 6),
+                  ],
                   pw.Text(
-                    'KeenX POS',
+                    companyTitle,
                     style: pw.TextStyle(
                       fontSize: 22,
                       fontWeight: pw.FontWeight.bold,
                     ),
                   ),
+                  if ((payload.companyPhone ?? '').isNotEmpty)
+                    pw.Text(payload.companyPhone!),
+                  if ((payload.companyAddress ?? '').isNotEmpty)
+                    pw.Text(
+                      payload.companyAddress!,
+                      style: const pw.TextStyle(fontSize: 9),
+                    ),
                   pw.SizedBox(height: 4),
                   pw.Text(labels.saleInvoiceTitle),
                   pw.Text(
@@ -208,6 +247,11 @@ class InvoicePrintService {
                     _summaryRow(
                       labels.invoiceDiscountSummaryLabel,
                       _formatMoney(payload.discountAmount),
+                    ),
+                  if (payload.taxAmount > 0)
+                    _summaryRow(
+                      labels.taxLabel,
+                      _formatMoney(payload.taxAmount),
                     ),
                   pw.Divider(),
                   _summaryRow(

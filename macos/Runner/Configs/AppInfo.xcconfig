@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = keenx_pos
+PRODUCT_NAME = mada_pos
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.keenx.keenxPos
+PRODUCT_BUNDLE_IDENTIFIER = com.mada.madaPos
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2026 com.keenx. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2026 com.mada. All rights reserved.

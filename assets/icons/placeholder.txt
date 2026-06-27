@@ -1,1 +1,0 @@
-Placeholder asset file to keep this directory tracked across platforms.

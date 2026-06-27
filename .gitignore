@@ -4,6 +4,9 @@
 *.pyc
 *.swp
 .DS_Store
+# macOS AppleDouble resource forks (breaks Dart analyzer/tests on other OSes)
+._*
+
 .atom/
 .build/
 .buildlog/
@@ -32,6 +35,11 @@ migrate_working_dir/
 .pub/
 /build/
 /coverage/
+
+# Release artifacts
+/dist/
+/build/symbols/
+/tool/.cache/
 
 # Symbolication related
 app.*.symbols

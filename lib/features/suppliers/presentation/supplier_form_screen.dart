@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:drift/drift.dart' show Value;
 import '../../../core/localization/l10n_ext.dart';
 import '../../../core/theme/app_colors.dart';
-import '../../../core/database/database.dart';
 import '../../../shared/providers/app_providers.dart';
+import '../../../shared/widgets/app_feedback.dart';
+import '../application/supplier_form_service.dart';
+import 'widgets/supplier_form_sections.dart';
 
 class SupplierFormScreen extends ConsumerStatefulWidget {
   final int? supplierId;
@@ -26,6 +27,7 @@ class _SupplierFormScreenState extends ConsumerState<SupplierFormScreen> {
   bool _isActive = true;
   bool _isSaving = false;
   bool _isEditing = false;
+  final SupplierFormService _supplierFormService = const SupplierFormService();
 
   @override
   void initState() {
@@ -47,9 +49,10 @@ class _SupplierFormScreenState extends ConsumerState<SupplierFormScreen> {
 
   Future<void> _loadSupplier() async {
     final db = ref.read(databaseProvider);
-    final supplier = await (db.select(
-      db.suppliers,
-    )..where((s) => s.id.equals(widget.supplierId!))).getSingleOrNull();
+    final supplier = await _supplierFormService.loadSupplier(
+      db,
+      widget.supplierId!,
+    );
     if (supplier != null) {
       _nameCtrl.text = supplier.name;
       _companyCtrl.text = supplier.companyName ?? '';
@@ -68,91 +71,36 @@ class _SupplierFormScreenState extends ConsumerState<SupplierFormScreen> {
 
     try {
       final db = ref.read(databaseProvider);
-      if (_isEditing) {
-        await (db.update(
-          db.suppliers,
-        )..where((s) => s.id.equals(widget.supplierId!))).write(
-          SuppliersCompanion(
-            name: Value(_nameCtrl.text.trim()),
-            companyName: Value(
-              _companyCtrl.text.trim().isEmpty
-                  ? null
-                  : _companyCtrl.text.trim(),
-            ),
-            phone: Value(
-              _phoneCtrl.text.trim().isEmpty ? null : _phoneCtrl.text.trim(),
-            ),
-            email: Value(
-              _emailCtrl.text.trim().isEmpty ? null : _emailCtrl.text.trim(),
-            ),
-            address: Value(
-              _addressCtrl.text.trim().isEmpty
-                  ? null
-                  : _addressCtrl.text.trim(),
-            ),
-            notes: Value(
-              _notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim(),
-            ),
-            isActive: Value(_isActive),
-            updatedAt: Value(DateTime.now()),
-          ),
-        );
-      } else {
-        await db
-            .into(db.suppliers)
-            .insert(
-              SuppliersCompanion.insert(
-                name: _nameCtrl.text.trim(),
-                companyName: Value(
-                  _companyCtrl.text.trim().isEmpty
-                      ? null
-                      : _companyCtrl.text.trim(),
-                ),
-                phone: Value(
-                  _phoneCtrl.text.trim().isEmpty
-                      ? null
-                      : _phoneCtrl.text.trim(),
-                ),
-                email: Value(
-                  _emailCtrl.text.trim().isEmpty
-                      ? null
-                      : _emailCtrl.text.trim(),
-                ),
-                address: Value(
-                  _addressCtrl.text.trim().isEmpty
-                      ? null
-                      : _addressCtrl.text.trim(),
-                ),
-                notes: Value(
-                  _notesCtrl.text.trim().isEmpty
-                      ? null
-                      : _notesCtrl.text.trim(),
-                ),
-              ),
-            );
-      }
+      await _supplierFormService.saveSupplier(
+        db,
+        supplierId: widget.supplierId,
+        payload: SupplierFormPayload(
+          name: _nameCtrl.text.trim(),
+          companyName: _companyCtrl.text.trim().isEmpty
+              ? null
+              : _companyCtrl.text.trim(),
+          phone: _phoneCtrl.text.trim().isEmpty ? null : _phoneCtrl.text.trim(),
+          email: _emailCtrl.text.trim().isEmpty ? null : _emailCtrl.text.trim(),
+          address: _addressCtrl.text.trim().isEmpty
+              ? null
+              : _addressCtrl.text.trim(),
+          notes: _notesCtrl.text.trim().isEmpty ? null : _notesCtrl.text.trim(),
+          isActive: _isActive,
+        ),
+      );
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              _isEditing
-                  ? l10n.supplierUpdatedSuccessfully
-                  : l10n.supplierAddedSuccessfully,
-            ),
-            backgroundColor: AppColors.success,
-          ),
+        AppFeedback.success(
+          context,
+          _isEditing
+              ? l10n.supplierUpdatedSuccessfully
+              : l10n.supplierAddedSuccessfully,
         );
         context.go('/suppliers');
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('${l10n.error}: $e'),
-            backgroundColor: AppColors.error,
-          ),
-        );
+        AppFeedback.error(context, '${l10n.error}: $e');
       }
     } finally {
       setState(() => _isSaving = false);
@@ -168,152 +116,37 @@ class _SupplierFormScreenState extends ConsumerState<SupplierFormScreen> {
       backgroundColor: isDark ? AppColors.darkBg : AppColors.lightBg,
       body: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.all(24),
-            child: Row(
-              children: [
-                IconButton(
-                  onPressed: () => context.go('/suppliers'),
-                  icon: const Icon(Icons.arrow_back_rounded),
-                ),
-                const SizedBox(width: 12),
-                Text(
-                  _isEditing ? l10n.editSupplier : l10n.newSupplier,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w700,
-                    color: isDark
-                        ? AppColors.darkTextPrimary
-                        : AppColors.lightTextPrimary,
-                  ),
-                ),
-                const Spacer(),
-                OutlinedButton(
-                  onPressed: () => context.go('/suppliers'),
-                  child: Text(l10n.cancel),
-                ),
-                const SizedBox(width: 12),
-                ElevatedButton.icon(
-                  onPressed: _isSaving ? null : _save,
-                  icon: _isSaving
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: Colors.white,
-                          ),
-                        )
-                      : const Icon(Icons.save_rounded, size: 18),
-                  label: Text(_isSaving ? l10n.saving : l10n.save),
-                ),
-              ],
-            ),
+          SupplierFormHeader(
+            isDark: isDark,
+            title: _isEditing ? l10n.editSupplier : l10n.newSupplier,
+            cancelLabel: l10n.cancel,
+            saveLabel: l10n.save,
+            savingLabel: l10n.saving,
+            isSaving: _isSaving,
+            onCancel: () => context.go('/suppliers'),
+            onSave: _save,
           ),
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Container(
-                constraints: const BoxConstraints(maxWidth: 600),
-                child: Form(
-                  key: _formKey,
-                  child: Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: isDark ? AppColors.darkCard : AppColors.lightCard,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                        color: isDark
-                            ? AppColors.darkBorder
-                            : AppColors.lightBorder,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          l10n.supplierInfo,
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            color: isDark
-                                ? AppColors.darkTextPrimary
-                                : AppColors.lightTextPrimary,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: _nameCtrl,
-                                decoration: InputDecoration(
-                                  labelText: '${l10n.supplierNameRequired} *',
-                                ),
-                                validator: (v) => v == null || v.trim().isEmpty
-                                    ? l10n.fieldRequired
-                                    : null,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: TextFormField(
-                                controller: _companyCtrl,
-                                decoration: InputDecoration(
-                                  labelText: l10n.companyName,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: TextFormField(
-                                controller: _phoneCtrl,
-                                decoration: InputDecoration(
-                                  labelText: l10n.phone,
-                                ),
-                                keyboardType: TextInputType.phone,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: TextFormField(
-                                controller: _emailCtrl,
-                                decoration: InputDecoration(
-                                  labelText: l10n.email,
-                                ),
-                                keyboardType: TextInputType.emailAddress,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        TextFormField(
-                          controller: _addressCtrl,
-                          decoration: InputDecoration(labelText: l10n.address),
-                          maxLines: 2,
-                        ),
-                        const SizedBox(height: 12),
-                        TextFormField(
-                          controller: _notesCtrl,
-                          decoration: InputDecoration(labelText: l10n.notes),
-                          maxLines: 3,
-                        ),
-                        const SizedBox(height: 12),
-                        SwitchListTile(
-                          title: Text(l10n.active),
-                          value: _isActive,
-                          onChanged: (v) => setState(() => _isActive = v),
-                          contentPadding: EdgeInsets.zero,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+            child: SupplierFormContent(
+              formKey: _formKey,
+              isDark: isDark,
+              sectionTitle: l10n.supplierInfo,
+              nameLabel: '${l10n.supplierNameRequired} *',
+              companyNameLabel: l10n.companyName,
+              phoneLabel: l10n.phone,
+              emailLabel: l10n.email,
+              addressLabel: l10n.address,
+              notesLabel: l10n.notes,
+              activeLabel: l10n.active,
+              requiredLabel: l10n.fieldRequired,
+              nameController: _nameCtrl,
+              companyController: _companyCtrl,
+              phoneController: _phoneCtrl,
+              emailController: _emailCtrl,
+              addressController: _addressCtrl,
+              notesController: _notesCtrl,
+              isActive: _isActive,
+              onActiveChanged: (value) => setState(() => _isActive = value),
             ),
           ),
         ],

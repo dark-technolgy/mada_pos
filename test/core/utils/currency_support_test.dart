@@ -1,8 +1,8 @@
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:keenx_pos/core/database/database.dart';
-import 'package:keenx_pos/core/utils/currency_conversion.dart';
-import 'package:keenx_pos/core/utils/currency_formatter.dart';
+import 'package:mada_pos/core/database/database.dart';
+import 'package:mada_pos/core/utils/currency_conversion.dart';
+import 'package:mada_pos/core/utils/currency_formatter.dart';
 
 Currency _currency({
   required int id,

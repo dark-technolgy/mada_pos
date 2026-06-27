@@ -1,13 +1,98 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../core/database/database.dart';
 import '../../core/localization/l10n_ext.dart';
+import '../../core/router/navigation_menu.dart';
+import '../../core/logging/app_logger.dart';
+import '../../core/security/account_security_service.dart';
+import '../../core/security/password_validation.dart';
 import '../../core/theme/app_colors.dart';
+import '../../features/auth/presentation/change_password_dialog.dart';
 import '../providers/app_providers.dart';
+import 'app_feedback.dart';
+import '../../core/services/branch_context_service.dart';
+import '../../features/auth/presentation/pin_lock_screen.dart';
+import 'command_palette.dart';
+import 'compact_layout.dart';
+import 'global_search_bar.dart';
+import 'notifications_panel.dart';
 
-class AppShell extends ConsumerWidget {
+class AppShell extends ConsumerStatefulWidget {
   final Widget child;
   const AppShell({super.key, required this.child});
+
+  @override
+  ConsumerState<AppShell> createState() => _AppShellState();
+}
+
+class _AppShellState extends ConsumerState<AppShell> {
+  bool _passwordCheckDone = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      unawaited(_ensurePasswordChangedIfRequired());
+    });
+  }
+
+  Future<void> _ensurePasswordChangedIfRequired() async {
+    if (_passwordCheckDone || !mounted) return;
+    final user = ref.read(currentUserProvider);
+    if (user == null) return;
+
+    final db = ref.read(databaseProvider);
+    final security = AccountSecurityService(db);
+    if (!await security.shouldRequirePasswordChange(user)) {
+      _passwordCheckDone = true;
+      return;
+    }
+
+    _passwordCheckDone = true;
+    if (!mounted) return;
+
+    final result = await ChangePasswordDialog.show(
+      context,
+      requireCurrentPassword: false,
+      isMandatory: true,
+    );
+    if (result == null || !mounted) {
+      await ref.read(sessionManagerProvider).endSession();
+      if (mounted) context.go('/login');
+      return;
+    }
+
+    try {
+      final updated = await security.changePassword(
+        user: user,
+        newPassword: result.newPassword,
+        validateCurrentPassword: false,
+      );
+      ref.read(currentUserProvider.notifier).state = updated;
+      if (mounted) {
+        AppFeedback.success(context, context.l10n.savedSuccessfully);
+      }
+    } on AccountSecurityException catch (error) {
+      if (mounted) {
+        final message =
+            passwordValidationMessage(context.l10n, error.message) ??
+            error.message;
+        AppFeedback.error(context, message);
+        await ref.read(sessionManagerProvider).endSession();
+        if (mounted) context.go('/login');
+      }
+    } catch (e, st) {
+      await AppLogger.record('Mandatory password change', error: e, stackTrace: st);
+      if (mounted) {
+        AppFeedback.error(context, context.l10n.errorOccurred);
+        await ref.read(sessionManagerProvider).endSession();
+        if (mounted) context.go('/login');
+      }
+    }
+  }
 
   String _localizedRole(BuildContext context, String? role) {
     final l10n = context.l10n;
@@ -21,21 +106,46 @@ class AppShell extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final location = GoRouterState.of(context).matchedLocation;
+    final index = NavigationMenu.indexForLocation(location);
+    if (index >= 0) {
+      final current = ref.read(selectedMenuIndexProvider);
+      if (current != index) {
+        ref.read(selectedMenuIndexProvider.notifier).state = index;
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final l10n = context.l10n;
     final isExpanded = ref.watch(sidebarExpandedProvider);
     final selectedIndex = ref.watch(selectedMenuIndexProvider);
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final sidebarWidth = isExpanded
+        ? CompactLayout.sidebarExpandedWidth(ref)
+        : CompactLayout.sidebarCollapsedWidth(ref);
     final user = ref.watch(currentUserProvider);
+    final session = ref.watch(sessionManagerProvider);
 
-    return Scaffold(
-      body: Row(
+    final isLocked = ref.watch(screenLockedProvider);
+
+    return AppCommandPaletteShortcuts(
+      child: Listener(
+        onPointerDown: (_) => session.recordActivity(),
+        child: Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Row(
         children: [
           // ─── SIDEBAR ───
           AnimatedContainer(
             duration: const Duration(milliseconds: 250),
             curve: Curves.easeInOutCubic,
-            width: isExpanded ? 260 : 72,
+            width: sidebarWidth,
             decoration: BoxDecoration(
               color: isDark ? AppColors.darkSidebar : AppColors.lightSidebar,
               border: Border(
@@ -68,6 +178,7 @@ class AppShell extends ConsumerWidget {
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: true,
                       ),
                       _buildMenuItem(
                         context,
@@ -79,6 +190,7 @@ class AppShell extends ConsumerWidget {
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('create_invoice'),
                       ),
                       _buildDivider(isDark),
                       _buildSectionTitle(l10n.products, isExpanded, isDark),
@@ -92,6 +204,7 @@ class AppShell extends ConsumerWidget {
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('manage_products'),
                       ),
                       _buildMenuItem(
                         context,
@@ -103,17 +216,31 @@ class AppShell extends ConsumerWidget {
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('manage_products'),
                       ),
                       _buildMenuItem(
                         context,
                         ref,
                         4,
+                        Icons.straighten_rounded,
+                        l10n.units,
+                        '/units',
+                        isExpanded,
+                        selectedIndex,
+                        isDark,
+                        enabled: session.hasPermission('manage_products'),
+                      ),
+                      _buildMenuItem(
+                        context,
+                        ref,
+                        5,
                         Icons.warehouse_rounded,
                         l10n.inventory,
                         '/inventory',
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('manage_inventory'),
                       ),
                       _buildDivider(isDark),
                       _buildSectionTitle(
@@ -124,96 +251,141 @@ class AppShell extends ConsumerWidget {
                       _buildMenuItem(
                         context,
                         ref,
-                        5,
+                        7,
                         Icons.people_rounded,
                         l10n.customers,
                         '/customers',
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('manage_customers'),
                       ),
                       _buildMenuItem(
                         context,
                         ref,
-                        6,
+                        8,
                         Icons.local_shipping_rounded,
                         l10n.suppliers,
                         '/suppliers',
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('manage_suppliers'),
                       ),
                       _buildDivider(isDark),
                       _buildSectionTitle(l10n.financial, isExpanded, isDark),
                       _buildMenuItem(
                         context,
                         ref,
-                        7,
+                        9,
                         Icons.receipt_long_rounded,
                         l10n.invoices,
                         '/invoices',
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('create_invoice'),
                       ),
                       _buildMenuItem(
                         context,
                         ref,
-                        8,
+                        11,
+                        Icons.savings_outlined,
+                        l10n.cashRegister,
+                        '/cash-register',
+                        isExpanded,
+                        selectedIndex,
+                        isDark,
+                        enabled: session.hasPermission('cash_register'),
+                      ),
+                      _buildMenuItem(
+                        context,
+                        ref,
+                        12,
                         Icons.account_balance_wallet_rounded,
                         l10n.debts,
                         '/debts',
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('manage_debts'),
                       ),
                       _buildMenuItem(
                         context,
                         ref,
-                        9,
+                        13,
                         Icons.money_off_rounded,
                         l10n.expenses,
                         '/expenses',
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('manage_expenses'),
                       ),
                       _buildDivider(isDark),
                       _buildSectionTitle(l10n.analytics, isExpanded, isDark),
                       _buildMenuItem(
                         context,
                         ref,
-                        10,
+                        14,
                         Icons.bar_chart_rounded,
                         l10n.reports,
                         '/reports',
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('view_reports'),
                       ),
                       _buildDivider(isDark),
                       _buildSectionTitle(l10n.system, isExpanded, isDark),
+                      if (session.hasPermission('manage_users'))
+                        _buildMenuItem(
+                          context,
+                          ref,
+                          15,
+                          Icons.admin_panel_settings_rounded,
+                          l10n.users,
+                          '/users',
+                          isExpanded,
+                          selectedIndex,
+                          isDark,
+                          enabled: true,
+                        ),
                       _buildMenuItem(
                         context,
                         ref,
-                        11,
+                        17,
                         Icons.settings_rounded,
                         l10n.settings,
                         '/settings',
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('manage_settings'),
                       ),
                       _buildMenuItem(
                         context,
                         ref,
-                        12,
+                        18,
                         Icons.backup_rounded,
                         l10n.backup,
                         '/backup',
                         isExpanded,
                         selectedIndex,
                         isDark,
+                        enabled: session.hasPermission('manage_backup'),
+                      ),
+                      _buildMenuItem(
+                        context,
+                        ref,
+                        19,
+                        Icons.info_outline_rounded,
+                        l10n.about,
+                        '/about',
+                        isExpanded,
+                        selectedIndex,
+                        isDark,
+                        enabled: true,
                       ),
                     ],
                   ),
@@ -224,8 +396,18 @@ class AppShell extends ConsumerWidget {
             ),
           ),
           // ─── MAIN CONTENT ───
-          Expanded(child: child),
+          Expanded(
+            child: GlobalSearchScope(child: widget.child),
+          ),
         ],
+      ),
+          if (isLocked && user != null)
+            Positioned.fill(
+              child: PinLockScreen(userName: user.fullName),
+            ),
+        ],
+      ),
+    ),
       ),
     );
   }
@@ -281,6 +463,7 @@ class AppShell extends ConsumerWidget {
                 ),
               ),
             ),
+            _BranchSelector(isDark: isDark),
           ],
           const Spacer(),
           InkWell(
@@ -315,8 +498,9 @@ class AppShell extends ConsumerWidget {
     String route,
     bool isExpanded,
     int selectedIndex,
-    bool isDark,
-  ) {
+    bool isDark, {
+    bool enabled = true,
+  }) {
     final isSelected = selectedIndex == index;
     final color = isSelected
         ? AppColors.primary
@@ -324,56 +508,61 @@ class AppShell extends ConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 2),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(10),
-        child: InkWell(
-          onTap: () {
-            ref.read(selectedMenuIndexProvider.notifier).state = index;
-            context.go(route);
-          },
+      child: Opacity(
+        opacity: enabled ? 1 : 0.35,
+        child: Material(
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(10),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            padding: EdgeInsets.symmetric(
-              horizontal: isExpanded ? 12 : 0,
-              vertical: 10,
-            ),
-            decoration: BoxDecoration(
-              color: isSelected
-                  ? AppColors.primary.withValues(alpha: 0.12)
-                  : Colors.transparent,
-              borderRadius: BorderRadius.circular(10),
-              border: isSelected
-                  ? Border.all(
-                      color: AppColors.primary.withValues(alpha: 0.3),
-                      width: 1,
-                    )
-                  : null,
-            ),
-            child: Row(
-              mainAxisAlignment: isExpanded
-                  ? MainAxisAlignment.start
-                  : MainAxisAlignment.center,
-              children: [
-                Icon(icon, color: color, size: 20),
-                if (isExpanded) ...[
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      label,
-                      style: TextStyle(
-                        color: color,
-                        fontSize: 13,
-                        fontWeight: isSelected
-                            ? FontWeight.w600
-                            : FontWeight.w400,
+          child: InkWell(
+            onTap: enabled
+                ? () {
+                    ref.read(selectedMenuIndexProvider.notifier).state = index;
+                    context.go(route);
+                  }
+                : null,
+            borderRadius: BorderRadius.circular(10),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              padding: EdgeInsets.symmetric(
+                horizontal: isExpanded ? 12 : 0,
+                vertical: 10,
+              ),
+              decoration: BoxDecoration(
+                color: isSelected
+                    ? AppColors.primary.withValues(alpha: 0.12)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+                border: isSelected
+                    ? Border.all(
+                        color: AppColors.primary.withValues(alpha: 0.3),
+                        width: 1,
+                      )
+                    : null,
+              ),
+              child: Row(
+                mainAxisAlignment: isExpanded
+                    ? MainAxisAlignment.start
+                    : MainAxisAlignment.center,
+                children: [
+                  Icon(icon, color: color, size: 20),
+                  if (isExpanded) ...[
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        label,
+                        style: TextStyle(
+                          color: color,
+                          fontSize: 13,
+                          fontWeight: isSelected
+                              ? FontWeight.w600
+                              : FontWeight.w400,
+                        ),
+                        overflow: TextOverflow.ellipsis,
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),
@@ -472,12 +661,69 @@ class AppShell extends ConsumerWidget {
               ),
             ),
           ],
+          if (isExpanded)
+            Tooltip(
+              message: context.l10n.notifications,
+              child: InkWell(
+                onTap: () => _showNotifications(context, ref),
+                borderRadius: BorderRadius.circular(8),
+                child: Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Icon(
+                    Icons.notifications_outlined,
+                    size: 18,
+                    color: AppColors.warning.withValues(alpha: 0.9),
+                  ),
+                ),
+              ),
+            ),
+          if (isExpanded) const SizedBox(width: 4),
+          if (isExpanded &&
+              ref.read(sessionManagerProvider).canUsePinLock)
+            Tooltip(
+              message: context.l10n.lockScreenNow,
+              child: InkWell(
+                onTap: () => ref.read(sessionManagerProvider).lockScreen(),
+                borderRadius: BorderRadius.circular(8),
+                child: Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Icon(
+                    Icons.lock_outline_rounded,
+                    size: 18,
+                    color: isDark
+                        ? AppColors.darkTextSecondary
+                        : AppColors.lightTextSecondary,
+                  ),
+                ),
+              ),
+            ),
+          if (isExpanded) const SizedBox(width: 4),
+          Tooltip(
+            message: context.l10n.changePassword,
+            child: InkWell(
+              onTap: user == null
+                  ? null
+                  : () => _changePassword(context, ref, user as User),
+              borderRadius: BorderRadius.circular(8),
+              child: Padding(
+                padding: const EdgeInsets.all(6),
+                child: Icon(
+                  Icons.lock_reset_rounded,
+                  size: 18,
+                  color: AppColors.primary.withValues(alpha: 0.9),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 4),
           Tooltip(
             message: context.l10n.logout,
             child: InkWell(
-              onTap: () {
-                ref.read(currentUserProvider.notifier).state = null;
-                context.go('/login');
+              onTap: () async {
+                await ref.read(sessionManagerProvider).endSession();
+                if (context.mounted) {
+                  context.go('/login');
+                }
               },
               borderRadius: BorderRadius.circular(8),
               child: Padding(
@@ -492,6 +738,113 @@ class AppShell extends ConsumerWidget {
           ),
         ],
       ),
+    );
+  }
+
+  void _showNotifications(BuildContext context, WidgetRef ref) {
+    ref.invalidate(appNotificationsProvider);
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(context.l10n.notifications),
+        content: const NotificationsPanel(),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text(context.l10n.close),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _changePassword(
+    BuildContext context,
+    WidgetRef ref,
+    User user,
+  ) async {
+    final result = await ChangePasswordDialog.show(
+      context,
+      requireCurrentPassword: true,
+    );
+    if (result == null || !context.mounted) return;
+
+    final database = ref.read(databaseProvider);
+    final service = AccountSecurityService(database);
+
+    try {
+      final updatedUser = await service.changePassword(
+        user: user,
+        currentPassword: result.currentPassword,
+        newPassword: result.newPassword,
+      );
+      ref.read(currentUserProvider.notifier).state = updatedUser;
+
+      if (context.mounted) {
+        AppFeedback.success(context, context.l10n.savedSuccessfully);
+      }
+    } on AccountSecurityException catch (error) {
+      if (context.mounted) {
+        final message =
+            passwordValidationMessage(context.l10n, error.message) ??
+            error.message;
+        AppFeedback.error(context, message);
+      }
+    } catch (e, st) {
+      await AppLogger.record('App shell action', error: e, stackTrace: st);
+      if (context.mounted) {
+        AppFeedback.error(context, context.l10n.errorOccurred);
+      }
+    }
+  }
+}
+
+class _BranchSelector extends ConsumerWidget {
+  const _BranchSelector({required this.isDark});
+
+  final bool isDark;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final branchesAsync = ref.watch(branchesProvider);
+    final activeId = ref.watch(activeBranchIdProvider);
+    return branchesAsync.when(
+      data: (branches) {
+        if (branches.length <= 1) return const SizedBox.shrink();
+        return Padding(
+          padding: const EdgeInsetsDirectional.only(start: 8),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<int>(
+              value: activeId ?? branches.first.id,
+              isDense: true,
+              style: TextStyle(
+                fontSize: 12,
+                color: isDark
+                    ? AppColors.darkTextSecondary
+                    : AppColors.lightTextSecondary,
+              ),
+              items: branches
+                  .map(
+                    (b) => DropdownMenuItem(
+                      value: b.id,
+                      child: Text(b.name, overflow: TextOverflow.ellipsis),
+                    ),
+                  )
+                  .toList(),
+              onChanged: (id) async {
+                if (id == null) return;
+                ref.read(activeBranchIdProvider.notifier).state = id;
+                await const BranchContextService().setActiveBranchId(
+                  ref.read(databaseProvider),
+                  id,
+                );
+              },
+            ),
+          ),
+        );
+      },
+      loading: () => const SizedBox(width: 24),
+      error: (_, _) => const SizedBox.shrink(),
     );
   }
 }

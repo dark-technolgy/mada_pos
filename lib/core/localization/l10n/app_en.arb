@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appName": "KeenX POS",
+  "appName": "Mada POS",
   "login": "Login",
   "logout": "Logout",
   "username": "Username",
@@ -193,6 +193,7 @@
   "gram": "Gram",
   "liter": "Liter",
   "meter": "Meter",
+  "hour": "hour(s)",
   "set": "Set",
   "pair": "Pair",
   "dozen": "Dozen",
@@ -279,7 +280,7 @@
   ,"searchInventory": "Search inventory..."
   ,"noSearchResults": "No results"
   ,"noProductsMatchSearch": "No products match your search"
-  ,"backupInfoMessage": "It is recommended to create backups regularly to protect your data. Backups are stored in the KeenX_Backups folder in your home directory."
+  ,"backupInfoMessage": "It is recommended to create backups regularly to protect your data. Backups are stored in the Mada_Backups folder in your home directory."
   ,"noBackups": "No backups"
   ,"createFirstBackupNow": "Create your first backup now"
   ,"backupCreatedAt": "Backup created at:\n{path}"
@@ -437,4 +438,300 @@
   ,"replaceCurrentSaleTitle": "Replace current sale"
   ,"replaceCurrentSaleMessage": "Your current cart will be replaced by the held invoice. Continue?"
   ,"heldInvoiceRestored": "Held invoice restored"
+  ,"invoiceCounterparty": "Customer / Supplier"
+  ,"newPurchaseInvoice": "New purchase invoice"
+  ,"recordPurchase": "Record purchase"
+  ,"addLine": "Add line"
+  ,"purchaseRecorded": "Purchase invoice recorded"
+  ,"invoiceDiscountOptional": "Invoice discount (optional)"
+  ,"removeLine": "Remove line"
+  ,"supplierNotSpecified": "No supplier"
+  ,"stockAdjustment": "Stock adjustment"
+  ,"adjustmentWarehouse": "Warehouse"
+  ,"adjustmentDeltaHint": "Change (+ add, − remove)"
+  ,"adjustmentNotesOptional": "Notes (optional)"
+  ,"applyAdjustment": "Apply"
+  ,"adjustmentSaved": "Stock updated"
+  ,"saleReturnTitle": "Sale return"
+  ,"returnQtyHint": "Return qty"
+  ,"returnSubmit": "Record return"
+  ,"returnRecorded": "Return recorded"
+  ,"originalSale": "Original sale"
+  ,"remainingReturnable": "Remaining: {qty}"
+  ,"@remainingReturnable": {
+    "placeholders": {
+      "qty": {}
+    }
+  }
+  ,"purchaseReturnTitle": "Purchase return"
+  ,"originalPurchase": "Original purchase"
+  ,"openingBalance": "Opening balance"
+  ,"expectedInDrawer": "Expected in drawer"
+  ,"countedCash": "Counted cash"
+  ,"difference": "Difference"
+  ,"openCashRegister": "Open shift"
+  ,"closeCashRegister": "Close shift"
+  ,"cashRegisterOpen": "Shift open"
+  ,"cashRegisterClosed": "Shift closed"
+  ,"noOpenCashRegister": "No open shift"
+  ,"cashRegisterAlreadyOpen": "A shift is already open"
+  ,"invalidCashAmount": "Enter a valid amount"
+  ,"backupIntervalHours": "Backup interval (hours)"
+  ,"autoBackupEnabled": "Automatic backup"
+  ,"autoBackupRanInBackground": "Scheduled backup created"
+  ,"taxRatePercent": "Tax rate (%)"
+  ,"taxIncludedInPrice": "Prices include tax"
+  ,"voidInvoice": "Void invoice"
+  ,"voidInvoiceTitle": "Void invoice?"
+  ,"voidInvoiceMessage": "This will cancel the invoice and reverse stock movements. This action cannot be undone."
+  ,"voidInvoiceSuccess": "Invoice voided successfully"
+  ,"cannotVoidInvoice": "This invoice cannot be voided"
+  ,"warehouses": "Warehouses"
+  ,"addWarehouse": "Add warehouse"
+  ,"editWarehouse": "Edit warehouse"
+  ,"warehouseName": "Warehouse name"
+  ,"defaultWarehouse": "Default warehouse"
+  ,"noWarehousesYet": "No warehouses yet"
+  ,"deleteWarehouseTitle": "Delete warehouse?"
+  ,"deleteWarehouseMessage": "Delete warehouse \"{name}\"?"
+  ,"@deleteWarehouseMessage": {
+    "placeholders": {
+      "name": {}
+    }
+  }
+  ,"cannotDeleteWarehouseHasStock": "Cannot delete a warehouse that still has stock"
+  ,"cannotDeleteDefaultWarehouse": "Cannot delete the default warehouse"
+  ,"auditLog": "Audit log"
+  ,"allActions": "All actions"
+  ,"noAuditEntries": "No audit entries yet"
+  ,"auditActionLogin": "Login"
+  ,"auditActionLogout": "Logout"
+  ,"auditActionVoid": "Void invoice"
+  ,"auditActionCreate": "Create"
+  ,"auditActionUpdate": "Update"
+  ,"auditActionDelete": "Delete"
+  ,"refresh": "Refresh"
+  ,"inactive": "Inactive"
+  ,"quotes": "Price quotes"
+  ,"newQuote": "New quote"
+  ,"editQuote": "Edit quote"
+  ,"noQuotesYet": "No quotes yet"
+  ,"quoteSaved": "Quote saved"
+  ,"convertToSale": "Convert to sale"
+  ,"convertQuoteTitle": "Convert quote to sale?"
+  ,"convertQuoteMessage": "Convert quote {number} into a paid sale invoice?"
+  ,"@convertQuoteMessage": {
+    "placeholders": {
+      "number": {}
+    }
+  }
+  ,"quoteConverted": "Sale created: {number}"
+  ,"@quoteConverted": {
+    "placeholders": {
+      "number": {}
+    }
+  }
+  ,"cannotConvertQuote": "Cannot convert this quote"
+  ,"deleteQuoteTitle": "Delete quote?"
+  ,"deleteQuoteMessage": "Delete quote {number}?"
+  ,"@deleteQuoteMessage": {
+    "placeholders": {
+      "number": {}
+    }
+  }
+  ,"exportedTo": "Exported to {path}"
+  ,"@exportedTo": {
+    "placeholders": {
+      "path": {}
+    }
+  }
+  ,"units": "Units"
+  ,"addUnit": "Add unit"
+  ,"editUnit": "Edit unit"
+  ,"abbreviation": "Abbreviation"
+  ,"nameAr": "Name (Arabic)"
+  ,"nameEn": "Name (English)"
+  ,"deleteUnitTitle": "Delete unit?"
+  ,"deleteUnitMessage": "Delete unit \"{name}\"?"
+  ,"@deleteUnitMessage": {
+    "placeholders": {
+      "name": {}
+    }
+  }
+  ,"cannotDeleteUnitInUse": "Cannot delete a unit used by products"
+  ,"passwordTooShort": "Password must be at least 8 characters"
+  ,"passwordNoUpper": "Must include an uppercase letter"
+  ,"passwordNoLower": "Must include a lowercase letter"
+  ,"passwordNoDigit": "Must include a number"
+  ,"activateLicense": "Activate license"
+  ,"licenseExpiredMessage": "Trial ended. Enter your license key to continue."
+  ,"licenseTrialMessage": "You can continue the trial or enter a license key."
+  ,"deviceId": "Device ID"
+  ,"copyDeviceId": "Copy device ID"
+  ,"licenseKey": "License key"
+  ,"invalidLicenseKey": "Invalid license key for this device"
+  ,"activate": "Activate"
+  ,"continueTrial": "Continue trial"
+  ,"trialDaysLeft": "Trial days remaining: {days}"
+  ,"@trialDaysLeft": {
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  }
+  ,"about": "About"
+  ,"userManual": "User manual"
+  ,"openUserManualHint": "Open PDF from the docs folder"
+  ,"manualNotFound": "User manual not found in installation folder"
+  ,"openLogs": "Error logs"
+  ,"logsFolder": "Logs folder"
+  ,"copied": "Copied"
+  ,"companyLogo": "Company logo"
+  ,"pickCompanyLogo": "Pick logo image"
+  ,"smartInsights": "Smart insights"
+  ,"smartSuggestions": "Smart suggestions"
+  ,"frequentlyBoughtTogether": "Frequently bought together"
+  ,"salesTrendUp": "Strong sales today"
+  ,"salesTrendUpMessage": "Sales are up {percent}% vs yesterday"
+  ,"@salesTrendUpMessage": {"placeholders": {"percent": {"type": "int"}}}
+  ,"salesTrendDown": "Sales dip"
+  ,"salesTrendDownMessage": "Sales are down {percent}% vs yesterday"
+  ,"@salesTrendDownMessage": {"placeholders": {"percent": {"type": "int"}}}
+  ,"slowDayInsight": "Quiet day"
+  ,"slowDayInsightMessage": "Today's sales are below your weekly average — consider promotions"
+  ,"lowStockAlert": "Low stock"
+  ,"lowStockAlertMessage": "{count} products need reordering"
+  ,"@lowStockAlertMessage": {"placeholders": {"count": {"type": "int"}}}
+  ,"overdueDebtsInsight": "Overdue debts"
+  ,"overdueDebtsInsightMessage": "{count} debts are past due"
+  ,"@overdueDebtsInsightMessage": {"placeholders": {"count": {"type": "int"}}}
+  ,"topProductToday": "Top seller today"
+  ,"topProductTodayMessage": "{name} is leading — keep stock available"
+  ,"@topProductTodayMessage": {"placeholders": {"name": {"type": "String"}}}
+  ,"businessHealthy": "Looking good"
+  ,"businessHealthyMessage": "No urgent alerts — keep up the great work"
+  ,"topSellingToday": "Top sellers"
+  ,"topSellersQuickPick": "Top sellers (7 days)"
+  ,"lowStockBadge": "Low stock"
+  ,"outOfStock": "Out of stock"
+  ,"stockLeft": "Left: {qty}"
+  ,"@stockLeft": {"placeholders": {"qty": {"type": "String"}}}
+  ,"insufficientStock": "Insufficient stock"
+  ,"insufficientStockMessage": "{name}: available {available}, requested {requested}"
+  ,"@insufficientStockMessage": {"placeholders": {"name": {"type": "String"}, "available": {"type": "String"}, "requested": {"type": "String"}}}
+  ,"saleGuardTitle": "Sale warning"
+  ,"saleGuardBelowCost": "Selling below cost: {name}"
+  ,"@saleGuardBelowCost": {"placeholders": {"name": {"type": "String"}}}
+  ,"saleGuardHighDiscount": "Total discount {percent}% exceeds usual limit"
+  ,"@saleGuardHighDiscount": {"placeholders": {"percent": {"type": "String"}}}
+  ,"saleGuardUnusualTotal": "Invoice total is much higher than your average sale"
+  ,"saleGuardConfirm": "Continue sale despite warnings?"
+  ,"proceedAnyway": "Proceed anyway"
+  ,"reorderSuggestion": "Suggested reorder"
+  ,"staleHeldInvoicesInsight": "Held invoices waiting"
+  ,"staleHeldInvoicesInsightMessage": "{count} held invoices are older than 24 hours — recall or complete them"
+  ,"@staleHeldInvoicesInsightMessage": {"placeholders": {"count": {"type": "int"}}}
+  ,"appInitializing": "Loading Mada POS..."
+  ,"appInitializingHint": "Windows libraries may be installed on first launch"
+  ,"appInitFailed": "Failed to initialize the application. Please restart."
+  ,"commandPaletteTitle": "Quick navigation"
+  ,"commandPaletteSearchHint": "Search pages..."
+  ,"commandPaletteNoResults": "No matching pages"
+  ,"changePassword": "Change password"
+  ,"retry": "Retry"
+  ,"keyboardShortcutsTitle": "Keyboard shortcuts"
+  ,"shortcutFocusSearch": "Focus product search"
+  ,"shortcutFocusBarcode": "Focus barcode field"
+  ,"shortcutCompleteSale": "Complete sale"
+  ,"shortcutClearCart": "Clear cart (with confirmation)"
+  ,"shortcutHoldInvoice": "Hold invoice (F6)"
+  ,"shortcutRecallInvoice": "Recall held invoice (F7)"
+  ,"shortcutShowHelp": "Show this help"
+  ,"clearCartTitle": "Clear cart?"
+  ,"clearCartMessage": "All items will be removed from the current sale."
+  ,"globalSearchHint": "Search products, customers, invoices..."
+  ,"globalSearchProducts": "Products"
+  ,"globalSearchCustomers": "Customers"
+  ,"globalSearchInvoices": "Invoices"
+  ,"last7Days": "Last 7 days"
+  ,"last30Days": "Last 30 days"
+  ,"resetToDefaults": "Reset to defaults"
+  ,"dashboardCustomize": "Customize dashboard"
+  ,"dashboardShowStats": "Statistics cards"
+  ,"dashboardShowInsights": "Smart insights"
+  ,"dashboardShowRecentTransactions": "Recent transactions"
+  ,"dashboardShowLowStock": "Low stock alerts"
+  ,"splitPaymentEmpty": "Enter at least one payment amount"
+  ,"splitPaymentMismatch": "Payment splits must equal the invoice total"
+  ,"splitPaymentEntered": "Entered"
+  ,"splitFillCash": "Remainder to cash"
+  ,"lockScreenTitle": "Screen locked"
+  ,"enterPin": "Enter PIN"
+  ,"invalidPin": "Invalid PIN"
+  ,"pinInvalidFormat": "PIN must be 4–6 digits"
+  ,"unlock": "Unlock"
+  ,"setUserPin": "Set PIN"
+  ,"clearUserPin": "Remove PIN"
+  ,"pinSetSuccess": "PIN saved"
+  ,"pinClearedSuccess": "PIN removed"
+  ,"notifications": "Notifications"
+  ,"noNotifications": "No notifications"
+  ,"notificationLowStock": "Low stock products"
+  ,"notificationOverdueDebts": "Overdue debts"
+  ,"notificationStaleHeld": "Stale held invoices"
+  ,"notificationSalesDown": "Sales below average"
+  ,"overdueDebtsCount": "Overdue debts"
+  ,"heldInvoicesCount": "Held invoices"
+  ,"grossMargin": "Gross margin"
+  ,"collectionRate": "Collection rate"
+  ,"topCustomerToday": "Top customer today"
+  ,"rolePermissions": "Role permissions"
+  ,"rolePermissionsHint": "Choose what each role can access"
+  ,"customerSpecialPrices": "Special prices"
+  ,"customerPriceSaved": "Special price saved"
+  ,"lockScreenNow": "Lock screen"
+  ,"paymentSplit": "Split"
+  ,"compactLayout": "Compact layout"
+  ,"compactLayoutHint": "Reduce spacing in lists and tables"
+  ,"shortcutsGlobalSection": "Global"
+  ,"shortcutsPosSection": "Point of sale"
+  ,"shortcutsPosActiveHint": "Available on the POS screen"
+  ,"branches": "Branches"
+  ,"branchesHint": "Add company branches and switch the active branch from the sidebar"
+  ,"addBranch": "Add branch"
+  ,"editBranch": "Edit branch"
+  ,"deleteBranch": "Delete branch"
+  ,"deleteBranchMessage": "Delete branch \"{name}\"?"
+  ,"@deleteBranchMessage": {"placeholders": {"name": {"type": "String"}}}
+  ,"branchName": "Branch name"
+  ,"branchCode": "Branch code"
+  ,"defaultBranch": "Default branch"
+  ,"noBranches": "No branches"
+  ,"cannotDeleteDefaultBranch": "Cannot delete the default branch"
+  ,"cannotDeleteBranchHasInvoices": "Branch has linked invoices"
+  ,"activeBranch": "Active branch"
+  ,"accountStatement": "Account statement"
+  ,"printStatement": "Print statement"
+  ,"period": "Period"
+  ,"openingBalance": "Opening balance"
+  ,"closingBalance": "Closing balance"
+  ,"debit": "Debit"
+  ,"credit": "Credit"
+  ,"description": "Description"
+  ,"cloudBackupEnabled": "Copy to cloud folder"
+  ,"cloudBackupPathHint": "Pick a OneDrive or Dropbox folder on this PC"
+  ,"chooseCloudFolder": "Choose folder"
+  ,"welcomeToMada": "Welcome to Mada"
+  ,"setupWizardSubtitle": "Let's set up the essentials in a few simple steps"
+  ,"startUsingApp": "Start Using App"
+  ,"allSet": "All Set!"
+  ,"readyToStartMessage": "Configuration saved successfully. You're ready to log in and start selling."
+  ,"quickTour": "Quick Tour"
+  ,"tourStep1Title": "Fast Point of Sale"
+  ,"tourStep1Content": "Use the POS screen for rapid sales with barcode scanning and F1-F7 keyboard shortcuts."
+  ,"tourStep2Title": "Inventory Management"
+  ,"tourStep2Content": "Add your products, organize them into categories, and monitor stock levels with smart alerts."
+  ,"tourStep3Title": "Reports & Analytics"
+  ,"tourStep3Content": "Track your profits and sales through detailed reports and real-time smart insights."
+  ,"tourStep4Title": "Backup & Security"
+  ,"tourStep4Content": "Your data is safe with the automatic backup feature whenever you close the application."
 }

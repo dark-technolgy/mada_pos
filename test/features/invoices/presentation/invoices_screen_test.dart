@@ -3,12 +3,12 @@ import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:keenx_pos/core/database/database.dart';
-import 'package:keenx_pos/core/localization/generated/app_localizations.dart';
-import 'package:keenx_pos/core/localization/kurdish_fallback_localizations.dart';
-import 'package:keenx_pos/core/utils/currency_formatter.dart';
-import 'package:keenx_pos/features/invoices/presentation/invoices_screen.dart';
-import 'package:keenx_pos/shared/providers/app_providers.dart';
+import 'package:mada_pos/core/database/database.dart';
+import 'package:mada_pos/core/localization/generated/app_localizations.dart';
+import 'package:mada_pos/core/localization/kurdish_fallback_localizations.dart';
+import 'package:mada_pos/core/utils/currency_formatter.dart';
+import 'package:mada_pos/features/invoices/presentation/invoices_screen.dart';
+import 'package:mada_pos/shared/providers/app_providers.dart';
 
 Widget _buildTestApp(AppDatabase database) {
   return ProviderScope(

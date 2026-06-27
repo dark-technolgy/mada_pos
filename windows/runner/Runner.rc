@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.keenx" "\0"
-            VALUE "FileDescription", "keenx_pos" "\0"
+            VALUE "CompanyName", "com.mada" "\0"
+            VALUE "FileDescription", "mada_pos" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "keenx_pos" "\0"
-            VALUE "LegalCopyright", "Copyright (C) 2026 com.keenx. All rights reserved." "\0"
-            VALUE "OriginalFilename", "keenx_pos.exe" "\0"
-            VALUE "ProductName", "keenx_pos" "\0"
+            VALUE "InternalName", "mada_pos" "\0"
+            VALUE "LegalCopyright", "Copyright (C) 2026 com.mada. All rights reserved." "\0"
+            VALUE "OriginalFilename", "mada_pos.exe" "\0"
+            VALUE "ProductName", "mada_pos" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -7,13 +7,91 @@ import 'core/localization/l10n_ext.dart';
 import 'core/localization/generated/app_localizations.dart';
 import 'shared/providers/app_providers.dart';
 
-class KeenXApp extends ConsumerWidget {
-  const KeenXApp({super.key});
+class MadaApp extends ConsumerWidget {
+  const MadaApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final bootstrap = ref.watch(appBootstrapProvider);
     final themeMode = ref.watch(themeModeProvider);
     final locale = ref.watch(localeProvider);
+
+    if (bootstrap.isLoading) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        themeMode: themeMode,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        locale: locale,
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          AppMaterialLocalizationsDelegate(),
+          AppCupertinoLocalizationsDelegate(),
+          AppWidgetsLocalizationsDelegate(),
+        ],
+        home: Builder(
+          builder: (context) {
+            final l10n = AppLocalizations.of(context)!;
+            return Scaffold(
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CircularProgressIndicator(),
+                    const SizedBox(height: 20),
+                    Text(
+                      l10n.appInitializing,
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      l10n.appInitializingHint,
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    }
+
+    if (bootstrap.hasError) {
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        themeMode: themeMode,
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        locale: locale,
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          AppMaterialLocalizationsDelegate(),
+          AppCupertinoLocalizationsDelegate(),
+          AppWidgetsLocalizationsDelegate(),
+        ],
+        home: Builder(
+          builder: (context) {
+            final l10n = AppLocalizations.of(context)!;
+            return Scaffold(
+              body: Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Text(
+                    l10n.appInitFailed,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      );
+    }
+
     final router = ref.watch(routerProvider);
 
     return MaterialApp.router(
