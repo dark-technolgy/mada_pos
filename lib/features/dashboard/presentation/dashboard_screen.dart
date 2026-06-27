@@ -10,6 +10,7 @@ import '../../../core/utils/currency_formatter.dart';
 import '../application/dashboard_layout_prefs.dart';
 import '../application/dashboard_service.dart';
 import '../../../core/smart/smart_insights_service.dart';
+import '../../../core/services/update_service.dart';
 import 'widgets/dashboard_sections.dart';
 import 'widgets/dashboard_smart_insights.dart';
 import 'widgets/dashboard_customize_dialog.dart';
@@ -69,6 +70,28 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       _layout = DashboardLayoutPrefs.fromJsonString(raw);
     });
     await _loadDashboardData();
+    _checkUpdates();
+  }
+
+  Future<void> _checkUpdates() async {
+    final updater = UpdateService(githubUser: 'dark-technolgy', githubRepo: 'mada_pos');
+    final update = await updater.checkForUpdate();
+    if (update != null && mounted) {
+      final confirm = await showDialog<bool>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('تحديث جديد متوفر'),
+          content: Text('الإصدار ${update.latestVersion} متوفر الآن. هل تريد التحديث؟'),
+          actions: [
+            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('لاحقاً')),
+            ElevatedButton(onPressed: () => Navigator.pop(context, true), child: const Text('تحديث الآن')),
+          ],
+        ),
+      );
+      if (confirm == true) {
+        await updater.launchUpdate(update.downloadUrl);
+      }
+    }
   }
 
   Future<void> _loadDashboardData() async {

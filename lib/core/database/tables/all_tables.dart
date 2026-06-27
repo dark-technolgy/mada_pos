@@ -3,7 +3,9 @@ import 'package:drift/drift.dart';
 /// Users table - المستخدمين
 class Users extends Table {
   IntColumn get id => integer().autoIncrement()();
+  TextColumn get supabaseId => text().nullable().unique()();
   TextColumn get username => text().withLength(min: 3, max: 50).unique()();
+  TextColumn get email => text().nullable().unique()();
   TextColumn get passwordHash => text()();
   TextColumn get fullName => text().withLength(min: 1, max: 100)();
   TextColumn get role => text().withDefault(

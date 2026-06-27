@@ -8,8 +8,10 @@ import '../../../core/security/account_security_service.dart';
 import '../../../core/security/password_validation.dart';
 import '../../../core/theme/app_colors.dart';
 import 'change_password_dialog.dart';
+import 'register_dialog.dart';
 import 'widgets/login_sections.dart';
 import '../../../shared/providers/app_providers.dart';
+import '../../../shared/widgets/app_feedback.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});
@@ -70,7 +72,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
       if (loginResult.status == LoginStatus.invalidCredentials ||
           loginResult.user == null) {
         setState(() {
-          _errorMessage = l10n.invalidCredentials;
+          _errorMessage = loginResult.status == LoginStatus.notApproved
+              ? 'الحساب بانتظار موافقة المسؤول'
+              : l10n.invalidCredentials;
           _isLoading = false;
         });
         return;
@@ -191,6 +195,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                   isLoading: _isLoading,
                   onSubmit: _login,
                   errorMessage: _errorMessage,
+                ),
+                Positioned(
+                  bottom: 40,
+                  right: 40,
+                  child: TextButton(
+                    onPressed: () => RegisterDialog.show(context),
+                    child: const Text('إنشاء حساب جديد', style: TextStyle(color: Colors.white70)),
+                  ),
                 ),
               ],
             ),

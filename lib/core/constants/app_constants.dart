@@ -13,7 +13,7 @@ class AppConstants {
 
   // Database
   static const String dbName = 'mada_pos.db';
-  static const int dbVersion = 6;
+  static const int dbVersion = 7;
 
   // Session
   static const int sessionTimeoutMinutes = 30;

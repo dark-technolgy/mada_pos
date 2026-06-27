@@ -4,6 +4,7 @@ import 'package:drift/drift.dart' show OrderingTerm, Value;
 import 'package:path/path.dart' as p;
 
 import '../../../core/database/database.dart';
+import 'cloud_backup_service.dart';
 
 class BackupService {
   const BackupService();
@@ -110,21 +111,29 @@ class BackupService {
     }
 
     try {
-      final cloudPath = await syncToCloudFolder(
-        localBackupPath: backup.filePath,
-        cloudFolderPath: cloudFolderPath.trim(),
-      );
-      await db.into(db.backups).insert(
-            BackupsCompanion.insert(
-              filePath: cloudPath,
-              type: 'cloud',
-              status: 'success',
-              sizeBytes: Value(backup.sizeBytes),
-              notes: Value(p.basename(cloudPath)),
-            ),
-          );
-    } on BackupException {
-      rethrow;
+      // 1. Sync to local cloud folder (OneDrive/Dropbox) if provided
+      if (cloudFolderPath != null && cloudFolderPath.trim().isNotEmpty) {
+        final cloudPath = await syncToCloudFolder(
+          localBackupPath: backup.filePath,
+          cloudFolderPath: cloudFolderPath.trim(),
+        );
+        await db.into(db.backups).insert(
+              BackupsCompanion.insert(
+                filePath: cloudPath,
+                type: 'cloud',
+                status: 'success',
+                sizeBytes: Value(backup.sizeBytes),
+                notes: Value(p.basename(cloudPath)),
+              ),
+            );
+      }
+
+      // 2. Sync to Supabase Storage (Always attempt if online)
+      try {
+        await CloudBackupService().uploadBackup(File(backup.filePath));
+      } catch (e) {
+        // Silently fail cloud sync if offline or storage bucket not ready
+      }
     } catch (e) {
       throw BackupException('Cloud sync failed: $e');
     }

@@ -138,6 +138,10 @@ WHERE invoice_id IS NOT NULL
 ''');
         }
       }
+      if (from < 7) {
+        await m.addColumn(users, users.supabaseId);
+        await m.addColumn(users, users.email);
+      }
     },
   );
 
