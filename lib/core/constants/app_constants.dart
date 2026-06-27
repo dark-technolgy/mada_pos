@@ -37,5 +37,5 @@ class AppConstants {
 
   // Supabase
   static const String supabaseUrl = 'https://xuafnfxlhoaweumsoqww.supabase.co';
-  static const String supabaseAnonKey = 'YOUR_ANON_KEY';
+  static const String supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1YWZuZnhsaG9hd2V1bXNvcXd3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1MTc2ODEsImV4cCI6MjA5ODA5MzY4MX0.vvOX0woZ4O4XSq9coEjYij2foVGbnUYsqspjWTKlc10';
 }
